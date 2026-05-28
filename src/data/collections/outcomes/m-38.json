@@ -1,0 +1,11 @@
+{
+  "id": "m-38",
+  "remedyId": "tetanus-immunoglobulin",
+  "conditionId": "tetanus",
+  "targetSymptomId": "muscle-spasms",
+  "gradeQuality": "High",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "Unaligned",
+  "clinicalSummary": "Passive immunization with Human TIG binds and neutralizes systemic tetanospasmin in blood tissues. Prevents toxin binding at motor endplates, halting the progression and severity of lockjaw jaw stiffness and painful opisthotonos muscle spasms.",
+  "citation": "WHO Guidelines on Clinical Management of Tetanus, 2021"
+}

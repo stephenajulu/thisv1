@@ -6,6 +6,7 @@
   "category": "Neglected Tropical Disease (NTD)",
   "description": "A highly contagious, parasitic skin infestation caused by the microscopic Sarcoptes scabiei var. hominis mite. Causes severe generalized pruritus (itching) with characteristic burrows, papules, and high risk of secondary bacterial pyoderma or cellulitis in crowded conditions.",
   "symptoms": [
+    "pruritus",
     "skin-ulcer",
     "fatigue"
   ],

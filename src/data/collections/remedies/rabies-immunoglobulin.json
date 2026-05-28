@@ -1,0 +1,22 @@
+{
+  "id": "rabies-immunoglobulin",
+  "name": "Rabies Immunoglobulin (RIG)",
+  "scientificName": "Human or Equine Rabies Immunoglobulin (HRIG/ERIG)",
+  "category": "pharmaceutical",
+  "description": "Exogenous concentrated antibodies providing immediate passive immunity to neutralize the rabies virus at the bite wound entry site before active vaccine-induced antibodies can develop.",
+  "activeConstituents": [
+    "Anti-Rabies Antibodies"
+  ],
+  "preparation": "Infiltrate as much of the calculated dose (20 IU/kg for HRIG, 40 IU/kg for ERIG) directly in and around all the animal bite wound sites. Inject any remaining volume intramuscularly at a site distant from the vaccine injection.",
+  "safetyRating": "High Safety",
+  "safetyAlert": "Never inject vaccine and immunoglobulin in the same syringe or at the same anatomical site, as RIG can neutralize the active vaccine antigen.",
+  "interactions": "Do not exceed standard calculated weight dosage, as excessive RIG can suppress active vaccine antibody development.",
+  "demographicCautions": [
+    {
+      "populationId": "pregnant-women",
+      "type": "info",
+      "title": "PREGNANCY CRITICAL INTERVENTION",
+      "message": "Highly recommended and safe in pregnant women. Essential passive immunizer following Category III animal bite exposures to prevent maternal viral entry."
+    }
+  ]
+}

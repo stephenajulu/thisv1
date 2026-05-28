@@ -1,0 +1,11 @@
+{
+  "id": "m-41",
+  "remedyId": "moringa-seeds",
+  "conditionId": "cholera",
+  "targetSymptomId": "watery-diarrhea",
+  "gradeQuality": "Moderate",
+  "recommendationStrength": "Conditional For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Laboratory tests and rural trial studies prove crushed Moringa seeds possess strong antibacterial properties against Vibrio cholerae and act as natural cationic coagulants. Clarifying well-water using seed powder reduces transmission and caseloads of severe watery diarrhea in outposts.",
+  "citation": "Water Research Journal, 2020"
+}

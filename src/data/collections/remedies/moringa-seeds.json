@@ -1,0 +1,23 @@
+{
+  "id": "moringa-seeds",
+  "name": "Moringa Seeds",
+  "scientificName": "Moringa oleifera seed extracts",
+  "category": "botanical",
+  "description": "Powerful botanical seeds containing natural cationic polyelectrolyte proteins that act as organic flocculants, clarifying turbid water and precipitating >90% of suspended pathogens.",
+  "activeConstituents": [
+    "Cationic Flocculating Proteins",
+    "Oleic Acid"
+  ],
+  "preparation": "Crush dry Moringa seeds into a fine powder. Mix with turbid water at a ratio of 50-150 mg powder per liter. Stir rapidly for 2 minutes, then slowly for 10 minutes. Let settle for 1 hour to precipitate contaminants, then decant or filter.",
+  "safetyRating": "High Safety",
+  "safetyAlert": "Only drink the clarified top layer of decanted water. Boiling the clarified water is still highly recommended to guarantee absolute microbial sterility.",
+  "interactions": "No documented drug interactions when consumed as treated water. Highly safe organic alternative.",
+  "demographicCautions": [
+    {
+      "populationId": "pregnant-women",
+      "type": "info",
+      "title": "PREGNANCY SAFE SANITIZER",
+      "message": "Highly recommended and safe. Providing microbiologically clean drinking water is vital to prevent severe gastrointestinal infections during pregnancy."
+    }
+  ]
+}

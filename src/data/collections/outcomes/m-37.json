@@ -1,0 +1,11 @@
+{
+  "id": "m-37",
+  "remedyId": "permethrin",
+  "conditionId": "scabies",
+  "targetSymptomId": "pruritus",
+  "gradeQuality": "High",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "Unaligned",
+  "clinicalSummary": "Double-blind RCTs confirm 5% permethrin cream successfully eradicates Sarcoptes mites, leading to a dramatic resolution of intense pruritus (itching) within 1-2 weeks, although transient itch irritation may persist after mite death.",
+  "citation": "Cochrane Database of Systematic Reviews, 2018"
+}

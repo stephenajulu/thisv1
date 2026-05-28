@@ -1,0 +1,11 @@
+{
+  "id": "m-39",
+  "remedyId": "rabies-vaccine",
+  "conditionId": "rabies",
+  "targetSymptomId": "hydrophobia",
+  "gradeQuality": "High",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "Unaligned",
+  "clinicalSummary": "Prospective trials demonstrate that post-exposure vaccine administration stimulates high levels of neutralizing antibodies. Prevents viral entry into the CNS and blocks the onset of fatal encephalitic hydrophobia when administered immediately.",
+  "citation": "WHO Technical Report Series on Rabies, 2018"
+}

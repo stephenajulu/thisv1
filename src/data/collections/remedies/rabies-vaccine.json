@@ -1,0 +1,22 @@
+{
+  "id": "rabies-vaccine",
+  "name": "Rabies Vaccine (Active PEP)",
+  "scientificName": "Inactivated Rabies Virus Vaccine",
+  "category": "pharmaceutical",
+  "description": "An inactivated viral vaccine that stimulates active immune antibody production against the Rabies lyssavirus. Indispensable for Post-Exposure Prophylaxis (PEP) following animal bite exposures in endemic outposts.",
+  "activeConstituents": [
+    "Inactivated Rabies Antigen"
+  ],
+  "preparation": "Intramuscular injection (standard Essen 4-dose regimen: Days 0, 3, 7, and 14-28). Do not inject into gluteal region due to lower antibody response; use deltoid area in children.",
+  "safetyRating": "High Safety",
+  "safetyAlert": "Administer immediately following exposure. There is no clinical contraindication when exposed, as Rabies infection is 100% fatal once symptoms emerge.",
+  "interactions": "Concurrent immunosuppressant therapy or antimalarials like chloroquine may diminish vaccine response. Monitor closely.",
+  "demographicCautions": [
+    {
+      "populationId": "pregnant-women",
+      "type": "info",
+      "title": "PREGNANCY SAFETY PROFILE",
+      "message": "Extremely safe in pregnancy. High risk of mortality overrides any potential minor vaccine side effects. Administer immediately after bite exposure."
+    }
+  ]
+}

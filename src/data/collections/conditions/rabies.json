@@ -6,6 +6,8 @@
   "category": "Zoonotic Viral Encephalitis",
   "description": "A deadly viral zoonosis transmitted through the saliva of infected mammals, most commonly domestic and feral dogs in developing tropical regions. The virus travels along peripheral nerves to the central nervous system, causing progressive, fatal encephalitis. Once clinical symptoms (such as hydrophobia, aerophobia, and paralysis) emerge, the mortality rate is virtually 100%.",
   "symptoms": [
+    "hydrophobia",
+    "muscle-spasms",
     "vomiting",
     "fatigue"
   ],

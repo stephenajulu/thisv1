@@ -12,15 +12,24 @@ export const database = {
   remedies,
   symptoms: [
     { id: "high-fever", name: "High Fever", description: "Elevated core body temperature (>38.5°C). Primary defense indicator." },
-    { id: "joint-pain", name: "Severe Joint & Muscle Pain", description: "Excruxiating skeletal pain and muscular aches." },
+    { id: "joint-pain", name: "Severe Joint & Muscle Pain", description: "Excruciating skeletal pain and muscular aches." },
     { id: "platelet-drop", name: "Thrombocytopenia", description: "Severe depletion of blood platelets, triggering bleeding risks." },
     { id: "dehydration", name: "Fluid & Salt Depletion", description: "Dehydration marked by dry tongue, rapid pulse, and dark sunken eyes." },
-    { id: "fatigue", name: "Profound Fatigue", description: "Systemic muscle weakness, lethary, and tissue hypoxia." },
+    { id: "fatigue", name: "Profound Fatigue", description: "Systemic muscle weakness, lethargy, and tissue hypoxia." },
     { id: "jaundice", name: "Jaundice & Yellowing", description: "Yellowing of skin/eyes from liver and renal complications." },
     { id: "skin-ulcer", name: "Skin Ulcers & Lesions", description: "Debilitating cutaneous ulcers, open sores, or eschar scabs." },
     { id: "vomiting", name: "Vomiting & Nausea", description: "Severe gastric distress, vomiting, and inability to retain fluids." },
     { id: "blindness", name: "Visual Impairment / Blindness", description: "Progressive ocular damage leading to severe visual impairment or blindness." },
-    { id: "cough", name: "Cough & Dyspnea", description: "Chest distress, acute coughing, and labored breathing." }
+    { id: "cough", name: "Cough & Dyspnea", description: "Chest distress, acute coughing, and labored breathing." },
+    { id: "severe-rigors", name: "Severe Rigors & Chills", description: "Intense shivering and alternating hot/cold chills typical in cyclic parasitemia." },
+    { id: "abdominal-pain", name: "Acute Abdominal Pain", description: "Severe stomach cramps, mesenteric congestion, or intestinal spasms." },
+    { id: "watery-diarrhea", name: "Profuse Watery Diarrhea", description: "Frequent liquid bowel movements causing rapid fluid volume depletion." },
+    { id: "bloody-stool", name: "Bloody Stool (Dysentery)", description: "Stools containing blood, mucus, or cellular debris indicating invasive infection." },
+    { id: "neck-stiffness", name: "Neck Stiffness & Meningism", description: "Rigid neck flexors, nuchal rigidity, or inability to touch chin to chest." },
+    { id: "pruritus", name: "Intense Pruritus & Itching", description: "Severe cutaneous itching, burning sensations, or night scratching." },
+    { id: "photophobia", name: "Photophobia", description: "Extreme sensitivity to light causing severe ocular discomfort or avoidance." },
+    { id: "muscle-spasms", name: "Muscle Spasms & Lockjaw", description: "Painful, uncontrolled muscle contractions, jaw tightness, or rigid body arches." },
+    { id: "hydrophobia", name: "Hydrophobia & Foaming", description: "Violent laryngeal spasms when attempting to swallow fluids, plus thick foaming saliva." }
   ],
   populations: [
     {
