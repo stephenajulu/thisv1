@@ -1,11 +1,11 @@
 {
   "id": "m-37",
-  "remedyId": "permethrin",
-  "conditionId": "scabies",
-  "targetSymptomId": "pruritus",
-  "gradeQuality": "High",
-  "recommendationStrength": "Strong For",
-  "traditionalAlignment": "Unaligned",
-  "clinicalSummary": "Double-blind RCTs confirm 5% permethrin cream successfully eradicates Sarcoptes mites, leading to a dramatic resolution of intense pruritus (itching) within 1-2 weeks, although transient itch irritation may persist after mite death.",
-  "citation": "Cochrane Database of Systematic Reviews, 2018"
+  "remedyId": "papaya-seeds",
+  "conditionId": "ascariasis",
+  "targetSymptomId": "abdominal-pain",
+  "gradeQuality": "Moderate",
+  "recommendationStrength": "Conditional",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Randomized controlled pilot trials show that administering dried Carica papaya seeds mixed with honey yields a helminth clearance rate of 71.4% to 76.7% in pediatric stool specimens with zero serious adverse events, confirming strong traditional anthelmintic utility.",
+  "citation": "Okeniyi JA, et al. (2007). Effectiveness of dried Carica papaya seeds against human intestinal parasitosis: a pilot study. J Med Food."
 }

@@ -1,0 +1,16 @@
+{
+  "id": "papaya-seeds",
+  "name": "Papaya Seeds",
+  "scientificName": "Carica papaya L. (seeds)",
+  "category": "botanical",
+  "description": "Traditional anthelmintic and intestinal anti-parasitic agent. Carica papaya seeds contain active Benzyl isothiocyanate (BITC) compounds which exhibit powerful vermifuge activity, paralyzing helminths to promote rapid digestive evacuation.",
+  "activeConstituents": [
+    "Benzyl isothiocyanate",
+    "Papain",
+    "Carpaine"
+  ],
+  "preparation": "Harvest seeds from a ripe papaya. Air-dry seeds in a shaded, well-ventilated area until dark and wrinkled. Grind the dry seeds into a fine powder. Mix 1 teaspoon (approx. 4g) of dried seed powder with 1 tablespoon of raw honey. Administer orally on an empty stomach in the morning for 3 consecutive days.",
+  "safetyRating": "Moderate Caution",
+  "safetyAlert": "Avoid large doses in pregnancy (theoretical embryotoxic risks from carpaine). May cause mild temporary stomach cramps.",
+  "interactions": "Safe with standard anthelmintics. May enhance blood thinning; use caution if patient is on anticoagulants."
+}

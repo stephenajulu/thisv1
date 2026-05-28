@@ -32,7 +32,8 @@ export const database = {
     { id: "pruritus", name: "Intense Pruritus & Itching", description: "Severe cutaneous itching, burning sensations, or night scratching." },
     { id: "photophobia", name: "Photophobia", description: "Extreme sensitivity to light causing severe ocular discomfort or avoidance." },
     { id: "muscle-spasms", name: "Muscle Spasms & Lockjaw", description: "Painful, uncontrolled muscle contractions, jaw tightness, or rigid body arches." },
-    { id: "hydrophobia", name: "Hydrophobia & Foaming", description: "Violent laryngeal spasms when attempting to swallow fluids, plus thick foaming saliva." }
+    { id: "hydrophobia", name: "Hydrophobia & Foaming", description: "Violent laryngeal spasms when attempting to swallow fluids, plus thick foaming saliva." },
+    { id: "lymphadenopathy", name: "Lymphadenopathy", description: "Swollen, tender, or enlarged lymph nodes, typical in lymphatic filariasis and systemic bacterial infections." }
   ],
   populations: [
     {

@@ -7,7 +7,8 @@
   "description": "A parasitic infection transmitted by mosquitoes, leading to chronic swelling of tissues (Elephantiasis). Causes severe physical disfigurement, social stigma, and painful lymphadenitis outbreaks.",
   "symptoms": [
     "fatigue",
-    "joint-pain"
+    "joint-pain",
+    "lymphadenopathy"
   ],
   "climateLinks": [
     {

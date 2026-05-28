@@ -1,0 +1,15 @@
+{
+  "id": "diethylcarbamazine",
+  "name": "Diethylcarbamazine (DEC)",
+  "scientificName": "Diethylcarbamazine dihydrogen citrate",
+  "category": "pharmaceutical",
+  "hepatotoxic": false,
+  "description": "Synthetic organic compound used as a highly effective microfilaricidal agent. Disrupts microfilarial membrane arachidonic acid metabolism, rendering them highly susceptible to rapid phagocytosis and clearance by the host immune system.",
+  "activeConstituents": [
+    "Diethylcarbamazine"
+  ],
+  "preparation": "Oral tablets (50mg or 100mg). The standard dosage is 6 mg/kg daily in divided doses after meals for 12 days, or as a single annual dose (in combination with albendazole) during mass drug administration (MDA) programs.",
+  "safetyRating": "Moderate Caution",
+  "safetyAlert": "Can trigger severe systemic inflammatory reactions (Mazzotti reaction) in patients co-infected with Onchocerciasis (river blindness) due to rapid microfilaria clearance. Always screen for ocular microfilariae before initiating.",
+  "interactions": "Immunosuppressants may reduce therapeutic clearance rates. Acts highly synergistically when co-administered with Albendazole."
+}
