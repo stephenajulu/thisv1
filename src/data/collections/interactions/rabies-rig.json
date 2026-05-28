@@ -1,0 +1,10 @@
+{
+  "id": "rabies-rig",
+  "compounds": ["rabies-vaccine", "rabies-immunoglobulin"],
+  "severity": "caution",
+  "title": "Antibody Neutralization Warning",
+  "description": "Injecting Rabies Vaccine and passive Rabies Immunoglobulin (RIG) in the same anatomical limb or mixing them in the same syringe will cause the RIG antibodies to neutralize the vaccine's antigen, rendering active immunization ineffective.",
+  "gradeQuality": "High",
+  "clinicalAdvice": "Strictly separate administration. Infiltrate RIG directly into the bite wound, and inject the Rabies Vaccine intramuscularly in a distant deltoid muscle.",
+  "citation": "WHO Rabies Post-Exposure Guidelines, 2018"
+}

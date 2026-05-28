@@ -1,0 +1,10 @@
+{
+  "id": "neem-act",
+  "compounds": ["neem-leaves", "artemether-lumefantrine"],
+  "severity": "caution",
+  "title": "CYP3A4 Metabolic Clearance Acceleration",
+  "description": "Neem leaf extracts induce hepatic CYP3A4 enzymes, accelerating the systemic clearance of Lumefantrine and reducing active antimalarial plasma concentrations.",
+  "gradeQuality": "Moderate",
+  "clinicalAdvice": "Avoid concurrent use. Allow ACT tablets to complete their full 3-day course before resuming Neem-based therapeutic teas.",
+  "citation": "Phytotherapy Research, 2020"
+}

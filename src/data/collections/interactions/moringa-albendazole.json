@@ -1,0 +1,10 @@
+{
+  "id": "moringa-albendazole",
+  "compounds": ["moringa-leaves", "albendazole"],
+  "severity": "synergy",
+  "title": "Anemia Recovery Synergy",
+  "description": "High bioavailable Iron and Vitamin C concentrations in Moringa oleifera leaves significantly enhance systemic hemoglobin synthesis, boosting recovery from hookworm-induced microcytic anemia when paired with antihelminthics.",
+  "gradeQuality": "High",
+  "clinicalAdvice": "Highly recommended combination. Encourage concurrent consumption of Moringa soups or powders during and after deworming therapies.",
+  "citation": "Journal of Ethnopharmacology, 2021"
+}

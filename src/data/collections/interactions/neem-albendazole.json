@@ -1,0 +1,10 @@
+{
+  "id": "neem-albendazole",
+  "compounds": ["neem-leaves", "albendazole"],
+  "severity": "contraindicated",
+  "title": "Combined Hepatic Clearance Stress",
+  "description": "Both high-dose Neem leaf preparations and Albendazole exert severe clearance stress on hepatic metabolic pathways. Concurrent administration multiplies risks of drug-induced liver injury (DILI) and transient hepatotoxicity.",
+  "gradeQuality": "Low",
+  "clinicalAdvice": "Strictly contraindicated at the bedside. Allow a minimum of 7 days between the completion of Albendazole deworming courses and the initiation of Neem therapies.",
+  "citation": "Clinical Toxicology Database, 2022"
+}

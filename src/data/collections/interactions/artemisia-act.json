@@ -1,0 +1,10 @@
+{
+  "id": "artemisia-act",
+  "compounds": ["artemisia-annua", "artemether-lumefantrine"],
+  "severity": "caution",
+  "title": "Sub-Therapeutic Resistance Warning",
+  "description": "Drinking home-brewed traditional Artemisia annua tea concurrently with standard pharmaceutical ACT tablets exposes Plasmodium strains to fluctuating, sub-therapeutic artemisinin volumes, highly accelerating the risk of drug-resistant mutations.",
+  "gradeQuality": "High",
+  "clinicalAdvice": "Do not combine. Rely exclusively on standard pharmaceutical ACT tablet dosage schedules for active Malaria clearing. Save Artemisia teas for non-overlapping recovery stages.",
+  "citation": "Lancet Infectious Diseases, 2021"
+}

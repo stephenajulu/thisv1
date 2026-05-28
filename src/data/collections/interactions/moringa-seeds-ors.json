@@ -1,0 +1,10 @@
+{
+  "id": "moringa-seeds-ors",
+  "compounds": ["moringa-seeds", "oral-rehydration-salts"],
+  "severity": "synergy",
+  "title": "Sterile Rehydration Synergy",
+  "description": "Preparing ORS solution using well-water clarified and pre-sanitized with crushed Moringa seeds eliminates >90% of bacteria, preventing secondary fecal contamination and accelerates intestinal mucosal healing.",
+  "gradeQuality": "High",
+  "clinicalAdvice": "Highly recommended in emergency outbreaks where sterile boiling water is unavailable. Flocculate and decant well-water with Moringa seeds first, then mix ORS.",
+  "citation": "World Journal of Microbiology, 2019"
+}

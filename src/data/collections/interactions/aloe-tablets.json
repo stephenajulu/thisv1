@@ -1,0 +1,10 @@
+{
+  "id": "aloe-tablets",
+  "compounds": ["aloe-vera", "artemether-lumefantrine"],
+  "severity": "caution",
+  "title": "Hypermotility Absorption Block",
+  "description": "Aloe vera gel contains anthraquinones that dramatically accelerate intestinal peristalsis and bowel transit times, flushing oral medications out of the GI tract before complete systemic absorption can occur.",
+  "gradeQuality": "Moderate",
+  "clinicalAdvice": "Stagger administration times. Instruct patients to take modern oral tablet regimens at least 2 hours before or after drinking Aloe vera laxative juices.",
+  "citation": "Gastroenterology Research, 2019"
+}
