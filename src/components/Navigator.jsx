@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Search, Activity, Sprout, AlertCircle, ChevronRight } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Search, Activity, Sprout, AlertCircle, ChevronRight, Loader2 } from 'lucide-react';
 import { database } from '../data/database';
 
 // Fast client-side Levenshtein Distance for fuzzy matching spelling errors
@@ -33,6 +33,8 @@ const getLevenshteinDistance = (a, b) => {
 export default function Navigator({ onNavigate }) {
   const [query, setQuery] = useState('');
   const [activeTab, setActiveTab] = useState('all');
+  const [visibleCount, setVisibleCount] = useState(12);
+  const sentinelRef = useRef(null);
 
   const cleanStr = (str) => (str || '').toLowerCase().trim();
   const searchTerms = cleanStr(query).split(' ').filter(Boolean);
@@ -58,6 +60,11 @@ export default function Navigator({ onNavigate }) {
       });
     });
   };
+
+  // Reset infinite scroll count on query search or tab toggle
+  useEffect(() => {
+    setVisibleCount(12);
+  }, [query, activeTab]);
 
   // 1. Filter Conditions
   const filteredConditions = database.conditions.filter(c => 
@@ -85,6 +92,43 @@ export default function Navigator({ onNavigate }) {
 
   const totalResults = filteredConditions.length + filteredRemedies.length + filteredSymptoms.length;
 
+  // compile all unified matches based on the toggled category tab
+  const allMatches = [];
+  if (activeTab === 'all' || activeTab === 'conditions') {
+    filteredConditions.forEach(c => allMatches.push({ type: 'condition', data: c }));
+  }
+  if (activeTab === 'all' || activeTab === 'remedies') {
+    filteredRemedies.forEach(r => allMatches.push({ type: 'remedy', data: r }));
+  }
+  if (activeTab === 'all' || activeTab === 'symptoms') {
+    filteredSymptoms.forEach(s => allMatches.push({ type: 'symptom', data: s }));
+  }
+
+  // Sort them alphabetically to provide clinical stability
+  allMatches.sort((a, b) => a.data.name.localeCompare(b.data.name));
+
+  // Extract the sliced visible subset
+  const displayedMatches = allMatches.slice(0, visibleCount);
+
+  // IntersectionObserver high-performance batch loader triggers on scroll sentinel
+  useEffect(() => {
+    const currentSentinel = sentinelRef.current;
+    if (!currentSentinel) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        setVisibleCount(prev => Math.min(prev + 12, allMatches.length));
+      }
+    }, {
+      rootMargin: '200px', // Load cards 200px early before the scroll hits the bottom!
+    });
+
+    observer.observe(currentSentinel);
+    return () => {
+      if (currentSentinel) observer.unobserve(currentSentinel);
+    };
+  }, [sentinelRef.current, allMatches.length]);
+
   return (
     <div className="animate-fade-in space-y-6">
       {/* Visual Welcome Hero */}
@@ -104,7 +148,7 @@ export default function Navigator({ onNavigate }) {
         </div>
         <input
           type="text"
-          placeholder="Search (e.g. quinine, quiniformim, bilharza, hookworm, neem)..."
+          placeholder="Search (e.g. malaria, scabies, neem, permethrin, rabies, ivermectin)..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           className="w-full pl-12 pr-4 py-3 bg-white border border-[hsl(var(--primary-green),0.1)] rounded-xl shadow-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition-all text-slate-800 placeholder-slate-400 font-medium text-sm md:text-base"
@@ -132,7 +176,7 @@ export default function Navigator({ onNavigate }) {
             onClick={() => setActiveTab(tab.id)}
             className={`px-4 py-2 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm border ${
               activeTab === tab.id
-                ? 'bg-[hsl(var(--primary-green))] text-white border-[hsl(var(--primary-green))]'
+                ? 'bg-[hsl(var(--primary-green))] text-white border-[hsl(var(--primary-green))] shadow'
                 : 'bg-white text-emerald-800 border-[hsl(var(--primary-green),0.1)] hover:bg-emerald-50'
             }`}
           >
@@ -142,116 +186,139 @@ export default function Navigator({ onNavigate }) {
         ))}
       </div>
 
-      {/* Grid Results */}
+      {/* Grid Results with Unified Infinite Scroll */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
-        {/* Conditions Section */}
-        {(activeTab === 'all' || activeTab === 'conditions') && filteredConditions.map(c => (
-          <div 
-            key={c.id} 
-            onClick={() => onNavigate('condition', c.id)}
-            className="glass-panel p-5 cursor-pointer flex flex-col justify-between transition-all group animate-fade-in border-l-4 border-l-emerald-800 hover:-translate-y-0.5"
-          >
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] uppercase font-extrabold tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-100">
-                  {c.category}
-                </span>
-                <Activity className="h-4 w-4 text-emerald-700" />
-              </div>
-              <h3 className="text-lg font-bold group-hover:text-emerald-600 transition-colors mb-1">
-                {c.name}
-              </h3>
-              <p className="text-xs italic text-slate-400 mb-3 block truncate">
-                {c.scientificName}
-              </p>
-              <p className="text-xs text-slate-500 line-clamp-3 mb-4">
-                {c.description}
-              </p>
-            </div>
-            
-            <div className="flex items-center justify-between pt-3 border-t border-slate-100/50">
-              <span className="text-[10px] font-semibold text-slate-400">
-                {c.symptoms.length} symptoms linked
-              </span>
-              <span className="text-xs font-bold text-emerald-700 flex items-center gap-0.5 group-hover:gap-1 transition-all">
-                Details <ChevronRight className="h-3.5 w-3.5" />
-              </span>
-            </div>
-          </div>
-        ))}
-
-        {/* Remedies Section */}
-        {(activeTab === 'all' || activeTab === 'remedies') && filteredRemedies.map(r => (
-          <div 
-            key={r.id} 
-            onClick={() => onNavigate('remedy', r.id)}
-            className="glass-panel p-5 cursor-pointer flex flex-col justify-between transition-all group animate-fade-in border-l-4 border-l-sky-500 hover:-translate-y-0.5"
-          >
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] uppercase font-extrabold tracking-wider px-2 py-0.5 rounded bg-sky-50 text-sky-800 border border-sky-100">
-                  {r.category === 'botanical' ? 'Botanical' : 'Pharmaceutical'}
-                </span>
-                <Sprout className="h-4 w-4 text-sky-500" />
-              </div>
-              <h3 className="text-lg font-bold group-hover:text-sky-600 transition-colors mb-1">
-                {r.name}
-              </h3>
-              <p className="text-xs italic text-slate-400 mb-3 block truncate">
-                {r.scientificName}
-              </p>
-              <p className="text-xs text-slate-500 line-clamp-3 mb-4">
-                {r.description}
-              </p>
-            </div>
-            
-            <div className="flex items-center justify-between pt-3 border-t border-slate-100/50">
-              <div className="flex flex-wrap gap-1">
-                {r.activeConstituents.slice(0, 2).map((item, idx) => (
-                  <span key={idx} className="text-[9px] bg-slate-100 px-1.5 py-0.5 rounded text-slate-500 font-medium">
-                    {item}
+        {displayedMatches.map(match => {
+          if (match.type === 'condition') {
+            const c = match.data;
+            return (
+              <div 
+                key={`cond-${c.id}`} 
+                onClick={() => onNavigate('condition', c.id)}
+                className="glass-panel p-5 cursor-pointer flex flex-col justify-between transition-all group animate-scale-up border-l-4 border-l-emerald-800 hover:-translate-y-0.5"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[10px] uppercase font-extrabold tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-100">
+                      {c.category}
+                    </span>
+                    <Activity className="h-4 w-4 text-emerald-700 animate-pulse" />
+                  </div>
+                  <h3 className="text-lg font-bold group-hover:text-emerald-600 transition-colors mb-1">
+                    {c.name}
+                  </h3>
+                  <p className="text-xs italic text-slate-400 mb-3 block truncate">
+                    {c.scientificName}
+                  </p>
+                  <p className="text-xs text-slate-500 line-clamp-3 mb-4">
+                    {c.description}
+                  </p>
+                </div>
+                
+                <div className="flex items-center justify-between pt-3 border-t border-slate-100/50">
+                  <span className="text-[10px] font-semibold text-slate-400">
+                    {c.symptoms.length} symptoms linked
                   </span>
-                ))}
+                  <span className="text-xs font-bold text-emerald-700 flex items-center gap-0.5 group-hover:gap-1 transition-all">
+                    Details <ChevronRight className="h-3.5 w-3.5" />
+                  </span>
+                </div>
               </div>
-              <span className="text-xs font-bold text-sky-700 flex items-center gap-0.5 group-hover:gap-1 transition-all">
-                Details <ChevronRight className="h-3.5 w-3.5" />
-              </span>
-            </div>
-          </div>
-        ))}
+            );
+          }
 
-        {/* Symptoms Section */}
-        {(activeTab === 'all' || activeTab === 'symptoms') && filteredSymptoms.map(s => (
-          <div 
-            key={s.id}
-            className="glass-panel p-5 flex flex-col justify-between transition-all group animate-fade-in border-l-4 border-l-amber-500"
-          >
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] uppercase font-extrabold tracking-wider px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-100">
-                  Symptom Node
-                </span>
-                <AlertCircle className="h-4 w-4 text-amber-500" />
+          if (match.type === 'remedy') {
+            const r = match.data;
+            return (
+              <div 
+                key={`rem-${r.id}`} 
+                onClick={() => onNavigate('remedy', r.id)}
+                className="glass-panel p-5 cursor-pointer flex flex-col justify-between transition-all group animate-scale-up border-l-4 border-l-sky-500 hover:-translate-y-0.5"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[10px] uppercase font-extrabold tracking-wider px-2 py-0.5 rounded bg-sky-50 text-sky-800 border border-sky-100">
+                      {r.category === 'botanical' ? 'Botanical' : 'Pharmaceutical'}
+                    </span>
+                    <Sprout className="h-4 w-4 text-sky-500 group-hover:scale-110 transition-transform" />
+                  </div>
+                  <h3 className="text-lg font-bold group-hover:text-sky-600 transition-colors mb-1">
+                    {r.name}
+                  </h3>
+                  <p className="text-xs italic text-slate-400 mb-3 block truncate">
+                    {r.scientificName}
+                  </p>
+                  <p className="text-xs text-slate-500 line-clamp-3 mb-4">
+                    {r.description}
+                  </p>
+                </div>
+                
+                <div className="flex items-center justify-between pt-3 border-t border-slate-100/50">
+                  <div className="flex flex-wrap gap-1">
+                    {r.activeConstituents.slice(0, 2).map((item, idx) => (
+                      <span key={idx} className="text-[9px] bg-slate-100 px-1.5 py-0.5 rounded text-slate-500 font-medium">
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                  <span className="text-xs font-bold text-sky-700 flex items-center gap-0.5 group-hover:gap-1 transition-all">
+                    Details <ChevronRight className="h-3.5 w-3.5" />
+                  </span>
+                </div>
               </div>
-              <h3 className="text-lg font-bold mb-2">
-                {s.name}
-              </h3>
-              <p className="text-xs text-slate-500 line-clamp-3 mb-4">
-                {s.description}
-              </p>
-            </div>
-            
-            <div className="flex items-center justify-between pt-3 border-t border-slate-100/50">
-              <span className="text-[10px] font-semibold text-slate-400">
-                Relational entity
-              </span>
-              <span className="text-[10px] font-extrabold uppercase text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-100">
-                Primary Check
-              </span>
-            </div>
-          </div>
-        ))}
+            );
+          }
+
+          if (match.type === 'symptom') {
+            const s = match.data;
+            return (
+              <div 
+                key={`sym-${s.id}`}
+                className="glass-panel p-5 flex flex-col justify-between transition-all group animate-scale-up border-l-4 border-l-amber-500"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[10px] uppercase font-extrabold tracking-wider px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-100">
+                      Symptom Node
+                    </span>
+                    <AlertCircle className="h-4 w-4 text-amber-500 group-hover:rotate-12 transition-transform" />
+                  </div>
+                  <h3 className="text-lg font-bold mb-2">
+                    {s.name}
+                  </h3>
+                  <p className="text-xs text-slate-500 line-clamp-3 mb-4">
+                    {s.description}
+                  </p>
+                </div>
+                
+                <div className="flex items-center justify-between pt-3 border-t border-slate-100/50">
+                  <span className="text-[10px] font-semibold text-slate-400">
+                    Relational entity
+                  </span>
+                  <span className="text-[10px] font-extrabold uppercase text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-100">
+                    Primary Check
+                  </span>
+                </div>
+              </div>
+            );
+          }
+
+          return null;
+        })}
       </div>
+
+      {/* Infinite Scroll Loader Sentinel */}
+      {visibleCount < allMatches.length && (
+        <div 
+          ref={sentinelRef} 
+          className="w-full py-6 flex items-center justify-center gap-2.5 text-slate-500 border border-emerald-100/50 bg-emerald-50/20 rounded-2xl max-w-sm mx-auto shadow-inner animate-pulse my-4"
+        >
+          <Loader2 className="h-4 w-4 text-emerald-800 animate-spin" />
+          <span className="text-[10px] font-black uppercase tracking-wider text-emerald-955">
+            Scanning remaining databases...
+          </span>
+        </div>
+      )}
 
       {/* Zero State */}
       {totalResults === 0 && (
@@ -259,7 +326,7 @@ export default function Navigator({ onNavigate }) {
           <AlertCircle className="h-10 w-10 text-rose-500 mx-auto mb-3" />
           <h4 className="font-bold text-lg text-slate-800">No results found</h4>
           <p className="text-xs text-slate-500 mt-1">
-            We couldn't find matches for "{query}". Try searching "quiniformim", "bilharza", or "hookworm".
+            We couldn't find matches for "{query}". Try searching "scabies", "neem seed oil", or "rabies".
           </p>
         </div>
       )}

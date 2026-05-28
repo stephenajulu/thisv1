@@ -1,0 +1,11 @@
+{
+  "id": "m-35",
+  "remedyId": "neem-seed-oil",
+  "conditionId": "scabies",
+  "targetSymptomId": "skin-ulcer",
+  "gradeQuality": "Moderate",
+  "recommendationStrength": "Conditional For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Clinical evaluations demonstrate a 10% dilution of cold-pressed neem seed oil combined with turmeric shows high acaricidal activity in clearing localized scabies lesions, serving as a reliable traditional alternative where synthetic creams are unavailable.",
+  "citation": "Journal of Ethnopharmacology, 2021"
+}

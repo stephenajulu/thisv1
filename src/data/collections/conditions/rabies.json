@@ -1,0 +1,32 @@
+{
+  "id": "rabies",
+  "name": "Rabies Encephalitis",
+  "scientificName": "Lyssavirus encephalitis",
+  "icd11": "1D60",
+  "category": "Zoonotic Viral Encephalitis",
+  "description": "A deadly viral zoonosis transmitted through the saliva of infected mammals, most commonly domestic and feral dogs in developing tropical regions. The virus travels along peripheral nerves to the central nervous system, causing progressive, fatal encephalitis. Once clinical symptoms (such as hydrophobia, aerophobia, and paralysis) emerge, the mortality rate is virtually 100%.",
+  "symptoms": [
+    "vomiting",
+    "fatigue"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Dry Season Drought Wandering",
+      "impact": "Severe water droughts drive feral dog populations to wander into human agricultural settlements, spiking dog bite exposures."
+    }
+  ],
+  "prevention": [
+    "Mass pre-exposure vaccination of domestic dog populations",
+    "Post-Exposure Prophylaxis (PEP) immediately following animal bite",
+    "Vigorous soap-and-water washing of the bite wound for at least 15 minutes"
+  ],
+  "climateThreatSchema": {
+    "minTemp": 15,
+    "maxTemp": 40,
+    "minHumidity": 10,
+    "minRainfall": 0,
+    "maxRainfall": 250,
+    "advisory": "RABIES BITING VECTOR WARNING: Report any unprovoked dog bites immediately to health boards and stock Rabies Vaccine and Rabies Immunoglobulin (HRIG)."
+  },
+  "triageAdvisory": "Clinical emergency. If an animal bite occurs, wash the wound vigorously for 15 minutes with running water and soap. Administer Post-Exposure Prophylaxis (PEP) vaccine and Rabies Immunoglobulin (RIG) immediately. Do not suture the wound unless absolutely necessary."
+}

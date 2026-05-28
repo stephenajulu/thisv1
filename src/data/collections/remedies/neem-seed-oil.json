@@ -1,0 +1,17 @@
+{
+  "id": "neem-seed-oil",
+  "name": "Neem Seed Oil",
+  "scientificName": "Azadirachta indica seed extract",
+  "category": "botanical",
+  "description": "An organic cold-pressed oil extracted from the kernels of the Azadirachta indica tree. Rich in Azadirachtin, Salannin, and Nimbin, it acts as a potent botanical acaricide, anti-inflammatory, and insect growth regulator that disrupts mite reproduction, feeding, and shell development.",
+  "activeConstituents": [
+    "Azadirachtin",
+    "Salannin",
+    "Nimbin",
+    "Oleic Acid"
+  ],
+  "preparation": "Mix cold-pressed neem seed oil with a carrier oil (such as coconut or sesame oil) to a 10% dilution. Apply directly to affected skin surfaces, focus on rashes and webs. Leave on for 4-6 hours before bathing. Repeat daily for 7 days.",
+  "safetyRating": "Caution: Pediatric and Oral Contrainidcated",
+  "safetyAlert": "Oral ingestion is highly toxic, inducing encephalopathy and metabolic acidosis, especially in infants. Apply topically only. Contraindicated on open infected wounds.",
+  "interactions": "None documented topically. Avoid using concurrently with other strong synthetic skin treatments to prevent localized contact dermatitis."
+}

@@ -1,0 +1,11 @@
+{
+  "id": "m-36",
+  "remedyId": "tetanus-immunoglobulin",
+  "conditionId": "tetanus",
+  "targetSymptomId": "joint-pain",
+  "gradeQuality": "High",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "Unaligned",
+  "clinicalSummary": "Passive immunization with human TIG immediately neutralizes unbound systemic tetanospasmin in blood tissues. Standard critical emergency protocol for contaminated soil wounds in un-immunized individuals.",
+  "citation": "CDC Epidemiology and Prevention of Vaccine-Preventable Diseases, 2022"
+}

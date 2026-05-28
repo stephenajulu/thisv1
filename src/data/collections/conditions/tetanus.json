@@ -1,0 +1,32 @@
+{
+  "id": "tetanus",
+  "name": "Tetanus (Lockjaw)",
+  "scientificName": "Clostridium tetani infection",
+  "icd11": "1C40",
+  "category": "Bacterial Nerve Infection",
+  "description": "An acute, often fatal bacterial disease caused by Clostridium tetani spores contaminating puncture wounds, deep cuts, or the umbilical stump in unhygienic deliveries. The bacteria release tetanospasmin, a potent neurotoxin that blocks inhibitory neurotransmitters, leading to severe lockjaw, neck stiffness, and painful generalized muscle spasms.",
+  "symptoms": [
+    "joint-pain",
+    "fatigue"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Agricultural Spores in Floodings",
+      "impact": "Flooding events distribute tetanus spores from farm soils into wider walking environments, rising infection risks for barefoot rural populations."
+    }
+  ],
+  "prevention": [
+    "Routine childhood immunization series with Tetanus Toxoid (TT)",
+    "Hygienic umbilical cord care and clean deliveries",
+    "Immediate surgical debridement and cleaning of contaminated soil wounds"
+  ],
+  "climateThreatSchema": {
+    "minTemp": 20,
+    "maxTemp": 42,
+    "minHumidity": 30,
+    "minRainfall": 50,
+    "maxRainfall": 300,
+    "advisory": "TETANUS ALERT: Initiate immediate wound cleaning with hydrogen peroxide or sterile saline at outposts for all agricultural puncture injuries."
+  },
+  "triageAdvisory": "A clinical emergency marked by masseter lockjaw or painful opisthotonos spasms. Administer Tetanus Immunoglobulin (TIG) and Tetanus Toxoid booster immediately. Keep patient in a dark, quiet room to prevent spasm-inducing sensory overloads."
+}

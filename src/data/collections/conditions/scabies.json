@@ -1,0 +1,32 @@
+{
+  "id": "scabies",
+  "name": "Scabies",
+  "scientificName": "Sarcoptes scabiei infestation",
+  "icd11": "1E30",
+  "category": "Neglected Tropical Disease (NTD)",
+  "description": "A highly contagious, parasitic skin infestation caused by the microscopic Sarcoptes scabiei var. hominis mite. Causes severe generalized pruritus (itching) with characteristic burrows, papules, and high risk of secondary bacterial pyoderma or cellulitis in crowded conditions.",
+  "symptoms": [
+    "skin-ulcer",
+    "fatigue"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Dry Season Crowding",
+      "impact": "Increased indoor close contact in communities experiencing water scarcity during droughts spikes transmission."
+    }
+  ],
+  "prevention": [
+    "Avoiding close personal skin-to-skin contact with infected cases",
+    "Hot laundering of bedding, towels, and clothing used in the last 72 hours",
+    "Mass Drug Administration (MDA) in highly endemic remote outposts"
+  ],
+  "climateThreatSchema": {
+    "minTemp": 18,
+    "maxTemp": 38,
+    "minHumidity": 20,
+    "minRainfall": 0,
+    "maxRainfall": 400,
+    "advisory": "SCABIES OUTPOST WATCH: Monitor children in close school quarters for nocturnal pruritus and visual papules between finger webs."
+  },
+  "triageAdvisory": "Clinical diagnosis based on severe nocturnal itching and interdigital burrows. Treatment of all household and close contacts concurrently is mandatory to prevent cyclical re-infestation."
+}

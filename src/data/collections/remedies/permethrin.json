@@ -1,0 +1,14 @@
+{
+  "id": "permethrin",
+  "name": "Permethrin (5% Cream)",
+  "scientificName": "Synthetic pyrethroid acaricide",
+  "category": "pharmaceutical",
+  "description": "A synthetic pyrethroid compound acting as a powerful neurotoxic acaricide. It disrupts nerve cell membranes of Sarcoptes scabiei mites, causing paralysis and death. Globally recognized as the first-line gold standard chemical treatment for scabies infestations.",
+  "activeConstituents": [
+    "Permethrin"
+  ],
+  "preparation": "Apply cream thoroughly from the neck down to the soles of the feet, paying special attention to interdigital webs, wrists, armpits, and groin. Wash off completely after 8 to 14 hours. Repeat application in 7 days to clear newly hatched eggs.",
+  "safetyRating": "Generally Safe (Pediatric Approved &gt;2 Months)",
+  "safetyAlert": "Mild, transient burning or stinging may occur. Safe for pregnant and lactating women, and pediatric patients older than 2 months.",
+  "interactions": "None documented. Avoid concurrent use with corticosteroids to prevent masking skin reactions or exacerbating irritation."
+}

@@ -1,0 +1,11 @@
+{
+  "id": "m-34",
+  "remedyId": "permethrin",
+  "conditionId": "scabies",
+  "targetSymptomId": "skin-ulcer",
+  "gradeQuality": "High",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "Unaligned",
+  "clinicalSummary": "Systematic Cochrane reviews of randomized trials prove a single overnight topical application of 5% Permethrin cream yields a >90% clinical cure rate, outperforming oral ivermectin for primary uncomplicated scabies clearance.",
+  "citation": "Cochrane Database of Systematic Reviews, 2018"
+}

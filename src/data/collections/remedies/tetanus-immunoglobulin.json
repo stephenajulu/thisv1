@@ -1,0 +1,14 @@
+{
+  "id": "tetanus-immunoglobulin",
+  "name": "Tetanus Immunoglobulin (TIG)",
+  "scientificName": "Human anti-tetanus antibody",
+  "category": "pharmaceutical",
+  "description": "A sterile solution of human globulins containing high-titer antibodies specific to tetanospasmin (the Clostridium tetani toxin). Administered to provide immediate passive immunity and neutralize circulating unbound toxins in patients with tetanus-prone puncture wounds.",
+  "activeConstituents": [
+    "Human anti-tetanus IgG antibodies"
+  ],
+  "preparation": "Administer intramuscularly (IM) as soon as possible after puncture wounds. Standard therapeutic dose is 3,000 to 6,000 units injected into muscle tissue, with separate syringes for different body sites if high volume.",
+  "safetyRating": "Clinical Supervision Mandatory",
+  "safetyAlert": "Contraindicated in patients with severe IgA deficiency. Do not administer intravenously (IV) due to high anaphylaxis risks.",
+  "interactions": "May impair the active immune response of live virus vaccines (such as MMR and Varicella) for up to 3 months. Do not mix in the same syringe with other vaccines or drugs."
+}
