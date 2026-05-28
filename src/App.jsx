@@ -9,6 +9,7 @@ import WeatherThreatForecast from './components/WeatherThreatForecast';
 import { ConditionPage, RemedyPage } from './components/PageTemplates';
 import { isProUnlocked, clearProMembership } from './utils/membership';
 import ProPaywall from './components/ProPaywall';
+import VisualAtlas from './components/VisualAtlas';
 
 export default function App() {
   const [activePage, setActivePage] = useState('dashboard');
@@ -55,7 +56,7 @@ export default function App() {
       } else if (params[0] === 'remedy' && params[1]) {
         setActivePage('remedy');
         setActiveEntityId(params[1]);
-      } else if (['matrix', 'safety', 'dosage', 'weather', 'clinician'].includes(params[0])) {
+      } else if (['matrix', 'safety', 'dosage', 'weather', 'atlas', 'clinician'].includes(params[0])) {
         setActivePage(params[0]);
         setActiveEntityId(null);
       } else {
@@ -164,6 +165,7 @@ export default function App() {
                       {[
                         { id: 'dosage', label: 'Dosage Calculator', icon: Calculator },
                         { id: 'weather', label: 'Weather Forecast', icon: CloudRain },
+                        { id: 'atlas', label: 'Visual Medical Atlas', icon: Layers },
                         { id: 'clinician', label: 'Clinician Quick-Ref', icon: Stethoscope }
                       ].map(sub => (
                         <button
@@ -263,6 +265,10 @@ export default function App() {
 
           {activePage === 'weather' && (
             proUnlocked ? <WeatherThreatForecast /> : <ProPaywall onUnlockSuccess={handleUnlockSuccess} />
+          )}
+
+          {activePage === 'atlas' && (
+            proUnlocked ? <VisualAtlas /> : <ProPaywall onUnlockSuccess={handleUnlockSuccess} />
           )}
 
           {activePage === 'clinician' && (

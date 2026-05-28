@@ -206,3 +206,100 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+/* =============================================================
+   VISUAL MEDICAL ATLAS INTERACTIVE TRANSITIONS
+   ============================================================= */
+svg rect, svg path, svg circle, svg ellipse, svg g {
+  transform-origin: center;
+  transform-box: fill-box;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Scabies eggs - interactive hover dial */
+svg circle[fill="#ffedd5"]:hover {
+  transform: scale(1.35);
+  fill: #ffe4e6 !important;
+  stroke: #e11d48 !important;
+  filter: drop-shadow(0 0 5px rgba(225, 29, 72, 0.6));
+  cursor: pointer;
+}
+
+/* Scabies Burrowing Mite - interactive bedside detail zoom */
+svg g[transform*="scale(0.6)"]:hover {
+  transform: scale(0.68) rotate(3deg) !important;
+  filter: drop-shadow(0 6px 12px rgba(71, 85, 105, 0.4));
+  cursor: pointer;
+}
+
+/* Buruli Cavern undermined gap highlight */
+svg path[fill="#7f1d1d"][opacity="0.1"]:hover {
+  opacity: 0.25 !important;
+  fill: #991b1b !important;
+  cursor: pointer;
+}
+
+/* Buruli necrotic slough yellow pulse */
+svg ellipse[fill="#fef08a"]:hover {
+  transform: scale(1.05);
+  fill: #fef9c3 !important;
+  filter: drop-shadow(0 0 8px rgba(234, 179, 8, 0.6));
+  cursor: pointer;
+}
+
+/* Dengue pinpoint petechiae spots - micro expand */
+svg circle[fill="#be123c"]:hover, 
+svg circle[fill="#e11d48"]:hover {
+  transform: scale(2.2);
+  fill: #ef4444 !important;
+  filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.8));
+  cursor: pointer;
+}
+
+/* Dengue Tourniquet Grid boundary hover */
+svg rect[stroke="#1e3a8a"]:hover {
+  stroke: #2563eb !important;
+  stroke-width: 3.5px !important;
+  filter: drop-shadow(0 0 4px rgba(37, 99, 235, 0.2));
+  cursor: pointer;
+}
+
+/* Romana's swollen eyelid outline and edema volume */
+svg path[fill="#f43f5e"][opacity="0.25"]:hover {
+  opacity: 0.45 !important;
+  fill: #e11d48 !important;
+  cursor: pointer;
+}
+
+/* Romana's bite entry lesion (Chagoma) hotspot */
+svg circle[fill="#e11d48"]:hover {
+  transform: scale(1.4);
+  filter: drop-shadow(0 0 6px rgba(225, 29, 72, 0.8));
+  cursor: pointer;
+}
+
+/* Botanical: Healing Species compound leaflets (emerald glow) */
+svg ellipse[fill="#3f6212"]:hover, 
+svg path[fill="#3f6212"]:hover {
+  fill: #166534 !important;
+  transform: scale(1.08) rotate(-1deg);
+  filter: drop-shadow(0 3px 6px rgba(22, 101, 52, 0.5));
+  cursor: pointer;
+}
+
+/* Botanical: Toxic Look-Alike leaflets (sky-blue warning highlight) */
+svg ellipse[fill="#0369a1"]:hover, 
+svg path[fill="#0369a1"]:hover {
+  fill: #075985 !important;
+  transform: scale(1.08) rotate(1deg);
+  filter: drop-shadow(0 3px 6px rgba(7, 89, 133, 0.5));
+  cursor: pointer;
+}
+
+/* Aloe protective spiny leaf spikes highlight */
+svg path[stroke="#a3e635"]:hover {
+  stroke: #84cc16 !important;
+  stroke-width: 3px !important;
+  cursor: pointer;
+}
+
+
