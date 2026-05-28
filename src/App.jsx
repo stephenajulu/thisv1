@@ -7,12 +7,36 @@ import ClinicianReference from './components/ClinicianReference';
 import DosageCalculator from './components/DosageCalculator';
 import WeatherThreatForecast from './components/WeatherThreatForecast';
 import { ConditionPage, RemedyPage } from './components/PageTemplates';
+import { isProUnlocked, clearProMembership } from './utils/membership';
+import ProPaywall from './components/ProPaywall';
 
 export default function App() {
   const [activePage, setActivePage] = useState('dashboard');
   const [activeEntityId, setActiveEntityId] = useState(null);
   const [clinicianMode, setClinicianMode] = useState(false);
   const [showToolkit, setShowToolkit] = useState(false);
+  const [proUnlocked, setProUnlocked] = useState(() => isProUnlocked());
+
+  const getProBadgeText = () => {
+    if (localStorage.getItem('this_pro_waiver') === 'active') {
+      const gpsLog = localStorage.getItem('this_pro_waiver_gps');
+      if (gpsLog) {
+        try {
+          const log = JSON.parse(gpsLog);
+          if (log.keyRedeemed) return `NGO (${log.keyRedeemed})`;
+        } catch (e) {}
+      }
+      return 'Waiver Active';
+    }
+    if (localStorage.getItem('this_pro_paid') === 'active') {
+      return 'BOGO Licensed';
+    }
+    return 'PRO Active';
+  };
+
+  const handleUnlockSuccess = () => {
+    setProUnlocked(true);
+  };
 
   // Sync browser back-button history and dynamic shareable URLs
   useEffect(() => {
@@ -162,30 +186,59 @@ export default function App() {
               </div>
             </nav>
 
-            {/* Clinician Mode Switcher */}
-            <div className="flex items-center gap-2.5 border-l border-slate-200 pl-4">
-              <span className={`text-[10px] font-extrabold uppercase tracking-wider ${clinicianMode ? 'text-emerald-800' : 'text-slate-400'}`}>
-                Clinician Mode
-              </span>
-              <button 
-                onClick={() => {
-                  setClinicianMode(!clinicianMode);
-                  if (!clinicianMode) {
-                    navigateTo('clinician');
-                  } else {
-                    navigateTo('dashboard');
-                  }
-                }}
-                className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out outline-none ${
-                  clinicianMode ? 'bg-emerald-600' : 'bg-slate-300'
-                }`}
-              >
-                <span 
-                  className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
-                    clinicianMode ? 'translate-x-5' : 'translate-x-0'
+            {/* Switcher & Membership Indicators */}
+            <div className="flex flex-wrap items-center gap-4 border-t lg:border-t-0 lg:border-l border-slate-200 pt-3 lg:pt-0 pl-0 lg:pl-4">
+              {/* Clinician Mode Switcher */}
+              <div className="flex items-center gap-2">
+                <span className={`text-[10px] font-extrabold uppercase tracking-wider ${clinicianMode ? 'text-emerald-800' : 'text-slate-400'}`}>
+                  Clinician Mode
+                </span>
+                <button 
+                  onClick={() => {
+                    setClinicianMode(!clinicianMode);
+                    if (!clinicianMode) {
+                      navigateTo('clinician');
+                    } else {
+                      navigateTo('dashboard');
+                    }
+                  }}
+                  className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out outline-none ${
+                    clinicianMode ? 'bg-emerald-600' : 'bg-slate-300'
                   }`}
-                />
-              </button>
+                >
+                  <span 
+                    className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+                      clinicianMode ? 'translate-x-5' : 'translate-x-0'
+                    }`}
+                  />
+                </button>
+              </div>
+
+              {/* Membership Status Badge */}
+              <div className="flex items-center gap-2 border-l border-slate-250 pl-3">
+                {proUnlocked ? (
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[9px] uppercase font-black tracking-wider px-2 py-0.5 rounded-full bg-amber-500 text-white flex items-center shadow-sm border border-amber-600">
+                      ★ {getProBadgeText()}
+                    </span>
+                    <button 
+                      onClick={() => {
+                        clearProMembership();
+                        setProUnlocked(false);
+                        navigateTo('dashboard');
+                      }}
+                      className="text-[9px] text-slate-400 hover:text-rose-600 hover:underline cursor-pointer transition-colors"
+                      title="Reset PRO status to test the Paywall/GPS waiver flow again"
+                    >
+                      Reset
+                    </button>
+                  </div>
+                ) : (
+                  <span className="text-[9px] uppercase font-extrabold tracking-wider px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 border border-slate-200 shadow-inner">
+                    Free Version
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         </header>
@@ -205,15 +258,15 @@ export default function App() {
           )}
 
           {activePage === 'dosage' && (
-            <DosageCalculator />
+            proUnlocked ? <DosageCalculator /> : <ProPaywall onUnlockSuccess={handleUnlockSuccess} />
           )}
 
           {activePage === 'weather' && (
-            <WeatherThreatForecast />
+            proUnlocked ? <WeatherThreatForecast /> : <ProPaywall onUnlockSuccess={handleUnlockSuccess} />
           )}
 
           {activePage === 'clinician' && (
-            <ClinicianReference />
+            proUnlocked ? <ClinicianReference /> : <ProPaywall onUnlockSuccess={handleUnlockSuccess} />
           )}
 
           {activePage === 'condition' && (
