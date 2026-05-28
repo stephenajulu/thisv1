@@ -20,6 +20,11 @@ export default function App() {
       const path = window.location.pathname;
       const params = path.split('/').filter(Boolean);
       
+      if (params[0] === 'admin') {
+        window.location.href = '/admin/index.html';
+        return;
+      }
+      
       if (params[0] === 'condition' && params[1]) {
         setActivePage('condition');
         setActiveEntityId(params[1]);

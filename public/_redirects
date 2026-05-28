@@ -1,0 +1,5 @@
+# Serves the admin panel directly (prevents rewriting it)
+/admin/*  /admin/index.html  200
+
+# Rewrite all other paths to the SPA index.html
+/*  /index.html  200
