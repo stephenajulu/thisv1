@@ -1,0 +1,61 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: public/images
+public_folder: /images
+
+collections:
+  - name: "conditions"
+    label: "Diseases & Conditions"
+    folder: "src/data/collections/conditions"
+    create: true
+    format: "json"
+    slug: "{{id}}"
+    fields:
+      - { label: "Unique ID", name: "id", widget: "string" }
+      - { label: "Disease Name", name: "name", widget: "string" }
+      - { label: "Scientific Name", name: "scientificName", widget: "string" }
+      - { label: "Category", name: "category", widget: "select", options: ["Vector-borne Disease", "Climate-linked Health Issue", "Nutrition-related Condition"] }
+      - { label: "Detailed Description", name: "description", widget: "text" }
+      - { label: "Symptoms (IDs)", name: "symptoms", widget: "list", field: { name: "symptomId", widget: "string" } }
+      - { label: "Climate Vulnerability Links", name: "climateLinks", widget: "list", fields: [
+          { label: "Weather Trigger", name: "trigger", widget: "string" },
+          { label: "Vector/Health Impact", name: "impact", widget: "text" }
+        ]}
+      - { label: "Prevention Steps", name: "prevention", widget: "list", field: { name: "step", widget: "string" } }
+
+  - name: "remedies"
+    label: "Remedies & Interventions"
+    folder: "src/data/collections/remedies"
+    create: true
+    format: "json"
+    slug: "{{id}}"
+    fields:
+      - { label: "Unique ID", name: "id", widget: "string" }
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Scientific / Chemical Name", name: "scientificName", widget: "string" }
+      - { label: "Category Type", name: "category", widget: "select", options: ["botanical", "pharmaceutical"] }
+      - { label: "Detailed Description", name: "description", widget: "text" }
+      - { label: "Active Constituents", name: "activeConstituents", widget: "list", field: { name: "constituent", widget: "string" } }
+      - { label: "Administration / Prep Instructions", name: "preparation", widget: "text" }
+      - { label: "Safety Rating", name: "safetyRating", widget: "select", options: ["Very High Safety", "Moderate Safety", "Moderate Caution", "High Caution"] }
+      - { label: "Safety Alert / Contraindications", name: "safetyAlert", widget: "text" }
+      - { label: "Drug-Herb Interactions", name: "interactions", widget: "text" }
+
+  - name: "outcomesMatrix"
+    label: "Evidence Outcomes Matrix Links"
+    folder: "src/data/collections/outcomes"
+    create: true
+    format: "json"
+    slug: "{{id}}"
+    fields:
+      - { label: "Unique Matrix Link ID", name: "id", widget: "string" }
+      - { label: "Remedy ID Link", name: "remedyId", widget: "string" }
+      - { label: "Condition ID Link", name: "conditionId", widget: "string" }
+      - { label: "Target Symptom ID Link", name: "targetSymptomId", widget: "string" }
+      - { label: "Evidence Clinical Grade", name: "evidenceGrade", widget: "select", options: ["A", "B", "C", "D"] }
+      - { label: "Magnitude of Clinical Effect", name: "magnitude", widget: "select", options: ["Strong", "Moderate", "Minor", "Negligible"] }
+      - { label: "Traditional-Modern Alignment", name: "traditionalAlignment", widget: "select", options: ["High", "Emerging", "Unaligned"] }
+      - { label: "Human Clinical Efficacy Summary", name: "clinicalSummary", widget: "text" }
+      - { label: "Reference Citation / PubMed URL", name: "citation", widget: "string" }

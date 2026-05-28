@@ -1,0 +1,180 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+@import "tailwindcss";
+
+:root {
+  /* HSL Color System */
+  --primary-green: 164, 86%, 12%;       /* #033c2a - Deep Jungle forest */
+  --primary-green-light: 164, 60%, 18%;
+  --clinical-teal: 162, 72%, 46%;       /* #20b887 - Clinical emerald */
+  --clinical-teal-muted: 162, 50%, 93%;
+  --clinical-teal-dark: 162, 80%, 30%;
+  --amber-warning: 36, 96%, 48%;         /* #e58707 - Ethno-botanical caution */
+  --amber-warning-muted: 36, 90%, 94%;
+  --crimson-danger: 343, 82%, 58%;       /* #e83e6f - Contraindication red */
+  --crimson-danger-muted: 343, 90%, 95%;
+  --slate-dark: 215, 28%, 17%;
+  --slate-text: 215, 16%, 30%;
+  --bg-mint-soft: 150, 20%, 98%;        /* Soft Clinical mint canvas */
+  --glass-border: rgba(3, 60, 42, 0.08);
+
+  /* Elevation Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.06), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+  --shadow-xl: 0 20px 25px -5px rgba(3, 60, 42, 0.05), 0 10px 10px -5px rgba(3, 60, 42, 0.02);
+
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+
+  color-scheme: light;
+  background-color: hsl(var(--bg-mint-soft));
+  color: hsl(var(--slate-text));
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: hsl(var(--bg-mint-soft));
+  background-image: 
+    radial-gradient(at 0% 0%, hsla(162, 72%, 46%, 0.05) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, hsla(36, 96%, 48%, 0.03) 0px, transparent 50%);
+  background-attachment: fixed;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Outfit', sans-serif;
+  color: hsl(var(--primary-green));
+  font-weight: 700;
+  margin-top: 0;
+  letter-spacing: -0.02em;
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-md);
+  border-radius: 1rem;
+}
+
+.glass-panel:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(3, 60, 42, 0.15);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Premium dynamic scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsla(var(--primary-green), 0.15);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsla(var(--primary-green), 0.3);
+}
+
+/* Layout Utilities */
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+/* Clinician reference overlay theme override */
+.clinician-mode {
+  --bg-mint-soft: 210, 20%, 98%;
+  background-image: none !important;
+}
+
+.clinician-mode .glass-panel {
+  background: #ffffff;
+  box-shadow: var(--shadow-sm);
+  border-radius: 0.5rem;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.clinician-mode .glass-panel:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* Badge classes */
+.badge-grade-a {
+  background-color: hsl(var(--clinical-teal-muted));
+  color: hsl(var(--clinical-teal-dark));
+  border: 1px solid hsla(var(--clinical-teal), 0.3);
+}
+
+.badge-grade-b {
+  background-color: hsl(210, 100%, 96%);
+  color: hsl(210, 100%, 35%);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+}
+
+.badge-grade-c {
+  background-color: hsl(var(--amber-warning-muted));
+  color: hsl(36, 100%, 25%);
+  border: 1px solid hsla(var(--amber-warning), 0.3);
+}
+
+.badge-grade-d {
+  background-color: hsl(210, 8%, 93%);
+  color: hsl(210, 8%, 35%);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+/* @media print layouts for clinical outpost exports */
+@media print {
+  body {
+    background: #ffffff !important;
+    background-image: none !important;
+    color: #000000 !important;
+  }
+  header, footer, button, nav, select, input, .no-print {
+    display: none !important;
+  }
+  .page-container, main {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  .glass-panel {
+    background: #ffffff !important;
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+    border-radius: 0.5rem !important;
+    page-break-inside: avoid;
+    margin-bottom: 1.5rem !important;
+  }
+  .clinician-mode {
+    background: #ffffff !important;
+  }
+}
+
