@@ -1,0 +1,35 @@
+{
+  "id": "scrub-typhus",
+  "name": "Scrub Typhus",
+  "scientificName": "Orientia tsutsugamushi infection",
+  "icd11": "1A20.Y",
+  "category": "Vector-borne Disease",
+  "description": "An acute febrile illness transmitted by the bite of larval mites (chiggers) in tropical scrub vegetation. Induces a characteristic dark scab (eschar) at the bite site, profound headache, lymphadenopathy, and dry cough.",
+  "symptoms": [
+    "high-fever",
+    "fatigue",
+    "joint-pain",
+    "skin-ulcer",
+    "cough"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Post-Monsoon Vegetation Spikes",
+      "impact": "Heavy rains trigger massive vegetative scrub growth, expanding larval chigger micro-habitats."
+    }
+  ],
+  "prevention": [
+    "Clearing grassy brush around outposts",
+    "Applying permethrin repellents to farming clothes",
+    "Wearing long clothing"
+  ],
+  "climateThreatSchema": {
+    "minTemp": 20,
+    "maxTemp": 34,
+    "minHumidity": 60,
+    "minRainfall": 80,
+    "maxRainfall": 300,
+    "advisory": "SCRUB TYPHUS SCRUB ALERT: High vegetation density multiplies mite habitats. Instruct communities to clear brush within a 100m radius of dwellings."
+  },
+  "triageAdvisory": "Scrub Typhus suspected. Conduct a complete skin check for a black chigger scab (eschar). Initiate Doxycycline immediately without waiting for lab reports."
+}

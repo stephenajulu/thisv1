@@ -1,0 +1,14 @@
+{
+  "id": "quinine",
+  "name": "Quinine",
+  "scientificName": "Quinine Sulfate",
+  "category": "pharmaceutical",
+  "description": "Classical Cinchona-bark derived alkaloid. Reserved today for severe cerebral malaria complications when modern ACT injections are unavailable.",
+  "activeConstituents": [
+    "Quinine alkaloid"
+  ],
+  "preparation": "Oral clinical tablets or intravenous drip infusion under active clinical supervision.",
+  "safetyRating": "High Caution",
+  "safetyAlert": "Narrow therapeutic window. Widespread side effects (tinnitus, severe hypoglycemia, cardiotoxicity).",
+  "interactions": "Avoid combining with antacids containing magnesium/aluminum."
+}

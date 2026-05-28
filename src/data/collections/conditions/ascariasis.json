@@ -1,0 +1,24 @@
+{
+  "id": "ascariasis",
+  "name": "Ascariasis",
+  "scientificName": "Ascaris lumbricoides infection",
+  "icd11": "1F65.0",
+  "category": "Water-borne Pathogen",
+  "description": "A major soil-transmitted helminth (giant roundworm) infection. Transmitted by swallowing eggs from soil contaminated with human feces or crops irrigated with raw sewage. Causes microcytic anemia, nutritional wasting, and potential intestinal obstruction in heavy pediatric cases.",
+  "symptoms": [
+    "fatigue",
+    "vomiting"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Flooding & Wastewater Inundation",
+      "impact": "Extreme rainwater flooding washes fecal roundworm eggs across residential yards, home gardens, and water wells."
+    }
+  ],
+  "prevention": [
+    "Mass school deworming campaigns",
+    "Rigorous washing of vegetables with clean water",
+    "Boiling agricultural water supplies"
+  ],
+  "triageAdvisory": "Ascariasis roundworm suspected. Run stool microscopy. Administer a single dose of Albendazole (400mg) to paralyze and flush adult worms."
+}

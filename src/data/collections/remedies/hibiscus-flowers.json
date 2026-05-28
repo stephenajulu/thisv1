@@ -1,0 +1,16 @@
+{
+  "id": "hibiscus-flowers",
+  "name": "Hibiscus Flower Tea",
+  "scientificName": "Hibiscus sabdariffa (Bissap)",
+  "category": "botanical",
+  "description": "Dried red calyces of the Roselle plant. Heavily consumed across the dry tropics as a refreshing, hydrating tea. Contains anthocyanins that exhibit natural ACE-inhibitor hypotensive properties.",
+  "activeConstituents": [
+    "Delphinidin",
+    "Hibiscic Acid",
+    "Anthocyanins"
+  ],
+  "preparation": "Steep 3-5g of dried calyces in boiling water for 15 minutes. Serve cooled as cold rehydration.",
+  "safetyRating": "High Safety",
+  "safetyAlert": "Extremely safe as beverage. Avoid extremely high concentrations in acute hypotension.",
+  "interactions": "May decrease bioavailability of Acetaminophen/Paracetamol if consumed concurrently."
+}

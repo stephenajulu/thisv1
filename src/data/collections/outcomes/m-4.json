@@ -1,0 +1,11 @@
+{
+  "id": "m-4",
+  "remedyId": "papaya-leaf-extract",
+  "conditionId": "dengue",
+  "targetSymptomId": "platelet-drop",
+  "gradeQuality": "Moderate",
+  "recommendationStrength": "Conditional For",
+  "traditionalAlignment": "Emerging",
+  "clinicalSummary": "Double-blind RCTs show Carica papaya leaf extract significantly elevates platelet counts and stabilizes hematocrit levels in patients with acute Dengue-induced thrombocytopenia by boosting ALOX12 gene expression.",
+  "citation": "Lancet Infectious Diseases / Clinical Trials, 2020"
+}

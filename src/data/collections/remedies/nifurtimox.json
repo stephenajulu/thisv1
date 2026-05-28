@@ -1,0 +1,14 @@
+{
+  "id": "nifurtimox",
+  "name": "Nifurtimox",
+  "scientificName": "Nifurtimox (Antiprotozoal)",
+  "category": "pharmaceutical",
+  "description": "A nitrofuran antiprotozoal compound. Induces cytotoxic intracellular free radicals that destroy Trypanosoma cruzi parasites in active Chagas disease.",
+  "activeConstituents": [
+    "Nifurtimox"
+  ],
+  "preparation": "Oral tablets administered daily under strict clinical supervision for 60-90 days.",
+  "safetyRating": "High Caution",
+  "safetyAlert": "Highly frequent side effects (anorexia, neurological changes, tremors, neuropathies). Complete treatment adherence is critical.",
+  "interactions": "Avoid alcohol consumption during the entire 90-day clinical course."
+}

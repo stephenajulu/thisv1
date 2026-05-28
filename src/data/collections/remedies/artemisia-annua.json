@@ -1,0 +1,24 @@
+{
+  "id": "artemisia-annua",
+  "name": "Artemisia Annua",
+  "scientificName": "Artemisia annua L. (Sweet Wormwood)",
+  "category": "botanical",
+  "description": "A highly aromatic traditional herb that synthesizes artemisinin, a sesquiterpene lactone. The baseline chemistry for modern malaria combination cures (ACTs).",
+  "activeConstituents": [
+    "Artemisinin",
+    "Flavonoids",
+    "Essential Oils"
+  ],
+  "preparation": "Infusion (tea) prepared by steeping 5g of dried leaves in hot water for 10 minutes.",
+  "safetyRating": "Moderate Caution",
+  "safetyAlert": "Monotherapy using Artemisia tea is strongly discouraged by the WHO as it drives drug resistance. Always use under diagnostic confirmation.",
+  "interactions": "Do not co-administer with medications metabolized by CYP3A4.",
+  "demographicCautions": [
+    {
+      "populationId": "pregnant-women",
+      "type": "warning",
+      "title": "CLINICAL ALERT: Artemisia clinical warning",
+      "message": "While artemisinin derivatives (ACTs) are safe under clinical supervision in the 2nd and 3rd trimesters, consuming crude Artemisia annua tea in early pregnancy lacks safety data and may induce sub-therapeutic dosing."
+    }
+  ]
+}

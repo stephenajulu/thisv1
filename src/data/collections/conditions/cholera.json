@@ -1,0 +1,32 @@
+{
+  "id": "cholera",
+  "name": "Cholera",
+  "scientificName": "Vibrio cholerae infection",
+  "icd11": "1A00",
+  "category": "Water-borne Pathogen",
+  "description": "An acute diarrheal infection caused by ingestion of food or water contaminated with Vibrio cholerae. Induces rapid, severe watery stools ('rice-water stool') and profound hypovolemic shock.",
+  "symptoms": [
+    "dehydration",
+    "fatigue"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Flooding & Inundated Wells",
+      "impact": "Floods mix surface sewage into shallow drinking wells, triggering immediate outbreak spikes."
+    }
+  ],
+  "prevention": [
+    "Chlorination of water sources",
+    "Safe waste disposal",
+    "Oral Cholera Vaccine (OCV)"
+  ],
+  "climateThreatSchema": {
+    "minTemp": 28,
+    "maxTemp": 99,
+    "minHumidity": 0,
+    "minRainfall": 250,
+    "maxRainfall": 999,
+    "advisory": "FLOOD CHOLERA ALERT: Surface sewage mixes into shallow wells. Distribute chlorine tablets, ban usage of untreated shallow wells, and mobilize immediate Oral Rehydration Salts (ORS) buffer stocks."
+  },
+  "triageAdvisory": "Water-borne cholera suspected. Immediate aggressive low-osmolarity ORS administration. Use IV fluids (Ringer's Lactate) if severe dehydration is diagnosed."
+}

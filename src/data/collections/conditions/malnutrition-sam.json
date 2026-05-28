@@ -1,0 +1,23 @@
+{
+  "id": "malnutrition-sam",
+  "name": "Severe Acute Malnutrition (SAM)",
+  "scientificName": "Marasmus / Kwashiorkor",
+  "icd11": "5C50",
+  "category": "Nutrition-related Condition",
+  "description": "A life-threatening condition where children show extreme wasting (marasmus) or bilateral pitting edema (kwashiorkor) due to starvation and severe protein-energy deficiency.",
+  "symptoms": [
+    "fatigue",
+    "dehydration"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "El Niño Crop Failure",
+      "impact": "Prolonged agricultural drought causes immediate household food insecurity and localized famine."
+    }
+  ],
+  "prevention": [
+    "Promoting indigenous superfoods (Moringa, Baobab)",
+    "Ready-to-Use Therapeutic Food (RUTF)"
+  ],
+  "triageAdvisory": "Severe Acute Malnutrition (SAM). Perform appetite test. Start RUTF (Ready-to-Use Therapeutic Food) under Plan A/B feeding guidelines."
+}

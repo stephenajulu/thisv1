@@ -1,0 +1,14 @@
+{
+  "id": "sodium-stibogluconate",
+  "name": "Sodium Stibogluconate",
+  "scientificName": "Pentavalent Antimonial (SSG)",
+  "category": "pharmaceutical",
+  "description": "A classical pentavalent antimonial compound. Primary clinical therapeutic for cutaneous and visceral Leishmaniasis (Kala-azar). Inhibits parasite macromolecular synthesis.",
+  "activeConstituents": [
+    "Pentavalent antimony"
+  ],
+  "preparation": "Intramuscular injection or slow intravenous drip administered daily in a clinical ward.",
+  "safetyRating": "High Caution",
+  "safetyAlert": "Extremely narrow therapeutic window. Can cause chemical pancreatitis, liver damage, and lethal cardiac arrhythmias. Requires baseline ECG monitoring.",
+  "interactions": "Do not combine with other cardiotoxic agents or drugs prolonging the QT interval."
+}

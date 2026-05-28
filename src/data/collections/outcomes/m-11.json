@@ -1,0 +1,11 @@
+{
+  "id": "m-11",
+  "remedyId": "pumpkin-seeds",
+  "conditionId": "hookworm",
+  "targetSymptomId": "fatigue",
+  "gradeQuality": "Low",
+  "recommendationStrength": "Conditional For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Cucurbitacin compound paralyzes intestinal nematodes, enabling mechanical fecal flushing. Useful as a low-cost, traditional rural anthelmintic alternative but exhibits lower efficacy than Albendazole.",
+  "citation": "Journal of Parasitology Research, 2019"
+}

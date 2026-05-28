@@ -1,0 +1,17 @@
+{
+  "id": "baobab-fruit",
+  "name": "Baobab Fruit Powder",
+  "scientificName": "Adansonia digitata L.",
+  "category": "botanical",
+  "description": "Dry pulp powder of the African Baobab fruit. Exceptionally high in Vitamin C (six times greater than oranges) and soluble prebiotic fibers, boosting zinc and iron absorption.",
+  "activeConstituents": [
+    "Ascorbic Acid",
+    "Pectin",
+    "Tartaric Acid",
+    "Potassium"
+  ],
+  "preparation": "10-20g of dry fruit powder dissolved in clean water or mixed into clinical porridge.",
+  "safetyRating": "Very High Safety",
+  "safetyAlert": "Extremely safe. Highly beneficial dietary prebiotic food.",
+  "interactions": "None. Dramatically enhances botanical iron absorption."
+}

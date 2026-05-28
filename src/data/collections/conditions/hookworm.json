@@ -1,0 +1,23 @@
+{
+  "id": "hookworm",
+  "name": "Hookworm Infection",
+  "scientificName": "Necator americanus / Ancylostoma duodenale",
+  "icd11": "1F64",
+  "category": "Water-borne Pathogen",
+  "description": "A soil-transmitted intestinal nematode. Hookworm larvae live in warm, damp soil and penetrate bare feet, migrating to the intestine where they feed on blood, causing severe iron deficiency.",
+  "symptoms": [
+    "fatigue"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Humid Soil & High Rainfall",
+      "impact": "Damp soil matches larval moisture requirements, extending hookworm survival up to weeks."
+    }
+  ],
+  "prevention": [
+    "Wearing enclosed rubber shoes",
+    "Sanitation infrastructure",
+    "Mass Albendazole distribution"
+  ],
+  "triageAdvisory": "Hookworm infestation. Run stool microscopy. Administer single dose Albendazole (400mg) to arrest blood loss and microcytic anemia."
+}

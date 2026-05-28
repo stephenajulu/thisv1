@@ -1,0 +1,11 @@
+{
+  "id": "m-9",
+  "remedyId": "zinc-sulfate",
+  "conditionId": "dehydration",
+  "targetSymptomId": "dehydration",
+  "gradeQuality": "High",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "Unaligned",
+  "clinicalSummary": "Highly robust global evidence confirms zinc supplementation accelerates water-electrolyte absorption, reduces diarrhea duration and stool frequency in children, and repairs mucosal damage.",
+  "citation": "Cochrane Systematic Review, 2021"
+}

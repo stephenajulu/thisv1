@@ -1,0 +1,24 @@
+{
+  "id": "lymphatic-filariasis",
+  "name": "Lymphatic Filariasis",
+  "scientificName": "Wuchereria bancrofti infection",
+  "icd11": "1F66",
+  "category": "Vector-borne Disease",
+  "description": "A parasitic infection transmitted by mosquitoes, leading to chronic swelling of tissues (Elephantiasis). Causes severe physical disfigurement, social stigma, and painful lymphadenitis outbreaks.",
+  "symptoms": [
+    "fatigue",
+    "joint-pain"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Urban Stagnant Water Pools",
+      "impact": "Culex mosquitoes breed aggressively in open drains and dirty puddles in urban tropical margins."
+    }
+  ],
+  "prevention": [
+    "Mass chemotherapy (DEC + Albendazole)",
+    "Vector control",
+    "Community lymphatic hygiene education"
+  ],
+  "triageAdvisory": "Lymphatic Filariasis (Elephantiasis). Administer mass chemotherapy (DEC + Albendazole) and initiate strict local hygiene routines."
+}

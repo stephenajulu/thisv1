@@ -1,0 +1,31 @@
+{
+  "id": "moringa-leaves",
+  "name": "Moringa Powder",
+  "scientificName": "Moringa oleifera (Drumstick Tree)",
+  "category": "botanical",
+  "synonyms": [
+    "drumstick tree",
+    "benzolive",
+    "muringa",
+    "horseradish tree"
+  ],
+  "description": "Fast-growing tropical superfood. Milled leaves are highly dense in vitamins, natural iron, and calcium, serving as a primary anti-malnutrition intervention.",
+  "activeConstituents": [
+    "Beta-carotene",
+    "Vitamin C",
+    "Iron",
+    "Polyphenols"
+  ],
+  "preparation": "1-2 tablespoons of finely dried leaf powder added directly to daily meals.",
+  "safetyRating": "Very High Safety",
+  "safetyAlert": "Extremely safe at dietary levels. Avoid root/bark preparations in pregnancy as they contain uterine stimulants.",
+  "interactions": "Highly safe. Enhances absorption of dietary iron.",
+  "demographicCautions": [
+    {
+      "populationId": "pregnant-women",
+      "type": "info",
+      "title": "NUTRITIONAL NOTICE: High Dietary Safety",
+      "message": "Moringa leaf powder is highly safe and beneficial for iron supplementation in pregnant women. However, avoid root or bark concentrates which contain uterine stimulants."
+    }
+  ]
+}

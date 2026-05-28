@@ -1,0 +1,30 @@
+{
+  "id": "fungal-keratitis",
+  "name": "Fungal Keratitis",
+  "scientificName": "Mycotic corneal ulcer",
+  "icd11": "9A01.3",
+  "category": "Climate-linked Health Issue",
+  "description": "A severe fungal infection of the cornea, highly prevalent among agricultural workers in humid tropical zones following minor plant eye traumas (e.g. scratch by sugar cane leaves).",
+  "symptoms": [
+    "joint-pain"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Humid Harvest Season",
+      "impact": "Harvesting in high humidity increases airborne fungal spore density (Fusarium/Aspergillus) on vegetation."
+    }
+  ],
+  "prevention": [
+    "Protective eyewear during farm labor",
+    "Immediate clean water rinsing of eye debris"
+  ],
+  "climateThreatSchema": {
+    "minTemp": 25,
+    "maxTemp": 99,
+    "minHumidity": 75,
+    "minRainfall": 100,
+    "maxRainfall": 999,
+    "advisory": "FUNGAL KERATITIS OUTBREAK: High harvest debris and humidity spike eye infections. Distribute protective eyewear and clean eye rinse bottles."
+  },
+  "triageAdvisory": "Suspected Mycotic Corneal Ulcer. Refer to ophthalmologist immediately for Natamycin drops. Never use topical steroids."
+}

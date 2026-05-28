@@ -1,0 +1,31 @@
+{
+  "id": "dehydration",
+  "name": "Severe Dehydration",
+  "scientificName": "Hypovolemia",
+  "icd11": "5C80.1",
+  "category": "Climate-linked Health Issue",
+  "description": "Severe loss of bodily fluids and vital salts. Triggered by humid hot seasons or clinical diarrheal illnesses like Cholera. Fatal within hours in infants if untreated.",
+  "symptoms": [
+    "dehydration",
+    "fatigue"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Extreme Heatwaves",
+      "impact": "Forces extreme sweat rates, exceeding normal hydration buffer limits."
+    }
+  ],
+  "prevention": [
+    "Immediate electrolyte replenishment",
+    "Shaded midday labor rests"
+  ],
+  "climateThreatSchema": {
+    "minTemp": 35,
+    "maxTemp": 99,
+    "minHumidity": 10,
+    "minRainfall": 0,
+    "maxRainfall": 30,
+    "advisory": "DEHYDRATION WATCH: Extreme heatwaves spike sweat rates. Maintain rehydration centers, distribute ORS, and counsel shaded rests."
+  },
+  "triageAdvisory": "Severe dehydration. Administer ORS solution immediately (Plan B or Plan C). Evaluate for hypovolemic shock. Administer dispersible Zinc."
+}

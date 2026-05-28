@@ -1,0 +1,11 @@
+{
+  "id": "m-33",
+  "remedyId": "coconut-water",
+  "conditionId": "dehydration",
+  "targetSymptomId": "dehydration",
+  "gradeQuality": "High",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Clinical standard rehydration analyses confirm young sterile coconut water is an outstanding natural rehydration standard containing natural potassium and salts, serving as a vital outpost fallback.",
+  "citation": "International Journal of Emergency Medicine, 2017"
+}

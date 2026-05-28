@@ -1,0 +1,11 @@
+{
+  "id": "m-28",
+  "remedyId": "ivermectin",
+  "conditionId": "dracunculiasis",
+  "targetSymptomId": "joint-pain",
+  "gradeQuality": "Moderate",
+  "recommendationStrength": "Conditional Against",
+  "traditionalAlignment": "Unaligned",
+  "clinicalSummary": "Clinical trials prove Ivermectin is ineffective at killing or accelerating extraction of adult Dracunculus medinensis. Standard manual tick-traction winding remains standard.",
+  "citation": "WHO Guinea Worm Eradication Report, 2020"
+}

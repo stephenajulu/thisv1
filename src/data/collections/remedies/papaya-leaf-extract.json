@@ -1,0 +1,22 @@
+{
+  "id": "papaya-leaf-extract",
+  "name": "Papaya Leaf Extract",
+  "scientificName": "Carica papaya (Papaya)",
+  "category": "botanical",
+  "synonyms": [
+    "pawpaw",
+    "papaw",
+    "paw paw",
+    "mugongo"
+  ],
+  "description": "Extract from papaya leaves. Clinical trials show significant capacity to increase gene expression responsible for accelerating platelet counts in viral hemorrhagic cases.",
+  "activeConstituents": [
+    "Papain",
+    "Carpaine",
+    "Flavonoids"
+  ],
+  "preparation": "Crushed leaf extract juice (20-30ml twice daily).",
+  "safetyRating": "Moderate Safety",
+  "safetyAlert": "Ensure correct plant identification. Latex from unripe fruits must be fully avoided.",
+  "interactions": "May increase bleeding risk if combined with pharmaceutical blood thinners (Warfarin)."
+}

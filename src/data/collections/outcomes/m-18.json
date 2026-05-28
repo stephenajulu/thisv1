@@ -1,0 +1,11 @@
+{
+  "id": "m-18",
+  "remedyId": "moringa-leaves",
+  "conditionId": "vitamin-a-deficiency",
+  "targetSymptomId": "fatigue",
+  "gradeQuality": "Moderate",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Moringa leaves represent one of the densest plant sources of beta-carotene (provitamin A) in tropical zones. Easily cultivated in dry soil, significantly boosting serum retinol and correcting visual xerophthalmia.",
+  "citation": "World Journal of Agricultural Sciences, 2020"
+}

@@ -1,0 +1,11 @@
+{
+  "id": "m-7",
+  "remedyId": "moringa-leaves",
+  "conditionId": "iron-anemia",
+  "targetSymptomId": "fatigue",
+  "gradeQuality": "Moderate",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Controlled nutritional studies prove that Moringa oleifera leaves represent an exceptional natural source of iron and Vitamin C. Significantly increases hemoglobin and reduces microcytic anemia fatigue in vulnerable children.",
+  "citation": "African Journal of Nutrition, 2021"
+}

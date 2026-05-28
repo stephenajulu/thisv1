@@ -1,0 +1,32 @@
+{
+  "id": "typhoid",
+  "name": "Typhoid Fever",
+  "scientificName": "Salmonella enterica serovar Typhi",
+  "icd11": "1A07",
+  "category": "Water-borne Pathogen",
+  "description": "A systemic bacterial infection contracted through contaminated food or water. Features high step-ladder fever, abdominal distress, delirium, and life-threatening intestinal perforation.",
+  "symptoms": [
+    "high-fever",
+    "fatigue"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Drought & Water Scarcity",
+      "impact": "Forces usage of contaminated, stagnant micro-dams and unsafe shared sources."
+    }
+  ],
+  "prevention": [
+    "Typhoid conjugate vaccine (TCV)",
+    "Strict food hygiene",
+    "Handwashing with clean water"
+  ],
+  "climateThreatSchema": {
+    "minTemp": 32,
+    "maxTemp": 99,
+    "minHumidity": 10,
+    "minRainfall": 0,
+    "maxRainfall": 15,
+    "advisory": "DROUGHT TYPHOID WARNING: Drought forces usage of stagnant, contaminated water sources. Mandate boiling of all drinking water and monitor for step-ladder fevers."
+  },
+  "triageAdvisory": "Suspected Typhoid Fever. Run blood cultures. Administer Ciprofloxacin for sensitive strains. Monitor for signs of intestinal perforation."
+}

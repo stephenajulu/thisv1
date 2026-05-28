@@ -1,0 +1,22 @@
+{
+  "id": "zinc-sulfate",
+  "name": "Zinc Sulfate",
+  "scientificName": "Zinc Sulfate monohydrate",
+  "category": "pharmaceutical",
+  "description": "Primary pediatric diarrheal therapeutic. Reduces severity, duration, and recurrence of acute diarrhea by accelerating mucosal cell regeneration and immunological recovery.",
+  "activeConstituents": [
+    "Zinc ions"
+  ],
+  "preparation": "Chewable dispersible tablets (20mg daily for 10-14 days during and after diarrhea).",
+  "safetyRating": "Extremely Safe",
+  "safetyAlert": "May cause vomiting if administered on a completely empty stomach. Best taken with food.",
+  "interactions": "May reduce absorption of oral iron and tetracycline antibiotics if taken concurrently.",
+  "demographicCautions": [
+    {
+      "populationId": "children-under-5",
+      "type": "info",
+      "title": "CLINICAL ADVISORY: Diarrhea Recovery Standard",
+      "message": "WHO strongly mandates dispersible Zinc Sulfate daily for 10-14 days alongside ORS for pediatric diarrheal episodes to rebuild mucosal tight junctions."
+    }
+  ]
+}

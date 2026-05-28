@@ -1,0 +1,11 @@
+{
+  "id": "m-21",
+  "remedyId": "cinchona-bark",
+  "conditionId": "malaria",
+  "targetSymptomId": "high-fever",
+  "gradeQuality": "Low",
+  "recommendationStrength": "Conditional Against",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Raw bark decoction clears Plasmodium parasites but dose calibration is highly uncertain, leading to a high clinical incidence of hearing impairment and toxicity. Modern oral Quinine tablets are strongly preferred.",
+  "citation": "Phytotherapy Research, 2019"
+}

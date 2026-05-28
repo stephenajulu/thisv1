@@ -1,0 +1,25 @@
+{
+  "id": "guava-leaves",
+  "name": "Guava Leaves",
+  "scientificName": "Psidium guajava L.",
+  "category": "botanical",
+  "description": "Traditional remedy for gastrointestinal spasms and diarrhea. Rich in quercetin and tannins that exhibit robust antispasmodic and anti-microbial activities.",
+  "activeConstituents": [
+    "Quercetin",
+    "Tannins",
+    "Guajaverin",
+    "Essential Oils"
+  ],
+  "preparation": "Decoction prepared by boiling 5-10 fresh leaves in 500ml water for 10 minutes.",
+  "safetyRating": "High Safety",
+  "safetyAlert": "Extremely safe at typical dietary doses. Avoid highly concentrated extracts in early infancy.",
+  "interactions": "May enhance clinical antidiarrheal medications; monitor for constipation.",
+  "demographicCautions": [
+    {
+      "populationId": "pregnant-women",
+      "type": "info",
+      "title": "Guava Leaf Safety Profile",
+      "message": "Guava leaf tea is highly safe at standard dietary strengths. Exhibits natural anti-spasmodic effects that calm intestinal cramping."
+    }
+  ]
+}

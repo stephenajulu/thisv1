@@ -1,0 +1,22 @@
+{
+  "id": "ribavirin",
+  "name": "Ribavirin",
+  "scientificName": "Ribavirin (Antiviral)",
+  "category": "pharmaceutical",
+  "description": "A synthetic nucleoside analog. Inhibits viral RNA-dependent RNA polymerase, serving as the primary first-line therapeutic for acute Lassa Fever.",
+  "activeConstituents": [
+    "Ribavirin"
+  ],
+  "preparation": "Oral or intravenous infusion administered under strict isolation clinical guidelines.",
+  "safetyRating": "High Caution",
+  "safetyAlert": "Highly teratogenic. Strictly contraindicated in pregnant women unless in life-saving emergencies where Ribavirin benefits outweigh maternal mortality risks.",
+  "interactions": "Do not combine with Zidovudine (increases anemia risks).",
+  "demographicCautions": [
+    {
+      "populationId": "pregnant-women",
+      "type": "danger",
+      "title": "CRITICAL ALERT: High Teratogenicity",
+      "message": "Ribavirin is highly teratogenic. Avoid in pregnant women unless in extreme emergencies to preserve maternal life from severe hemorrhagic Lassa Fever."
+    }
+  ]
+}

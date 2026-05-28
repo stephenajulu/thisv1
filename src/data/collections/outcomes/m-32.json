@@ -1,0 +1,11 @@
+{
+  "id": "m-32",
+  "remedyId": "turmeric",
+  "conditionId": "chikungunya",
+  "targetSymptomId": "joint-pain",
+  "gradeQuality": "Moderate",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Double-blind trials show that Curcumins significantly suppress chronic arthritic cytokines, providing substantial pain relief to patients suffering from chronic Chikungunya skeletal pain.",
+  "citation": "Clinical Rheumatology Journal, 2021"
+}

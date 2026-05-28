@@ -1,0 +1,11 @@
+{
+  "id": "m-12",
+  "remedyId": "praziquantel",
+  "conditionId": "schistosomiasis",
+  "targetSymptomId": "fatigue",
+  "gradeQuality": "High",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "Unaligned",
+  "clinicalSummary": "Global gold-standard. Single dose (40mg/kg) clears adult worms, stopping egg deposition and reversing inflammatory chronic Bilharzia tissue damage.",
+  "citation": "WHO Preventive Chemotherapy Guidelines, 2022"
+}

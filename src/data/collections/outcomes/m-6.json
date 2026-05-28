@@ -1,0 +1,11 @@
+{
+  "id": "m-6",
+  "remedyId": "quinine",
+  "conditionId": "malaria",
+  "targetSymptomId": "high-fever",
+  "gradeQuality": "High",
+  "recommendationStrength": "Conditional For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Highly potent parasite clearance. Reserved clinically as a crucial second-line therapeutic for severe cerebral malaria complications when intravenous ACTs are unavailable. High side-effect profile.",
+  "citation": "New England Journal of Medicine, 2017"
+}

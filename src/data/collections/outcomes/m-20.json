@@ -1,0 +1,11 @@
+{
+  "id": "m-20",
+  "remedyId": "zinc-sulfate",
+  "conditionId": "malnutrition-sam",
+  "targetSymptomId": "fatigue",
+  "gradeQuality": "High",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "Unaligned",
+  "clinicalSummary": "WHO clinical protocol strongly mandates Zinc supplementation for severely malnourished children during therapeutic feeding (SAM) to rebuild standard cellular enzyme synthesis.",
+  "citation": "WHO Malnutrition Protocols, 2022"
+}

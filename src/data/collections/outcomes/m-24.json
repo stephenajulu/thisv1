@@ -1,0 +1,11 @@
+{
+  "id": "m-24",
+  "remedyId": "metronidazole",
+  "conditionId": "amoebic-dysentery",
+  "targetSymptomId": "dehydration",
+  "gradeQuality": "High",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "Unaligned",
+  "clinicalSummary": "Highly standardized clinical evidence confirms Metronidazole is exceptionally effective at eradicating Entamoeba histolytica trophozoites, rapidly resolving dysenteric cramping.",
+  "citation": "WHO Intestinal Protozoan Guidelines, 2021"
+}

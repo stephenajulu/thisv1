@@ -1,0 +1,11 @@
+{
+  "id": "m-3",
+  "remedyId": "neem-leaves",
+  "conditionId": "malaria",
+  "targetSymptomId": "high-fever",
+  "gradeQuality": "Low",
+  "recommendationStrength": "Conditional For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Lemongrass and Neem smudge burning shows insect-repelling spatial citronella effects. Oral leaf extracts show mild antipyretic pre-clinical response but lacks high-quality human trial validation for malaria cure.",
+  "citation": "Malaria Journal, 2018"
+}

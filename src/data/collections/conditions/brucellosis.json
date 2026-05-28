@@ -1,0 +1,26 @@
+{
+  "id": "brucellosis",
+  "name": "Brucellosis",
+  "scientificName": "Brucella abortus / melitensis",
+  "icd11": "1A90",
+  "category": "Climate-linked Health Issue",
+  "description": "A highly infectious zoonotic bacterial infection transmitted by consuming raw, unpasteurized milk and cheese, or by direct skin contact with fluids of infected cattle and goats. Induces undulating high fever, severe night sweats, carditis, and chronic arthralgic joint pain.",
+  "symptoms": [
+    "high-fever",
+    "joint-pain",
+    "fatigue",
+    "vomiting"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Drought Pastoral Confluences",
+      "impact": "Dry seasonal drought forces herders and cattle to gather closely around scarce water points, driving horizontal infection."
+    }
+  ],
+  "prevention": [
+    "Strict pasteurization/boiling of dairy",
+    "Livestock vaccination programs",
+    "Wearing gloves during livestock birthing assistances"
+  ],
+  "triageAdvisory": "Brucellosis suspected. Perform serological serum agglutination tests. Initiate a 6-week dual antibiotic course (Doxycycline + Rifampicin) to prevent bone and cardiac relapse."
+}

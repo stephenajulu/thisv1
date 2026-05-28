@@ -1,0 +1,11 @@
+{
+  "id": "m-23",
+  "remedyId": "ribavirin",
+  "conditionId": "lassa-fever",
+  "targetSymptomId": "high-fever",
+  "gradeQuality": "Moderate",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "Unaligned",
+  "clinicalSummary": "Clinical trial data confirms early administration of intravenous Ribavirin (within 6 days of symptom onset) significantly reduces mortality rates in patients with acute Lassa Fever.",
+  "citation": "New England Journal of Medicine, 1986 / CDC Lassa Protocol"
+}

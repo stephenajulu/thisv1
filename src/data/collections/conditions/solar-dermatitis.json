@@ -1,0 +1,30 @@
+{
+  "id": "solar-dermatitis",
+  "name": "Chronic Solar Dermatitis",
+  "scientificName": "Actinic prurigo",
+  "icd11": "EK50",
+  "category": "Climate-linked Health Issue",
+  "description": "Severe inflammatory skin reactions caused by prolonged exposure to high-intensity ultraviolet (UV) radiation in equatorial zones, highly affecting subsistence agricultural workers.",
+  "symptoms": [
+    "joint-pain"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Equatorial UV Spikes",
+      "impact": "High solar radiation intensity combined with outdoor work schedules causes chronic skin cellular damage."
+    }
+  ],
+  "prevention": [
+    "Use of broad-brimmed traditional straw hats",
+    "Long-sleeved light clothing"
+  ],
+  "climateThreatSchema": {
+    "minTemp": 30,
+    "maxTemp": 99,
+    "minHumidity": 10,
+    "minRainfall": 0,
+    "maxRainfall": 80,
+    "advisory": "EQUATORIAL UV ALERTS: High sun intensity. Advise subsistence farmers to wear long sleeves and wide straw hats during farming labor."
+  },
+  "triageAdvisory": "Chronic Solar Dermatitis. Recommend topical zinc-oxide sunblocks, protective clothing, and avoiding mid-day solar exposure."
+}

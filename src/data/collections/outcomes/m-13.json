@@ -1,0 +1,11 @@
+{
+  "id": "m-13",
+  "remedyId": "nifurtimox",
+  "conditionId": "chagas",
+  "targetSymptomId": "fatigue",
+  "gradeQuality": "Moderate",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "Unaligned",
+  "clinicalSummary": "Nifurtimox clears parasitic trypanosomes in the acute phase of Chagas disease. Highly recommended under clinical supervision, but carries a high profile of adverse neurological events.",
+  "citation": "CDC Chagas Disease Clinical Protocol"
+}

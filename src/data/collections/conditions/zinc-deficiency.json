@@ -1,0 +1,22 @@
+{
+  "id": "zinc-deficiency",
+  "name": "Zinc Deficiency",
+  "scientificName": "Hypozincemia",
+  "icd11": "5C64.3",
+  "category": "Nutrition-related Condition",
+  "description": "Inadequate zinc absorption, heavily impairing protein synthesis and cellular immunity in the tropics. Significantly increases the duration and severity of child diarrheal diseases.",
+  "symptoms": [
+    "fatigue"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Cereal Monoculture",
+      "impact": "Soil depletion of micro-nutrients coupled with high phytate tuber diets disables zinc absorption."
+    }
+  ],
+  "prevention": [
+    "Zinc Sulfate supplementation during diarrhea",
+    "Promoting diverse local seed and nut diets"
+  ],
+  "triageAdvisory": "Zinc Deficiency. Prescribe Zinc Sulfate supplementation (20mg daily, or 10mg if <6 months) for exactly 10 to 14 days during diarrheal episodes."
+}

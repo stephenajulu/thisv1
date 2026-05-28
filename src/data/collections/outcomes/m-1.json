@@ -1,0 +1,11 @@
+{
+  "id": "m-1",
+  "remedyId": "artemether-lumefantrine",
+  "conditionId": "malaria",
+  "targetSymptomId": "high-fever",
+  "gradeQuality": "High",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "Unaligned",
+  "clinicalSummary": "Multicenter RCTs confirm first-line ACT clears Plasmodium falciparum asexual blood stages within 24-48 hours. Strongly recommended globally as first-line therapy.",
+  "citation": "WHO Guidelines for Malaria, 2023"
+}

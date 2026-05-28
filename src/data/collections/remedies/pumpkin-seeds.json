@@ -1,0 +1,23 @@
+{
+  "id": "pumpkin-seeds",
+  "name": "Pumpkin Seeds",
+  "scientificName": "Cucurbita pepo L.",
+  "category": "botanical",
+  "synonyms": [
+    "pepita",
+    "cucurbita",
+    "pumpkin seed"
+  ],
+  "pending": true,
+  "description": "Flat green edible seeds of the pumpkin. Contains cucurbitacin, an active amino acid that paralyzes soil-transmitted worms, allowing them to be flushed out of the gut naturally.",
+  "activeConstituents": [
+    "Cucurbitacin",
+    "Zinc",
+    "Phytosterols",
+    "L-Arginine"
+  ],
+  "preparation": "Mash 30-50g of raw, unsalted seeds into paste, mix with small amount of honey, consume on empty stomach.",
+  "safetyRating": "Very High Safety",
+  "safetyAlert": "Highly safe. An excellent, low-cost traditional deworming alternative.",
+  "interactions": "None."
+}

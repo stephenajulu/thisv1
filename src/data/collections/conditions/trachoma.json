@@ -1,0 +1,22 @@
+{
+  "id": "trachoma",
+  "name": "Trachoma",
+  "scientificName": "Chlamydia trachomatis infection",
+  "icd11": "1B10",
+  "category": "Climate-linked Health Issue",
+  "description": "An infectious bacterial eye disease and the leading cause of preventable blindness globally. Spread via eye-seeking flies (Musca sorbens) and shared cloths. Recurrent infections cause severe eyelid scarring, turning eyelashes inward to scratch the cornea (trichiasis).",
+  "symptoms": [
+    "joint-pain",
+    "blindness"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Arid Water Scarcity",
+      "impact": "Extreme arid conditions restrict washing water, leading to dirty faces that attract disease-carrying Musca flies."
+    }
+  ],
+  "prevention": [
+    "WHO SAFE strategy: Surgery (for trichiasis), Antibiotics (Azithromycin), Facial cleanliness, Environmental hygiene"
+  ],
+  "triageAdvisory": "Trachoma diagnosed. Administer single-dose oral Azithromycin to active childhood cases. Refer patients with inward-facing lashes (trichiasis) for standard corrective eyelid surgery."
+}

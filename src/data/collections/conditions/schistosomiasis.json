@@ -1,0 +1,23 @@
+{
+  "id": "schistosomiasis",
+  "name": "Schistosomiasis",
+  "scientificName": "Schistosoma haematobium / mansoni",
+  "icd11": "1F80",
+  "category": "Water-borne Pathogen",
+  "description": "A parasitic worm disease also known as Bilharzia. Larvae are released by freshwater snails, penetrating the skin of individuals swimming or washing clothes in infested rivers.",
+  "symptoms": [
+    "fatigue"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Dam Construction & Irrigation",
+      "impact": "Slow-moving agricultural irrigation canals dramatically expand habitats for vector snails."
+    }
+  ],
+  "prevention": [
+    "Mass Drug Administration (Praziquantel)",
+    "Snail control using molluscicides",
+    "Safe sanitation facilities"
+  ],
+  "triageAdvisory": "Schistosomiasis / Bilharzia suspected. Conduct urine/stool microscopy. Administer single dose Praziquantel (40mg/kg) under clinical supervision."
+}

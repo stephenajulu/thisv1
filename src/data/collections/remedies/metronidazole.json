@@ -1,0 +1,22 @@
+{
+  "id": "metronidazole",
+  "name": "Metronidazole",
+  "scientificName": "Metronidazole (Antiprotozoal)",
+  "category": "pharmaceutical",
+  "description": "A nitroimidazole antibiotic and antiprotozoal medication. Inhibits nucleic acid synthesis in anaerobic cells, serving as first-line therapy for acute Amoebic Dysentery.",
+  "activeConstituents": [
+    "Metronidazole"
+  ],
+  "preparation": "Oral tablets administered three times daily for 5-10 days.",
+  "safetyRating": "Moderate Caution",
+  "safetyAlert": "Must completely avoid alcohol during therapy and for 48 hours after completion to prevent a severe disulfiram-like reaction.",
+  "interactions": "Do not consume alcohol. Disulfiram-like reactions include vomiting, flush, and tachycardia.",
+  "demographicCautions": [
+    {
+      "populationId": "pregnant-women",
+      "type": "warning",
+      "title": "CLINICAL ADVISORY: First Trimester Caution",
+      "message": "Crosses the placenta rapidly. Avoid during the first trimester of pregnancy unless amoebic abscess complications require urgent clinical therapy."
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "id": "iron-anemia",
+  "name": "Iron-Deficiency Anemia",
+  "scientificName": "Microcytic anemia",
+  "icd11": "3A00",
+  "category": "Nutrition-related Condition",
+  "description": "A chronic lack of healthy red blood cells due to low iron. Exacerbated in tropical zones by parasitic hookworm blood loss and malaria-induced red blood cell lysis.",
+  "symptoms": [
+    "fatigue"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Flooded Farming Fields",
+      "impact": "Damp soil triggers extreme hookworm larval density, increasing skin penetration."
+    }
+  ],
+  "prevention": [
+    "Regular mass deworming campaigns",
+    "Dietary iron enhancers",
+    "Use of protective farm boots"
+  ],
+  "triageAdvisory": "Iron-Deficiency Anemia suspected. Investigate dietary intake and hookworm exposure. Recommend iron-rich Moringa and regular Albendazole deworming."
+}

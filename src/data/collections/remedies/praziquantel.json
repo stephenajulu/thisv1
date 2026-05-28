@@ -1,0 +1,14 @@
+{
+  "id": "praziquantel",
+  "name": "Praziquantel",
+  "scientificName": "Praziquantel (Anthelmintic)",
+  "category": "pharmaceutical",
+  "description": "The gold-standard anthelmintic treatment for Schistosomiasis. Increases calcium permeability of worm membranes, inducing immediate muscular contraction and paralysis of the parasite.",
+  "activeConstituents": [
+    "Praziquantel"
+  ],
+  "preparation": "Weight-calibrated oral tablets administered as a single clinical dose (40mg/kg).",
+  "safetyRating": "Moderate Safety",
+  "safetyAlert": "May cause mild dizziness or abdominal pain as dead parasites release antigens into the portal vein.",
+  "interactions": "Rifampicin co-administration drastically lowers active praziquantel blood levels."
+}

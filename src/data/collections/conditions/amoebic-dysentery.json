@@ -1,0 +1,25 @@
+{
+  "id": "amoebic-dysentery",
+  "name": "Amoebic Dysentery",
+  "scientificName": "Entamoeba histolytica",
+  "icd11": "1A36.0",
+  "category": "Water-borne Pathogen",
+  "description": "A severe intestinal parasitic infection causing bloody diarrhea, abdominal cramps, and mucosal ulcers. Spread via ingestion of raw foods or water contaminated with microscopic cysts.",
+  "symptoms": [
+    "dehydration",
+    "fatigue",
+    "vomiting"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Shallow Well Recessional Drying",
+      "impact": "Forces concentration of cysts in stagnant public water structures during drought peaks."
+    }
+  ],
+  "prevention": [
+    "Rigorous water boiling (minimum 1 minute)",
+    "Sanitation filters",
+    "Hand hygiene"
+  ],
+  "triageAdvisory": "Suspected Amoebic Dysentery. Perform stool microscopy. Administer Metronidazole (Flagyl) followed by a luminal deworming agent. Maintain active rehydration."
+}

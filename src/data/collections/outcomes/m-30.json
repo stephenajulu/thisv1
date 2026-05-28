@@ -1,0 +1,11 @@
+{
+  "id": "m-30",
+  "remedyId": "ginger",
+  "conditionId": "ebola",
+  "targetSymptomId": "vomiting",
+  "gradeQuality": "Low",
+  "recommendationStrength": "Conditional For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Ethnobotanical research and pre-clinical trials confirm ginger decoction suppresses gastric vomiting receptors. Extremely helpful as traditional supportive therapy to aid fluid retention in acute Ebola outbreaks.",
+  "citation": "Journal of Alternative and Complementary Medicine, 2018"
+}

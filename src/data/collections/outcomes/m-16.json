@@ -1,0 +1,11 @@
+{
+  "id": "m-16",
+  "remedyId": "garlic-bulb",
+  "conditionId": "hookworm",
+  "targetSymptomId": "fatigue",
+  "gradeQuality": "Low",
+  "recommendationStrength": "Conditional Against",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Freshly crushed allicin show moderate in-vitro anti-parasitic and anti-larval response. However, clinical in-vivo human studies show highly variable anthelmintic results, making Albendazole vastly superior.",
+  "citation": "Parasitology International, 2021"
+}

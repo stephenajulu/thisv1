@@ -1,0 +1,35 @@
+{
+  "id": "leptospirosis",
+  "name": "Leptospirosis",
+  "scientificName": "Leptospira interrogans infection",
+  "icd11": "1C1A",
+  "category": "Water-borne Pathogen",
+  "description": "A bacterial infection transmitted through water contaminated with the urine of infected rodents. Highly prevalent after tropical monsoons and floods. Causes sudden high fever, headache, vomiting, severe muscle aches (calves), and potentially fatal renal or liver failure (Weil's disease).",
+  "symptoms": [
+    "high-fever",
+    "joint-pain",
+    "fatigue",
+    "jaundice",
+    "vomiting"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Monsoon Flooding",
+      "impact": "Inundation flushes rodent excreta into crop fields, sewers, and rural drinking wells."
+    }
+  ],
+  "prevention": [
+    "Wearing protective boots during farm work",
+    "Avoiding wading in floodwaters",
+    "Rodent control in food storage"
+  ],
+  "climateThreatSchema": {
+    "minTemp": 22,
+    "maxTemp": 38,
+    "minHumidity": 70,
+    "minRainfall": 120,
+    "maxRainfall": 999,
+    "advisory": "LEPTOSPIROSIS FLOOD WATCH: Standing floodwaters contain high rodent urine concentration. Counsel agricultural cohorts to wear high rubber boots and protect skin wounds."
+  },
+  "triageAdvisory": "Leptospirosis suspected. Monitor urine output and scleral icterus (jaundice). Initiate Doxycycline early. Severe cases require intravenous penicillin and supportive critical care."
+}

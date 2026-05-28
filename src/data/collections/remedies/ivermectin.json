@@ -1,0 +1,28 @@
+{
+  "id": "ivermectin",
+  "name": "Ivermectin",
+  "scientificName": "Ivermectin (Broad-Spectrum Antiparasitic)",
+  "category": "pharmaceutical",
+  "description": "A highly effective, broad-spectrum anthelmintic agent. Binds to glutamate-gated chloride channels in nerve cells, paralyzing and killing microfilariae in River Blindness (Onchocerciasis) and severe soil parasitic mites.",
+  "activeConstituents": [
+    "Ivermectin"
+  ],
+  "preparation": "Standard oral tablets administered as a single dose on an empty stomach with water.",
+  "safetyRating": "High Safety",
+  "safetyAlert": "Mass clearing of microfilariae may trigger a mild Mazzotti reaction (fever, rash, pruritus) due to dead parasite antigens; manage with antihistamines.",
+  "interactions": "None major. Highly compatible with massive community preventive programs.",
+  "demographicCautions": [
+    {
+      "populationId": "pregnant-women",
+      "type": "warning",
+      "title": "PREGNANCY CLINICAL CAUTION",
+      "message": "Safety during early embryogenesis is not fully validated. Avoid during the first trimester of pregnancy unless parasitosis threatens maternal survival."
+    },
+    {
+      "populationId": "children-under-5",
+      "type": "warning",
+      "title": "PEDIATRIC LIMITATION: Weight < 15 kg",
+      "message": "Safety and dosing parameters are not established for children weighing less than 15 kg. Avoid routing mass distribution in early infancy."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "id": "cinchona-bark",
+  "name": "Cinchona Bark",
+  "scientificName": "Cinchona officinalis L.",
+  "category": "botanical",
+  "description": "The botanical source bark from which Quinine was originally isolated. Historically used by South American indigenous healers to treat febrile shivering before modern pharmacology.",
+  "activeConstituents": [
+    "Quinine",
+    "Quinidine",
+    "Cinchonine",
+    "Tannins"
+  ],
+  "preparation": "Decoction prepared by boiling 2g of dried bark powder in 250ml water for 15 minutes.",
+  "safetyRating": "High Caution",
+  "safetyAlert": "Highly dangerous if dose is not calibrated. Can induce severe cinchonism (deafness, vomiting, arrhythmias). Prefer modern quinine tablets.",
+  "interactions": "Strong cardiac drug interactions. Do not combine with antiarrhythmics."
+}

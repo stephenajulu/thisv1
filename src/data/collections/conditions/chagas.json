@@ -1,0 +1,24 @@
+{
+  "id": "chagas",
+  "name": "Chagas Disease",
+  "scientificName": "Trypanosoma cruzi infection",
+  "icd11": "1F53",
+  "category": "Vector-borne Disease",
+  "description": "A parasitic infection transmitted by triatomine bugs ('kissing bugs') in rural mud-walled homes. Can lead to chronic life-threatening cardiac enlargement and megacolon years after infection.",
+  "symptoms": [
+    "fatigue",
+    "high-fever"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Substandard Housing Humidity",
+      "impact": "Triatomine bugs proliferate in warm, dark cracks of mud and thatch structures."
+    }
+  ],
+  "prevention": [
+    "Spraying cracks with residual insecticides",
+    "Plastering mud walls",
+    "Using bed nets"
+  ],
+  "triageAdvisory": "Chagas disease suspected. Perform serological testing. Administer Nifurtimox under active clinical observation."
+}

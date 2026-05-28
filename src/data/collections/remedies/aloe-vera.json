@@ -1,0 +1,25 @@
+{
+  "id": "aloe-vera",
+  "name": "Aloe Vera Gel",
+  "scientificName": "Aloe vera (L.) Burm.f.",
+  "category": "botanical",
+  "description": "A succulent plant yielding clear mucilage gel. Accelerates wound epithelization, soothes sunburn inflammation, and exhibits powerful antibacterial properties on cutaneous lesions.",
+  "activeConstituents": [
+    "Acemannan",
+    "Aloin",
+    "Salicylic Acid",
+    "Glucomannan"
+  ],
+  "preparation": "Topical application of fresh inner gel harvested directly from sliced leaves onto cleaned sores.",
+  "safetyRating": "High Safety",
+  "safetyAlert": "Extremely safe for topical dermal applications. Ingestion of raw yellow leaf sap (aloin latex) is contraindicated due to severe purgative cramping.",
+  "interactions": "None known topically.",
+  "demographicCautions": [
+    {
+      "populationId": "pregnant-women",
+      "type": "danger",
+      "title": "CONTRAINDICATION: Oral Aloin Ingestion",
+      "message": "Ingestion of the raw yellow leaf latex (aloin) is strictly contraindicated in pregnancy due to potent uterine stimulating and abortifacient laxative effects. Topical inner gel remains 100% safe."
+    }
+  ]
+}

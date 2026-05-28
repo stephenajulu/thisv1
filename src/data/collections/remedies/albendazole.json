@@ -1,0 +1,22 @@
+{
+  "id": "albendazole",
+  "name": "Albendazole",
+  "scientificName": "Albendazole (Anthelmintic)",
+  "category": "pharmaceutical",
+  "description": "Broad-spectrum modern dewormer. Degrades the cytoplasmic microtubules of intestinal parasites, completely starving the worms of glucose absorption until they perish.",
+  "activeConstituents": [
+    "Albendazole"
+  ],
+  "preparation": "Single oral chewable tablet (200mg or 400mg) administered twice yearly in high-prevalence soil zones.",
+  "safetyRating": "Moderate Safety",
+  "safetyAlert": "Contraindicated in the first trimester of pregnancy due to theoretical teratogenic risks.",
+  "interactions": "Dexamethasone and Praziquantel increase plasma levels of active albendazole metabolite.",
+  "demographicCautions": [
+    {
+      "populationId": "pregnant-women",
+      "type": "danger",
+      "title": "CONTRAINDICATION: First Trimester Pregnancy",
+      "message": "Albendazole dewormer is strictly contraindicated in the first trimester of pregnancy due to theoretical teratogenicity. Avoid unless strictly mandated under clinical supervision."
+    }
+  ]
+}

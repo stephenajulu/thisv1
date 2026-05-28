@@ -1,0 +1,22 @@
+{
+  "id": "onchocerciasis",
+  "name": "Onchocerciasis",
+  "scientificName": "Onchocerca volvulus (River Blindness)",
+  "icd11": "1F68",
+  "category": "Vector-borne Disease",
+  "description": "A parasitic infection transmitted by the bites of infected blackflies breeding in fast-flowing rivers. Causes severe skin itching, depigmentation, and permanent blindness due to microfilariae in the eye.",
+  "symptoms": [
+    "fatigue"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Turbulent Rapid Rivers",
+      "impact": "Blackfly larvae require highly oxygenated, fast-flowing water to complete development."
+    }
+  ],
+  "prevention": [
+    "Mass administration of Ivermectin (Mectizan)",
+    "Aerial larvicide spraying of fast rivers"
+  ],
+  "triageAdvisory": "Onchocerca volvulus infection. Administer single dose Ivermectin (Mectizan) annually to clear microfilariae and prevent eye lesions."
+}

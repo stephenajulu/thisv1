@@ -1,0 +1,11 @@
+{
+  "id": "m-2",
+  "remedyId": "artemisia-annua",
+  "conditionId": "malaria",
+  "targetSymptomId": "high-fever",
+  "gradeQuality": "Moderate",
+  "recommendationStrength": "Conditional Against",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Artemisia annua infusions reduce parasite density and fever, but highly variable artemisinin levels lead to sub-therapeutic blood concentrations. WHO strongly recommends against monotherapy to prevent parasite drug resistance.",
+  "citation": "WHO Monograph / Journal of Ethnopharmacology, 2021"
+}

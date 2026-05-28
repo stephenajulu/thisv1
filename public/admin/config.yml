@@ -16,14 +16,26 @@ collections:
       - { label: "Unique ID", name: "id", widget: "string" }
       - { label: "Disease Name", name: "name", widget: "string" }
       - { label: "Scientific Name", name: "scientificName", widget: "string" }
+      - { label: "ICD-11 Code Badge", name: "icd11", widget: "string" }
       - { label: "Category", name: "category", widget: "select", options: ["Vector-borne Disease", "Climate-linked Health Issue", "Nutrition-related Condition"] }
       - { label: "Detailed Description", name: "description", widget: "text" }
       - { label: "Symptoms (IDs)", name: "symptoms", widget: "list", field: { name: "symptomId", widget: "string" } }
+      - { label: "Local Synonyms & Aliases", name: "synonyms", widget: "list", required: false, field: { name: "synonym", widget: "string" } }
+      - { label: "Pending Clinical Vetting Audit?", name: "pending", widget: "boolean", default: false }
       - { label: "Climate Vulnerability Links", name: "climateLinks", widget: "list", fields: [
           { label: "Weather Trigger", name: "trigger", widget: "string" },
           { label: "Vector/Health Impact", name: "impact", widget: "text" }
         ]}
       - { label: "Prevention Steps", name: "prevention", widget: "list", field: { name: "step", widget: "string" } }
+      - { label: "Triage Bedside Advisory", name: "triageAdvisory", widget: "text" }
+      - { label: "Climate Threat Thresholds & Schema", name: "climateThreatSchema", widget: "object", required: false, fields: [
+          { label: "Minimum Temp Threshold (°C)", name: "minTemp", widget: "number", value_type: "int" },
+          { label: "Maximum Temp Threshold (°C)", name: "maxTemp", widget: "number", value_type: "int" },
+          { label: "Minimum Humidity Threshold (%)", name: "minHumidity", widget: "number", value_type: "int" },
+          { label: "Minimum Rainfall Threshold (mm)", name: "minRainfall", widget: "number", value_type: "int" },
+          { label: "Maximum Rainfall Threshold (mm)", name: "maxRainfall", widget: "number", value_type: "int" },
+          { label: "Outpost Immediate Action Advisory", name: "advisory", widget: "text" }
+        ]}
 
   - name: "remedies"
     label: "Remedies & Interventions"
@@ -39,9 +51,17 @@ collections:
       - { label: "Detailed Description", name: "description", widget: "text" }
       - { label: "Active Constituents", name: "activeConstituents", widget: "list", field: { name: "constituent", widget: "string" } }
       - { label: "Administration / Prep Instructions", name: "preparation", widget: "text" }
-      - { label: "Safety Rating", name: "safetyRating", widget: "select", options: ["Very High Safety", "Moderate Safety", "Moderate Caution", "High Caution"] }
+      - { label: "Safety Rating", name: "safetyRating", widget: "select", options: ["Very High Safety", "High Safety", "Moderate Safety", "Moderate Caution", "High Caution"] }
       - { label: "Safety Alert / Contraindications", name: "safetyAlert", widget: "text" }
       - { label: "Drug-Herb Interactions", name: "interactions", widget: "text" }
+      - { label: "Local Synonyms & Botanical Aliases", name: "synonyms", widget: "list", required: false, field: { name: "synonym", widget: "string" } }
+      - { label: "Pending Peer-Review Audit?", name: "pending", widget: "boolean", default: false }
+      - { label: "Vulnerable Population Cautions", name: "demographicCautions", widget: "list", required: false, fields: [
+          { label: "Population ID", name: "populationId", widget: "select", options: ["pregnant-women", "children-under-5", "subsistence-farmers"] },
+          { label: "Alert Severity Type", name: "type", widget: "select", options: ["info", "warning", "danger"] },
+          { label: "Warning Title", name: "title", widget: "string" },
+          { label: "Warning Details / Message", name: "message", widget: "text" }
+        ]}
 
   - name: "outcomesMatrix"
     label: "Evidence Outcomes Matrix Links"
@@ -54,8 +74,8 @@ collections:
       - { label: "Remedy ID Link", name: "remedyId", widget: "string" }
       - { label: "Condition ID Link", name: "conditionId", widget: "string" }
       - { label: "Target Symptom ID Link", name: "targetSymptomId", widget: "string" }
-      - { label: "Evidence Clinical Grade", name: "evidenceGrade", widget: "select", options: ["A", "B", "C", "D"] }
-      - { label: "Magnitude of Clinical Effect", name: "magnitude", widget: "select", options: ["Strong", "Moderate", "Minor", "Negligible"] }
+      - { label: "GRADE Evidence Quality", name: "gradeQuality", widget: "select", options: ["High", "Moderate", "Low", "Very Low"] }
+      - { label: "GRADE Recommendation Strength", name: "recommendationStrength", widget: "select", options: ["Strong For", "Conditional For", "Conditional Against", "Strong Against"] }
       - { label: "Traditional-Modern Alignment", name: "traditionalAlignment", widget: "select", options: ["High", "Emerging", "Unaligned"] }
       - { label: "Human Clinical Efficacy Summary", name: "clinicalSummary", widget: "text" }
       - { label: "Reference Citation / PubMed URL", name: "citation", widget: "string" }

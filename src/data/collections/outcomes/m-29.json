@@ -1,0 +1,11 @@
+{
+  "id": "m-29",
+  "remedyId": "rifampicin",
+  "conditionId": "buruli-ulcer",
+  "targetSymptomId": "skin-ulcer",
+  "gradeQuality": "High",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "Unaligned",
+  "clinicalSummary": "WHO-backed trials confirm standard 8-week course of Rifampicin combined with Streptomycin or Clarithromycin achieves complete healing of Buruli ulcers in over 90% of early cases.",
+  "citation": "WHO Buruli Ulcer Guidelines, 2021"
+}

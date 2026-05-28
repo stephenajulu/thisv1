@@ -1,0 +1,11 @@
+{
+  "id": "m-5",
+  "remedyId": "oral-rehydration-salts",
+  "conditionId": "dehydration",
+  "targetSymptomId": "dehydration",
+  "gradeQuality": "High",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Coupled sodium-glucose active transport in the gut operates normally even in cholera. Water is aggressively drawn back into tissues, immediately reversing life-threatening hypovolemic shock.",
+  "citation": "Lancet / WHO Rehydration Guidelines"
+}

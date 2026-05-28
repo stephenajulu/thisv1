@@ -1,0 +1,25 @@
+{
+  "id": "zika",
+  "name": "Zika Virus",
+  "scientificName": "Zika virus (ZIKV)",
+  "icd11": "1D21.1",
+  "category": "Vector-borne Disease",
+  "description": "A viral infection transmitted primarily by Aedes mosquitoes. While symptoms are usually mild, maternal Zika infection is strongly linked to microcephaly and severe congenital brain defects in newborns.",
+  "symptoms": [
+    "high-fever",
+    "joint-pain",
+    "fatigue"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Warming Climate Vectors",
+      "impact": "Warm winters expand Aedes mosquito distribution to higher altitudes."
+    }
+  ],
+  "prevention": [
+    "Mosquito prevention during pregnancy",
+    "Condom use in active zones",
+    "Avoiding vector breeding sites"
+  ],
+  "triageAdvisory": "Zika Virus. Supportive therapy. Highly critical to monitor pregnant women due to extreme congenital microcephaly risks."
+}

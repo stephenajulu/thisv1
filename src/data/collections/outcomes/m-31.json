@@ -1,0 +1,11 @@
+{
+  "id": "m-31",
+  "remedyId": "aloe-vera",
+  "conditionId": "solar-dermatitis",
+  "targetSymptomId": "joint-pain",
+  "gradeQuality": "Moderate",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "RCTs prove that topical application of Aloe vera gel significantly reduces skin erythema and accelerates cell regeneration in actinic solar dermatitis caused by high equatorial UV exposure.",
+  "citation": "Journal of Dermatological Treatment, 2020"
+}

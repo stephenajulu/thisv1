@@ -1,0 +1,28 @@
+{
+  "id": "ebola",
+  "name": "Ebola Virus Disease",
+  "scientificName": "Ebola virus disease (EVD)",
+  "icd11": "1D80",
+  "category": "Vector-borne Disease",
+  "description": "A highly severe and fatal viral hemorrhagic fever. Spills over from zoonotic reservoirs (fruit bats) and spreads rapidly via direct contact with blood, secretions, or bodily fluids of infected individuals. Induces massive gastrointestinal vomiting, diarrhea, internal bleeding, and profound dehydration.",
+  "symptoms": [
+    "high-fever",
+    "fatigue",
+    "joint-pain",
+    "dehydration",
+    "vomiting"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Forest Dry Season Scarcity",
+      "impact": "Severe dry droughts force frugivorous bats into human domestic orchards, triggering animal-to-human spillover."
+    }
+  ],
+  "prevention": [
+    "Strict avoidance of bushmeat and fruit bats",
+    "Immediate clinical isolation",
+    "Full Class-4 Personal Protective Equipment (PPE)",
+    "Safe and dignified burial protocols"
+  ],
+  "triageAdvisory": "EMERGENCY WATCH: Isolate suspect immediately. Direct contact strictly prohibited. Notify disease control. Administer aggressive, massive oral/intravenous rehydration alongside monoclonal antibodies."
+}

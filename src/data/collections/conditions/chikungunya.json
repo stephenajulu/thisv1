@@ -1,0 +1,24 @@
+{
+  "id": "chikungunya",
+  "name": "Chikungunya Fever",
+  "scientificName": "Chikungunya virus (CHIKV)",
+  "icd11": "1D21.0",
+  "category": "Vector-borne Disease",
+  "description": "A viral infection transmitted by Aedes mosquitoes. Characterized by sudden fever and severe, chronic joint pain that can persist for months or years, causing significant economic disablement.",
+  "symptoms": [
+    "high-fever",
+    "joint-pain",
+    "fatigue"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Pre-Monsoon Storage",
+      "impact": "Drought-driven household water storage in open containers creates massive Aedes breeding hubs."
+    }
+  ],
+  "prevention": [
+    "Aggressive mosquito population control",
+    "Topical DEET usage"
+  ],
+  "triageAdvisory": "Chikungunya Fever. Supportive therapy. Administer Paracetamol for pain control. Monitor for long-term chronic joint disability."
+}

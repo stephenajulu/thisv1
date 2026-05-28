@@ -1,0 +1,11 @@
+{
+  "id": "m-27",
+  "remedyId": "doxycycline",
+  "conditionId": "scrub-typhus",
+  "targetSymptomId": "high-fever",
+  "gradeQuality": "High",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "Unaligned",
+  "clinicalSummary": "RCTs confirm first-line oral Doxycycline eliminates Orientia tsutsugamushi, resolving fever within 24-48 hours and preventing severe systemic organ failure.",
+  "citation": "NEJM Clinical Protocols, 2021"
+}

@@ -1,0 +1,16 @@
+{
+  "id": "garlic-bulb",
+  "name": "Garlic Extract",
+  "scientificName": "Allium sativum L.",
+  "category": "botanical",
+  "description": "Traditional bulbous plant. Organosulfur compounds exhibit powerful in-vitro and in-vivo anti-microbial, anti-parasitic, and vascular protective properties.",
+  "activeConstituents": [
+    "Alliin",
+    "Allicin",
+    "Ajoene"
+  ],
+  "preparation": "Crushed fresh garlic cloves (1-2 cloves daily) consumed raw or diluted in warm botanical oil.",
+  "safetyRating": "High Safety",
+  "safetyAlert": "Safe in dietary amounts. High clinical doses may increase bleeding risk.",
+  "interactions": "Use caution when combined with antiplatelet drugs (Aspirin) or HIV protease inhibitors."
+}

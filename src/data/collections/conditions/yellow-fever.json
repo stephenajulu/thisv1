@@ -1,0 +1,23 @@
+{
+  "id": "yellow-fever",
+  "name": "Yellow Fever",
+  "scientificName": "Yellow fever virus (YFV)",
+  "icd11": "1D22",
+  "category": "Vector-borne Disease",
+  "description": "An acute viral hemorrhagic disease transmitted by infected Haemagogus or Aedes mosquitoes. Causes severe jaundice ('yellow' skin/eyes due to liver damage), vomiting, and hemorrhaging.",
+  "symptoms": [
+    "high-fever",
+    "fatigue"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Forest Fringe Warming",
+      "impact": "Elevates viral transmission cycle between jungle monkeys and forest mosquitoes."
+    }
+  ],
+  "prevention": [
+    "Single-dose Yellow Fever vaccine (provides lifelong immunity)",
+    "Mosquito netting"
+  ],
+  "triageAdvisory": "Yellow Fever suspected. Immediate isolation and supportive therapy. Do NOT give NSAIDs (Aspirin/Ibuprofen) due to bleeding risks."
+}

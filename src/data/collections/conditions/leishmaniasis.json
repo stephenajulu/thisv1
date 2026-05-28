@@ -1,0 +1,24 @@
+{
+  "id": "leishmaniasis",
+  "name": "Leishmaniasis",
+  "scientificName": "Leishmania donovani / tropica",
+  "icd11": "1F54",
+  "category": "Vector-borne Disease",
+  "description": "A disease caused by protozoan parasites transmitted through the bites of infected sandflies. Cutaneous form causes severe disfiguring skin ulcers; Visceral form (Kala-azar) is fatal, attacking the spleen and liver.",
+  "symptoms": [
+    "high-fever",
+    "fatigue"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Deforestation & Warming",
+      "impact": "Changes sandfly distribution, shifting vector breeding habitats closer to rural settlements."
+    }
+  ],
+  "prevention": [
+    "Insecticide-treated bed nets",
+    "Vector control spraying",
+    "Immediate clinical diagnosis and therapy"
+  ],
+  "triageAdvisory": "Leishmaniasis suspected. Perform skin biopsy or splenic aspirate. Initiate specialized antiprotozoal treatment."
+}

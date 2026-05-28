@@ -1,0 +1,11 @@
+{
+  "id": "m-15",
+  "remedyId": "hibiscus-flowers",
+  "conditionId": "dehydration",
+  "targetSymptomId": "dehydration",
+  "gradeQuality": "Moderate",
+  "recommendationStrength": "Conditional For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Roselle tea is exceptionally high in organic acids and potassium, acting as a highly safe, refreshing rehydration beverage in arid tropical regions. Anthocyanins also show mild ACE-inhibiting hypotensive properties.",
+  "citation": "Journal of Ethnopharmacology, 2020"
+}

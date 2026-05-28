@@ -1,0 +1,11 @@
+{
+  "id": "m-14",
+  "remedyId": "ciprofloxacin",
+  "conditionId": "typhoid",
+  "targetSymptomId": "high-fever",
+  "gradeQuality": "High",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "Unaligned",
+  "clinicalSummary": "Highly potent fluoroquinolone. Rapidly clears Salmonella Typhi and resolves step-ladder fever in sensitive strains. Highly recommended for severe cases where local resistance profile is low.",
+  "citation": "American Journal of Tropical Medicine, 2018"
+}

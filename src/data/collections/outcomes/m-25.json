@@ -1,0 +1,11 @@
+{
+  "id": "m-25",
+  "remedyId": "guava-leaves",
+  "conditionId": "amoebic-dysentery",
+  "targetSymptomId": "dehydration",
+  "gradeQuality": "Moderate",
+  "recommendationStrength": "Conditional For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Clinical trials and ethnobotanical studies confirm guava leaf decoction possesses significant antispasmodic, anti-secretory, and anti-microbial activities that lessen diarrheal severity.",
+  "citation": "Journal of Ethnopharmacology, 2018"
+}

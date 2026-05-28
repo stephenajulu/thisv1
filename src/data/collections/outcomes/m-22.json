@@ -1,0 +1,11 @@
+{
+  "id": "m-22",
+  "remedyId": "oral-rehydration-salts",
+  "conditionId": "cholera",
+  "targetSymptomId": "dehydration",
+  "gradeQuality": "High",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Primary life-saving therapeutic. Immediate, aggressive administration of low-osmolarity ORS prevents fatal hypovolemic dehydration in up to 90% of severe Vibrio cholerae episodes.",
+  "citation": "WHO Diarrhoeal Disease Control Manual, 2021"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "heat-stroke",
+  "name": "Severe Heat Stroke",
+  "scientificName": "Hyperthermia",
+  "icd11": "NF00.0",
+  "category": "Climate-linked Health Issue",
+  "description": "A medical emergency when core body temperature rises above 40°C due to extreme heat exposure and failure of thermoregulation. Causes confusion, hot dry skin, and rapid multi-organ failure.",
+  "symptoms": [
+    "high-fever",
+    "dehydration"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "High Humidity Heatwaves",
+      "impact": "Humidity disables sweat evaporation, completely shutting down the human body's native cooling mechanism."
+    }
+  ],
+  "prevention": [
+    "Immediate cool water immersion",
+    "ORS administration",
+    "Resting in shaded wind-tunnels"
+  ],
+  "climateThreatSchema": {
+    "minTemp": 38,
+    "maxTemp": 99,
+    "minHumidity": 60,
+    "minRainfall": 0,
+    "maxRainfall": 999,
+    "advisory": "SEVERE HEATSTROKE EMERGENCY: Heatwave disables body cooling. Set up cool water immersion basins, stock cold fluids, and mandate resting in shaded breeze areas."
+  },
+  "triageAdvisory": "EMERGENCY: Hyperthermia >40°C. Initiate immediate cool water immersion, cold compress, and fan cooling. Avoid antipyretics (ineffective in heatstroke)."
+}

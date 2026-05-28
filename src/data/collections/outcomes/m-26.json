@@ -1,0 +1,11 @@
+{
+  "id": "m-26",
+  "remedyId": "doxycycline",
+  "conditionId": "leptospirosis",
+  "targetSymptomId": "high-fever",
+  "gradeQuality": "High",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "Unaligned",
+  "clinicalSummary": "Double-blind clinical trials confirm early administration of Doxycycline rapidly clears Leptospira bacteremia, reducing severity and preventing development of Weil's syndrome.",
+  "citation": "Lancet Infectious Diseases, 2019"
+}

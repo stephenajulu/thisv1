@@ -1,0 +1,11 @@
+{
+  "id": "m-17",
+  "remedyId": "lemongrass",
+  "conditionId": "dengue",
+  "targetSymptomId": "high-fever",
+  "gradeQuality": "Low",
+  "recommendationStrength": "Conditional For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Topical application of citral-rich lemongrass oil acts as a moderate personal spatial repellent against Aedes vectors. Lacks human trial evidence to treat active Dengue infections.",
+  "citation": "Tropical Biomedicine Journal, 2019"
+}

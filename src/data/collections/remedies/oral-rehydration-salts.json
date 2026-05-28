@@ -1,0 +1,25 @@
+{
+  "id": "oral-rehydration-salts",
+  "name": "Oral Rehydration Salts (ORS)",
+  "scientificName": "WHO electrolyte rehydration sachet",
+  "category": "pharmaceutical",
+  "description": "Balanced glucose-electrolyte rehydration sachet. Glucose-coupled sodium absorption in the gut drives water back into cells, saving lives from hypovolemic shock.",
+  "activeConstituents": [
+    "Sodium Chloride",
+    "Glucose Anhydrous",
+    "Potassium Chloride",
+    "Citrate"
+  ],
+  "preparation": "Dissolve 1 sachet in exactly 1 Liter of clean water. Sip frequently.",
+  "safetyRating": "Extremely Safe",
+  "safetyAlert": "Ensure exact water ratio. Hypertonic solutions (too concentrated) will drive osmotic fluid out of tissues and worsen diarrhea.",
+  "interactions": "None. Highly compatible with all botanical therapies.",
+  "demographicCautions": [
+    {
+      "populationId": "children-under-5",
+      "type": "info",
+      "title": "PREPARATION ADVICE: Electrolyte precision",
+      "message": "ORS is extremely safe and a primary lifesaver. Ensure the sachet is mixed in exactly 1 Liter of clean water. Worsened dehydration can occur if mixed too concentrated."
+    }
+  ]
+}

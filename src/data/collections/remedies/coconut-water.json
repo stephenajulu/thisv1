@@ -1,0 +1,26 @@
+{
+  "id": "coconut-water",
+  "name": "Coconut Water",
+  "scientificName": "Cocos nucifera L. fluid",
+  "category": "botanical",
+  "description": "The clear, naturally sterile liquid inside young green coconuts. Exceptionally rich in potassium, natural glucose, and electrolytes, serving as a highly effective hydration standard in tropical zones.",
+  "activeConstituents": [
+    "Potassium",
+    "Sodium",
+    "Magnesium",
+    "Electrolyte Salts",
+    "Cytokinins"
+  ],
+  "preparation": "Young green coconut sliced open and the sterile water consumed directly. Drink slowly.",
+  "safetyRating": "Very High Safety",
+  "safetyAlert": "Extremely safe. Provides a outstanding natural electrolyte rehydration fallback when clinical packages are stocked out.",
+  "interactions": "Fully compatible with all oral therapies. Promotes rapid renal clearing.",
+  "demographicCautions": [
+    {
+      "populationId": "children-under-5",
+      "type": "info",
+      "title": "EXCELLENT pediatric rehydration fallback",
+      "message": "Coconut water provides a sterile, highly potassium-rich natural hydration fluid when ORS packages are unavailable. Administer slowly in sips."
+    }
+  ]
+}

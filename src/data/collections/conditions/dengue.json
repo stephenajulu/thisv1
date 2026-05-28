@@ -1,0 +1,34 @@
+{
+  "id": "dengue",
+  "name": "Dengue Fever",
+  "scientificName": "Dengue virus (DENV 1-4)",
+  "icd11": "1D20",
+  "category": "Vector-borne Disease",
+  "description": "A viral infection transmitted by Aedes aegypti mosquitoes. Features rapid high fever, excruciating skeletal pain ('breakbone fever'), and critical platelet depletion.",
+  "symptoms": [
+    "high-fever",
+    "joint-pain",
+    "platelet-drop",
+    "fatigue"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Warm Humidity Spikes",
+      "impact": "Accelerates Aedes viral replication and biting frequency."
+    }
+  ],
+  "prevention": [
+    "Eliminating artificial water standing pools",
+    "Topical repellents",
+    "Larvicides"
+  ],
+  "climateThreatSchema": {
+    "minTemp": 25,
+    "maxTemp": 34,
+    "minHumidity": 50,
+    "minRainfall": 31,
+    "maxRainfall": 999,
+    "advisory": "DENGUE OUTBREAK ADVISORY: Conduct community campaign to cover water barrels, spray Aedes vector habitats, and warn caregivers to avoid NSAID painkillers (use Paracetamol only)."
+  },
+  "triageAdvisory": "High risk of Dengue Fever. Platelet count monitoring required. Do NOT administer NSAIDs (Ibuprofen, Aspirin) as they increase hemorrhagic risk. Use Paracetamol for fever control."
+}

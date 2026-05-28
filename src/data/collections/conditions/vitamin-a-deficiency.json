@@ -1,0 +1,22 @@
+{
+  "id": "vitamin-a-deficiency",
+  "name": "Vitamin A Deficiency",
+  "scientificName": "Xerophthalmia",
+  "icd11": "5C60",
+  "category": "Nutrition-related Condition",
+  "description": "A critical dietary lack of Vitamin A. Leading cause of preventable childhood blindness in the tropics and severely compromises immune response to measles and diarrheal pathogens.",
+  "symptoms": [
+    "fatigue"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Crop Failure & Drought",
+      "impact": "Drying of gardens reduces immediate access to orange beta-carotene fruits and green leaves."
+    }
+  ],
+  "prevention": [
+    "High-dose Vitamin A capsules twice yearly",
+    "Cultivation of biofortified crops (Orange Sweet Potato)"
+  ],
+  "triageAdvisory": "Vitamin A deficiency. Administer high-dose Vitamin A capsules immediately and repeat at 6-month intervals to prevent childhood blindness."
+}

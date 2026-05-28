@@ -1,0 +1,24 @@
+{
+  "id": "buruli-ulcer",
+  "name": "Buruli Ulcer",
+  "scientificName": "Mycobacterium ulcerans infection",
+  "icd11": "1B21",
+  "category": "Climate-linked Health Issue",
+  "description": "A chronic, necrotizing skin disease caused by Mycobacterium ulcerans. The bacterium secretes an immunosuppressive toxin (mycolactone) that destroys subcutaneous fat and tissues, leading to massive, painless open ulcers primarily on the limbs.",
+  "symptoms": [
+    "fatigue",
+    "skin-ulcer"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Slow River Recessions",
+      "impact": "Low water flow and slow riverbeds foster mycobacterial biofilms on aquatic vegetation, exposing rural farmers."
+    }
+  ],
+  "prevention": [
+    "Wearing long clothing while working in swamps",
+    "Prompt washing and dressing of agricultural skin scratches",
+    "Improved personal hygiene and water sanitation"
+  ],
+  "triageAdvisory": "Suspected Buruli Ulcer. Secure PCR swab of the undermined ulcer edge. Initiate standard WHO antibiotic course (Rifampicin + Clarithromycin or Streptomycin) daily for 8 weeks."
+}

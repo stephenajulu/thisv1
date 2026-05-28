@@ -1,0 +1,23 @@
+{
+  "id": "artemether-lumefantrine",
+  "name": "Artemether-Lumefantrine (ACT)",
+  "scientificName": "Artemether / Lumefantrine combination therapy",
+  "category": "pharmaceutical",
+  "description": "The primary gold-standard WHO first-line antimalarial therapy. Artemether clears 99% of parasites rapidly, while Lumefantrine has a long half-life to clear residual parasitemia.",
+  "activeConstituents": [
+    "Artemether",
+    "Lumefantrine"
+  ],
+  "preparation": "Administered as standard oral tablets. Must be taken with fatty food/milk to double lumefantrine absorption.",
+  "safetyRating": "Moderate Safety",
+  "safetyAlert": "Ensure completion of the full 3-day clinical course (6 doses) to prevent immediate recrudescence and drug resistance.",
+  "interactions": "Do not combine with class IA/III antiarrhythmics or drugs prolonging QT interval.",
+  "demographicCautions": [
+    {
+      "populationId": "pregnant-women",
+      "type": "warning",
+      "title": "PREGNANCY CLINICAL WARNING",
+      "message": "Avoid ACTs in the first trimester of pregnancy if other WHO-approved treatments are available, though severe malaria cases require immediate saving of the mother's life under expert guidelines."
+    }
+  ]
+}

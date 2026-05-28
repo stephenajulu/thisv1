@@ -1,0 +1,14 @@
+{
+  "id": "rifampicin",
+  "name": "Rifampicin",
+  "scientificName": "Rifampin (Rifamycin Antibiotic)",
+  "category": "pharmaceutical",
+  "description": "A highly powerful rifamycin antibiotic. Inhibits bacterial DNA-dependent RNA polymerase, serving as the primary antimycobacterial standard for Buruli Ulcer and Leprosy.",
+  "activeConstituents": [
+    "Rifampicin"
+  ],
+  "preparation": "Oral capsules administered daily on an empty stomach to ensure maximum absorption.",
+  "safetyRating": "Moderate Safety",
+  "safetyAlert": "Induces completely harmless orange-red discoloration of urine, sweat, tears, and saliva. Monitor liver function regularly in extended courses.",
+  "interactions": "Extremely strong inducer of hepatic CYP450 enzymes. Drastically lowers blood levels of oral contraceptives, warfarins, and anti-retrovirals."
+}

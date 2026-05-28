@@ -1,0 +1,28 @@
+{
+  "id": "doxycycline",
+  "name": "Doxycycline",
+  "scientificName": "Doxycycline Hyclate",
+  "category": "pharmaceutical",
+  "description": "A highly potent, broad-spectrum tetracycline antibiotic. Interferes with bacterial protein synthesis. It serves as the clinical first-line therapy for Leptospirosis and Scrub Typhus, and is also highly utilized for malaria prophylaxis.",
+  "activeConstituents": [
+    "Doxycycline"
+  ],
+  "preparation": "Oral capsules/tablets administered once or twice daily after food with a full glass of water. Patient must remain upright for 30 minutes to prevent severe esophageal ulceration.",
+  "safetyRating": "Moderate Caution",
+  "safetyAlert": "Highly photosensitizing; increases severe sunburn risk under equatorial UV. Contraindicated in children and pregnancy due to permanent tooth staining.",
+  "interactions": "Absorption is drastically reduced if taken concurrently with iron, calcium, dairy, or antacids.",
+  "demographicCautions": [
+    {
+      "populationId": "children-under-5",
+      "type": "danger",
+      "title": "CONTRAINDICATION: Permanent Enamel Staining",
+      "message": "Doxycycline binds to calcium during tooth development, causing permanent brown/yellow discoloration of teeth and enamel hypoplasia. Do not administer to children under 8 years unless in life-threatening rickettsial conditions."
+    },
+    {
+      "populationId": "pregnant-women",
+      "type": "danger",
+      "title": "CONTRAINDICATION: Fetal Skeletal Retardation",
+      "message": "Crosses the placenta. Associated with deceleration of bone growth and skeletal staining in the fetus, alongside increased maternal liver necrosis risks. Strongly contraindicated."
+    }
+  ]
+}

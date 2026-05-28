@@ -1,0 +1,11 @@
+{
+  "id": "m-8",
+  "remedyId": "baobab-fruit",
+  "conditionId": "iron-anemia",
+  "targetSymptomId": "fatigue",
+  "gradeQuality": "Moderate",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Clinical dietary trials demonstrate the organic acid content of Adansonia digitata fruit pulp powder acts as a potent non-heme iron absorption enhancer. Significantly reduces fatigue index in rural schools.",
+  "citation": "Journal of Nutritional Science, 2019"
+}

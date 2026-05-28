@@ -1,0 +1,36 @@
+{
+  "id": "neem-leaves",
+  "name": "Neem Leaves",
+  "scientificName": "Azadirachta indica (Neem)",
+  "category": "botanical",
+  "synonyms": [
+    "dogonyaro",
+    "nim",
+    "margosa",
+    "indian lilac"
+  ],
+  "description": "Cornerstone tree of traditional medicine. AZADIRACHTIN compounds exhibit potent anti-insecticidal properties, disrupting vector larval development.",
+  "activeConstituents": [
+    "Azadirachtin",
+    "Nimbin",
+    "Quercetin"
+  ],
+  "preparation": " Topical leaf oil applied as mosquito repellent, or leaf smudge burning to clear vector flies.",
+  "safetyRating": "High Caution",
+  "safetyAlert": "Strongly contraindicated in pregnancy (potent abortifacient). Oral Neem seed oil is toxic in children, causing liver damage.",
+  "interactions": "May lower blood sugar; check glucose when taking pharmaceutical antidiabetics.",
+  "demographicCautions": [
+    {
+      "populationId": "pregnant-women",
+      "type": "danger",
+      "title": "EXTREME ALERT: Neem is contraindicated in pregnancy",
+      "message": "Scientific research confirms Neem leaf extracts have potent abortifacient properties and can stimulate uterine contractions, causing miscarriage. Do not ingest under any circumstances during pregnancy."
+    },
+    {
+      "populationId": "children-under-5",
+      "type": "danger",
+      "title": "CRITICAL ALERT: Neem seed oil hepatotoxicity",
+      "message": "Documented clinical cases show oral consumption of Neem seed oil in infants causes toxic encephalopathy, mitochondrial damage, and severe Reye-like syndrome. Never administer internally."
+    }
+  ]
+}

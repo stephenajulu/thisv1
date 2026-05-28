@@ -1,0 +1,25 @@
+{
+  "id": "lassa-fever",
+  "name": "Lassa Fever",
+  "scientificName": "Lassa mammarenavirus infection",
+  "icd11": "1D81",
+  "category": "Vector-borne Disease",
+  "description": "An acute viral hemorrhagic illness transmitted to humans through contact with food or household items contaminated with rodent excreta. Endemic to parts of West Africa, causing severe fevers and bleeding.",
+  "symptoms": [
+    "high-fever",
+    "fatigue",
+    "joint-pain"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Dry Season Agricultural Smudging",
+      "impact": "Forces Mastomys rodent vectors out of forest fringe habitats into village grain silos."
+    }
+  ],
+  "prevention": [
+    "Storing household grains in airtight metal drums",
+    "Sustained domestic rodent controls",
+    "Avoiding consumption of raw bushmeat"
+  ],
+  "triageAdvisory": "Lassa Fever suspected. Run ELISA or RT-PCR tests. Initiate early Ribavirin administration under strict isolation. Supportive hydration is critical. Do NOT give Aspirin/NSAIDs."
+}

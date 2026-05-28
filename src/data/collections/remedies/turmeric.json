@@ -1,0 +1,17 @@
+{
+  "id": "turmeric",
+  "name": "Turmeric Powder",
+  "scientificName": "Curcuma longa L.",
+  "category": "botanical",
+  "description": "A golden-yellow rhizome spice. Curcumin compounds serve as a highly powerful natural anti-inflammatory agent, actively down-regulating NF-kB and COX-2 inflammatory pathways to relieve severe bone/joint pain.",
+  "activeConstituents": [
+    "Curcumin",
+    "Demethoxycurcumin",
+    "Bisdemethoxycurcumin",
+    "Zingiberene"
+  ],
+  "preparation": "1-2g of dried powder mixed in warm beverage. Must be paired with a pinch of black pepper (piperine) to increase bioavailability of curcumin by 2000%.",
+  "safetyRating": "Very High Safety",
+  "safetyAlert": "Extremely safe and non-toxic. Avoid massive concentrated extracts in active gallstone biliary obstructions.",
+  "interactions": "Synergistic anti-inflammatory response when combined with other traditional or clinical analgesics."
+}

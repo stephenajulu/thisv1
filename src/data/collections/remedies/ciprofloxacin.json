@@ -1,0 +1,14 @@
+{
+  "id": "ciprofloxacin",
+  "name": "Ciprofloxacin",
+  "scientificName": "Ciprofloxacin Hydrochloride (Fluoroquinolone)",
+  "category": "pharmaceutical",
+  "description": "Broad-spectrum fluoroquinolone antibiotic. Inhibits bacterial DNA gyrase, reserved for severe systemic water-borne bacterial infections like acute Typhoid Fever.",
+  "activeConstituents": [
+    "Ciprofloxacin"
+  ],
+  "preparation": "Oral tablets or IV drip under active clinical diagnosis.",
+  "safetyRating": "Moderate Caution",
+  "safetyAlert": "Avoid routine overuse due to rapid emergence of fluoroquinolone resistance in typhoid strains. Risk of tendon rupture.",
+  "interactions": "Do not take concurrently with dairy or calcium-fortified juices; reduces absorption by 50%."
+}

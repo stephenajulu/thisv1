@@ -1,0 +1,25 @@
+{
+  "id": "dracunculiasis",
+  "name": "Dracunculiasis (Guinea Worm)",
+  "scientificName": "Dracunculus medinensis",
+  "icd11": "1F6F",
+  "category": "Water-borne Pathogen",
+  "description": "Guinea Worm Disease. A debilitating parasitic worm infection contracted by drinking stagnant water contaminated with microscopic fleas (cyclops) harboring larvae. The adult worm grows up to 1 meter in length, migrating slowly to emerge through a burning skin blister on the limbs.",
+  "symptoms": [
+    "joint-pain",
+    "fatigue",
+    "skin-ulcer"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Dry Season Pond Concentration",
+      "impact": "Evaporative water scarcity forces communities to share concentrated stagnant surface ponds, expanding cyclops ingestion risk."
+    }
+  ],
+  "prevention": [
+    "Filtering drinking water through fine mesh filters",
+    "Preventing patients with emerging worms from entering water sources",
+    "Treatment of surface ponds with larvicides"
+  ],
+  "triageAdvisory": "Guinea Worm emerging. Keep the wound clean and moist. Slowly wind the emerging worm around a sterile stick (a few centimeters daily). Do NOT pull forcefully; worm rupture causes severe anaphylaxis."
+}

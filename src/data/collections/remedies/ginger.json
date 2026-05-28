@@ -1,0 +1,25 @@
+{
+  "id": "ginger",
+  "name": "Ginger Rhizome",
+  "scientificName": "Zingiber officinale Roscoe",
+  "category": "botanical",
+  "description": "A traditional warming rhizome. Highly loaded with gingerols and shogaols that possess powerful anti-emetic, gastroprotective, and anti-inflammatory properties. Reduces severe nausea and fever distress.",
+  "activeConstituents": [
+    "Gingerols",
+    "Shogaols",
+    "Zingiberene",
+    "Diarylheptanoids"
+  ],
+  "preparation": "Decoction prepared by boiling 3-5g of fresh sliced ginger in 250ml water for 10 minutes, consumed warm.",
+  "safetyRating": "Very High Safety",
+  "safetyAlert": "Highly safe and well tolerated. Promotes stomach emptying. High doses should be used cautiously in bleeding disorders.",
+  "interactions": "May mildly enhance antiplatelet drugs (Aspirin); monitor in severe hemorrhagic climates.",
+  "demographicCautions": [
+    {
+      "populationId": "pregnant-women",
+      "type": "info",
+      "title": "EXCELLENT PREGNANCY ANTI-EMETIC",
+      "message": "Highly effective and scientifically validated for resolving early morning nausea and pregnancy vomiting. Safe at typical dietary strengths (1-2g daily)."
+    }
+  ]
+}

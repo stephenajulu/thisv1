@@ -1,0 +1,23 @@
+{
+  "id": "sleeping-sickness",
+  "name": "African Trypanosomiasis",
+  "scientificName": "Trypanosoma brucei (Sleeping Sickness)",
+  "icd11": "1F52",
+  "category": "Vector-borne Disease",
+  "description": "A parasitic disease transmitted by the bite of the tsetse fly in rural Sub-Saharan Africa. The parasite crosses the blood-brain barrier, causing severe neurological disruption and reversing sleep cycles.",
+  "symptoms": [
+    "high-fever",
+    "fatigue"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Woodland Encroachment",
+      "impact": "Savannah tsetse fly zones expand with shifts in tropical humidity and cattle movements."
+    }
+  ],
+  "prevention": [
+    "Use of tsetse fly vector traps",
+    "Proactive screening of remote farming populations"
+  ],
+  "triageAdvisory": "African Trypanosomiasis (Sleeping Sickness). Perform lumbar puncture to assess neurological stage. Administer targeted specialized antiprotozoal drugs."
+}

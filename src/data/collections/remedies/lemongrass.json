@@ -1,0 +1,16 @@
+{
+  "id": "lemongrass",
+  "name": "Lemongrass Oil & Tea",
+  "scientificName": "Cymbopogon citratus",
+  "category": "botanical",
+  "description": "A fragrant grass yielding citronella essential oils. Burning lemongrass smudge acts as a highly effective, traditional spatial mosquito vector repellent.",
+  "activeConstituents": [
+    "Citral",
+    "Myrcene",
+    "Geraniol"
+  ],
+  "preparation": "Essential oil diluted in coconut carrier oil applied topically, or dried grass smudge burned in clay pots.",
+  "safetyRating": "Moderate Safety",
+  "safetyAlert": "Do not apply undiluted lemongrass essential oil directly to skin; can cause severe contact dermatitis.",
+  "interactions": "None known."
+}

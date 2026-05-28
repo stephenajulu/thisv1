@@ -1,0 +1,33 @@
+{
+  "id": "malaria",
+  "name": "Malaria",
+  "scientificName": "Plasmodium falciparum / vivax infection",
+  "icd11": "1F40",
+  "category": "Vector-borne Disease",
+  "description": "A life-threatening parasitic disease transmitted through female Anopheles mosquitoes. Causes high fever, severe rigors, and anemia. Exacerbated by humid monsoon rains.",
+  "symptoms": [
+    "high-fever",
+    "chills",
+    "fatigue"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Monsoon Rainfall",
+      "impact": "Creates massive breeding pools for Anopheles larvae."
+    }
+  ],
+  "prevention": [
+    "Insecticide-treated bed nets (ITNs)",
+    "Indoor residual spraying",
+    "Clearing stagnant pools"
+  ],
+  "climateThreatSchema": {
+    "minTemp": 22,
+    "maxTemp": 32,
+    "minHumidity": 60,
+    "minRainfall": 80,
+    "maxRainfall": 250,
+    "advisory": "MALARIA ACTIVE THREAT: Deploy LLIN bed nets to all households, initiate vector-larvicide treatment of stagnant pools, and stock Artemether-Lumefantrine (ACT) tablets at outposts."
+  },
+  "triageAdvisory": "Highly suggestive of Malaria. Run a Rapid Diagnostic Test (RDT) or thick blood smear immediately. If positive, initiate standard Artemisinin-based Combination Therapy (ACT)."
+}

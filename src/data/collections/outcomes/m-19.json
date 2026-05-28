@@ -1,0 +1,11 @@
+{
+  "id": "m-19",
+  "remedyId": "baobab-fruit",
+  "conditionId": "malnutrition-sam",
+  "targetSymptomId": "fatigue",
+  "gradeQuality": "Low",
+  "recommendationStrength": "Conditional For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Pectin-rich baobab powder acts as a natural prebiotic, stabilizing microflora and improving nutrient absorption in moderately malnourished children. Should be paired with energy-dense lipids.",
+  "citation": "African Journal of Ecology, 2020"
+}
