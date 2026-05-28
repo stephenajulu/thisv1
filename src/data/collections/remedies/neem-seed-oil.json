@@ -3,6 +3,7 @@
   "name": "Neem Seed Oil",
   "scientificName": "Azadirachta indica seed extract",
   "category": "botanical",
+  "hepatotoxic": true,
   "description": "An organic cold-pressed oil extracted from the kernels of the Azadirachta indica tree. Rich in Azadirachtin, Salannin, and Nimbin, it acts as a potent botanical acaricide, anti-inflammatory, and insect growth regulator that disrupts mite reproduction, feeding, and shell development.",
   "activeConstituents": [
     "Azadirachtin",

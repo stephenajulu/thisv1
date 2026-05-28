@@ -3,6 +3,7 @@
   "name": "Cinchona Bark",
   "scientificName": "Cinchona officinalis L.",
   "category": "botanical",
+  "hepatotoxic": true,
   "description": "The botanical source bark from which Quinine was originally isolated. Historically used by South American indigenous healers to treat febrile shivering before modern pharmacology.",
   "activeConstituents": [
     "Quinine",

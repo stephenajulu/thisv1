@@ -3,6 +3,7 @@
   "name": "Metronidazole",
   "scientificName": "Metronidazole (Antiprotozoal)",
   "category": "pharmaceutical",
+  "hepatotoxic": true,
   "description": "A nitroimidazole antibiotic and antiprotozoal medication. Inhibits nucleic acid synthesis in anaerobic cells, serving as first-line therapy for acute Amoebic Dysentery.",
   "activeConstituents": [
     "Metronidazole"

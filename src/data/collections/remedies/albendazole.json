@@ -3,6 +3,7 @@
   "name": "Albendazole",
   "scientificName": "Albendazole (Anthelmintic)",
   "category": "pharmaceutical",
+  "hepatotoxic": true,
   "description": "Broad-spectrum modern dewormer. Degrades the cytoplasmic microtubules of intestinal parasites, completely starving the worms of glucose absorption until they perish.",
   "activeConstituents": [
     "Albendazole"

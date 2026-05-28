@@ -328,5 +328,50 @@ path[class*="fill-rose-500/25"] {
   }
 }
 
+/* ========================================================
+   PHASE 3.4: DILI & RUCAM LIVER INJURY STYLES & ANIMATIONS
+   ======================================================== */
+.hepatocellular-pulse {
+  animation: hepatocellular-hazard 2s infinite ease-in-out;
+}
 
+.cholestatic-pulse {
+  animation: cholestatic-hazard 2.5s infinite ease-in-out;
+}
 
+.mixed-pulse {
+  animation: mixed-hazard 2.2s infinite ease-in-out;
+}
+
+@keyframes hepatocellular-hazard {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.4);
+    border-color: rgba(225, 29, 72, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 12px 4px rgba(225, 29, 72, 0.2);
+    border-color: rgba(225, 29, 72, 0.8);
+  }
+}
+
+@keyframes cholestatic-hazard {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.3);
+    border-color: rgba(14, 165, 233, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 10px 3px rgba(14, 165, 233, 0.15);
+    border-color: rgba(14, 165, 233, 0.8);
+  }
+}
+
+@keyframes mixed-hazard {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.3);
+    border-color: rgba(245, 158, 11, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 10px 3px rgba(245, 158, 11, 0.15);
+    border-color: rgba(245, 158, 11, 0.8);
+  }
+}
