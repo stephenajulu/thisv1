@@ -6,10 +6,10 @@
   "category": "Bacterial Nerve Infection",
   "description": "An acute, often fatal bacterial disease caused by Clostridium tetani spores contaminating puncture wounds, deep cuts, or the umbilical stump in unhygienic deliveries. The bacteria release tetanospasmin, a potent neurotoxin that blocks inhibitory neurotransmitters, leading to severe lockjaw, neck stiffness, and painful generalized muscle spasms.",
   "symptoms": [
-    "muscle-spasms",
-    "neck-stiffness",
-    "joint-pain",
-    "fatigue"
+    { "id": "muscle-spasms", "weight": "primary" },
+    { "id": "neck-stiffness", "weight": "primary" },
+    { "id": "joint-pain", "weight": "secondary" },
+    { "id": "fatigue", "weight": "secondary" }
   ],
   "climateLinks": [
     {

@@ -6,8 +6,9 @@
   "category": "Water-borne Pathogen",
   "description": "An acute diarrheal infection caused by ingestion of food or water contaminated with Vibrio cholerae. Induces rapid, severe watery stools ('rice-water stool') and profound hypovolemic shock.",
   "symptoms": [
-    "dehydration",
-    "fatigue"
+    { "id": "watery-diarrhea", "weight": "primary" },
+    { "id": "dehydration", "weight": "primary" },
+    { "id": "fatigue", "weight": "secondary" }
   ],
   "climateLinks": [
     {

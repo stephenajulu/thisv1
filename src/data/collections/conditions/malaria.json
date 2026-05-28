@@ -6,9 +6,9 @@
   "category": "Vector-borne Disease",
   "description": "A life-threatening parasitic disease transmitted through female Anopheles mosquitoes. Causes high fever, severe rigors, and anemia. Exacerbated by humid monsoon rains.",
   "symptoms": [
-    "high-fever",
-    "severe-rigors",
-    "fatigue"
+    { "id": "high-fever", "weight": "primary" },
+    { "id": "severe-rigors", "weight": "primary" },
+    { "id": "fatigue", "weight": "secondary" }
   ],
   "climateLinks": [
     {

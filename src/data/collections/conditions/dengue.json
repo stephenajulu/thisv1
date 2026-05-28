@@ -6,10 +6,10 @@
   "category": "Vector-borne Disease",
   "description": "A viral infection transmitted by Aedes aegypti mosquitoes. Features rapid high fever, excruciating skeletal pain ('breakbone fever'), and critical platelet depletion.",
   "symptoms": [
-    "high-fever",
-    "joint-pain",
-    "platelet-drop",
-    "fatigue"
+    { "id": "high-fever", "weight": "primary" },
+    { "id": "joint-pain", "weight": "primary" },
+    { "id": "platelet-drop", "weight": "primary" },
+    { "id": "fatigue", "weight": "secondary" }
   ],
   "climateLinks": [
     {

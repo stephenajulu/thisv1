@@ -95,10 +95,36 @@ export default function ClinicianReference() {
 
     const results = database.conditions.map(cond => {
       const conditionSymptoms = cond.symptoms || [];
-      const matchedSymptoms = conditionSymptoms.filter(sId => selectedSymptomIds.includes(sId));
+      
+      let totalMaxWeight = 0;
+      let totalMatchWeight = 0;
+      const matchedSymptoms = [];
+
+      conditionSymptoms.forEach(s => {
+        let sId = "";
+        let isPrimary = false;
+        
+        if (typeof s === 'string') {
+          sId = s;
+          isPrimary = false;
+        } else if (s && typeof s === 'object' && s.id) {
+          sId = s.id;
+          isPrimary = s.weight === 'primary';
+        }
+
+        if (!sId) return;
+
+        const weightValue = isPrimary ? 3 : 1;
+        totalMaxWeight += weightValue;
+
+        if (selectedSymptomIds.includes(sId)) {
+          totalMatchWeight += weightValue;
+          matchedSymptoms.push(sId);
+        }
+      });
+
       const matchCount = matchedSymptoms.length;
-      const totalSymptomCount = conditionSymptoms.length;
-      const matchPct = totalSymptomCount > 0 ? Math.round((matchCount / totalSymptomCount) * 100) : 0;
+      const matchPct = totalMaxWeight > 0 ? Math.round((totalMatchWeight / totalMaxWeight) * 100) : 0;
 
       return {
         ...cond,

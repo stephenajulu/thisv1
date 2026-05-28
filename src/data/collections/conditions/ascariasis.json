@@ -6,9 +6,9 @@
   "category": "Water-borne Pathogen",
   "description": "A major soil-transmitted helminth (giant roundworm) infection. Transmitted by swallowing eggs from soil contaminated with human feces or crops irrigated with raw sewage. Causes microcytic anemia, nutritional wasting, and potential intestinal obstruction in heavy pediatric cases.",
   "symptoms": [
-    "fatigue",
-    "vomiting",
-    "abdominal-pain"
+    { "id": "abdominal-pain", "weight": "primary" },
+    { "id": "vomiting", "weight": "secondary" },
+    { "id": "fatigue", "weight": "secondary" }
   ],
   "climateLinks": [
     {

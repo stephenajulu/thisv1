@@ -6,9 +6,9 @@
   "category": "Vector-borne Disease",
   "description": "A parasitic infection transmitted by mosquitoes, leading to chronic swelling of tissues (Elephantiasis). Causes severe physical disfigurement, social stigma, and painful lymphadenitis outbreaks.",
   "symptoms": [
-    "fatigue",
-    "joint-pain",
-    "lymphadenopathy"
+    { "id": "lymphadenopathy", "weight": "primary" },
+    { "id": "joint-pain", "weight": "secondary" },
+    { "id": "fatigue", "weight": "secondary" }
   ],
   "climateLinks": [
     {
