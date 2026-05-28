@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ShieldCheck, Layers, ShieldAlert, Stethoscope, Activity, Sprout, Settings, Calculator, CloudRain, ChevronDown } from 'lucide-react';
+import { ShieldCheck, Layers, ShieldAlert, Stethoscope, Activity, Sprout, Settings, Calculator, CloudRain, ChevronDown, MapPin } from 'lucide-react';
 import Navigator from './components/Navigator';
 import EvidenceMatrix from './components/EvidenceMatrix';
 import SafetyChecker from './components/SafetyChecker';
@@ -17,6 +17,9 @@ export default function App() {
   const [clinicianMode, setClinicianMode] = useState(false);
   const [showToolkit, setShowToolkit] = useState(false);
   const [proUnlocked, setProUnlocked] = useState(() => isProUnlocked());
+  const [selectedRegion, setSelectedRegion] = useState(() => {
+    return localStorage.getItem('this_selected_region') || 'nairobi';
+  });
 
   const getProBadgeText = () => {
     if (localStorage.getItem('this_pro_waiver') === 'active') {
@@ -190,8 +193,34 @@ export default function App() {
 
             {/* Switcher & Membership Indicators */}
             <div className="flex flex-wrap items-center gap-4 border-t lg:border-t-0 lg:border-l border-slate-200 pt-3 lg:pt-0 pl-0 lg:pl-4">
-              {/* Clinician Mode Switcher */}
+              {/* Active Region County Context Selector */}
               <div className="flex items-center gap-2">
+                <MapPin className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500 font-outfit">
+                  County Context:
+                </span>
+                <div className="relative">
+                  <select
+                    value={selectedRegion}
+                    onChange={(e) => {
+                      const reg = e.target.value;
+                      setSelectedRegion(reg);
+                      localStorage.setItem('this_selected_region', reg);
+                      window.dispatchEvent(new Event('this_region_changed'));
+                    }}
+                    className="appearance-none bg-slate-50 border border-slate-200 hover:border-emerald-500 rounded-lg pl-2 pr-7 py-1 text-xs font-bold outline-none cursor-pointer focus:ring-2 focus:ring-emerald-500 text-slate-700 transition-all font-outfit"
+                  >
+                    <option value="nairobi">Nairobi (Highlands)</option>
+                    <option value="mombasa">Mombasa (Coast)</option>
+                    <option value="lodwar">Lodwar (Turkana Arid)</option>
+                    <option value="kakamega">Kakamega (Western)</option>
+                  </select>
+                  <ChevronDown className="h-3 w-3 text-slate-400 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Clinician Mode Switcher */}
+              <div className="flex items-center gap-2 border-l border-slate-200 pl-3">
                 <span className={`text-[10px] font-extrabold uppercase tracking-wider ${clinicianMode ? 'text-emerald-800' : 'text-slate-400'}`}>
                   Clinician Mode
                 </span>
@@ -217,7 +246,7 @@ export default function App() {
               </div>
 
               {/* Membership Status Badge */}
-              <div className="flex items-center gap-2 border-l border-slate-250 pl-3">
+              <div className="flex items-center gap-2 border-l border-slate-200 pl-3">
                 {proUnlocked ? (
                   <div className="flex items-center gap-1.5">
                     <span className="text-[9px] uppercase font-black tracking-wider px-2 py-0.5 rounded-full bg-amber-500 text-white flex items-center shadow-sm border border-amber-600">
@@ -248,31 +277,31 @@ export default function App() {
         {/* Dynamic Page Views */}
         <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
           {activePage === 'dashboard' && (
-            <Navigator onNavigate={navigateTo} />
+            <Navigator onNavigate={navigateTo} selectedRegion={selectedRegion} />
           )}
 
           {activePage === 'matrix' && (
-            <EvidenceMatrix onNavigate={navigateTo} />
+            <EvidenceMatrix onNavigate={navigateTo} selectedRegion={selectedRegion} />
           )}
 
           {activePage === 'safety' && (
-            <SafetyChecker />
+            <SafetyChecker selectedRegion={selectedRegion} />
           )}
 
           {activePage === 'dosage' && (
-            proUnlocked ? <DosageCalculator /> : <ProPaywall onUnlockSuccess={handleUnlockSuccess} />
+            proUnlocked ? <DosageCalculator selectedRegion={selectedRegion} /> : <ProPaywall onUnlockSuccess={handleUnlockSuccess} />
           )}
 
           {activePage === 'weather' && (
-            proUnlocked ? <WeatherThreatForecast /> : <ProPaywall onUnlockSuccess={handleUnlockSuccess} />
+            proUnlocked ? <WeatherThreatForecast selectedRegion={selectedRegion} /> : <ProPaywall onUnlockSuccess={handleUnlockSuccess} />
           )}
 
           {activePage === 'atlas' && (
-            proUnlocked ? <VisualAtlas /> : <ProPaywall onUnlockSuccess={handleUnlockSuccess} />
+            proUnlocked ? <VisualAtlas selectedRegion={selectedRegion} /> : <ProPaywall onUnlockSuccess={handleUnlockSuccess} />
           )}
 
           {activePage === 'clinician' && (
-            proUnlocked ? <ClinicianReference /> : <ProPaywall onUnlockSuccess={handleUnlockSuccess} />
+            proUnlocked ? <ClinicianReference selectedRegion={selectedRegion} /> : <ProPaywall onUnlockSuccess={handleUnlockSuccess} />
           )}
 
           {activePage === 'condition' && (
@@ -280,6 +309,7 @@ export default function App() {
               id={activeEntityId} 
               onBack={() => navigateTo('dashboard')} 
               onNavigate={navigateTo}
+              selectedRegion={selectedRegion}
             />
           )}
 
@@ -288,6 +318,7 @@ export default function App() {
               id={activeEntityId} 
               onBack={() => navigateTo('dashboard')} 
               onNavigate={navigateTo}
+              selectedRegion={selectedRegion}
             />
           )}
         </main>

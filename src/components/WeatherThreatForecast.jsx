@@ -11,7 +11,7 @@ const OUTPOSTS = {
   garissa: { name: 'Garissa (Arid Savannah)', lat: -0.4536, lon: 39.6461 },
 };
 
-export default function WeatherThreatForecast() {
+export default function WeatherThreatForecast({ selectedRegion }) {
   const [temperature, setTemperature] = useState(28);
   const [humidity, setHumidity] = useState(70);
   const [rainfall, setRainfall] = useState(150);
@@ -223,6 +223,20 @@ export default function WeatherThreatForecast() {
           </div>
 
           <div className="flex flex-wrap items-center gap-2.5 w-full md:w-auto">
+            {selectedRegion && OUTPOSTS[selectedRegion] && selectedOutpost !== selectedRegion && (
+              <button
+                onClick={() => {
+                  setSelectedOutpost(selectedRegion);
+                  syncWeatherData(selectedRegion);
+                }}
+                className="px-3 py-2 bg-emerald-50 text-emerald-800 hover:bg-emerald-100 border border-emerald-250 rounded-xl text-xs font-bold transition-all flex items-center gap-1 shadow-sm font-outfit cursor-pointer"
+                title={`Fast sync coordinates with active header county: ${OUTPOSTS[selectedRegion].name}`}
+              >
+                <MapPin className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+                Sync with Active County ({selectedRegion})
+              </button>
+            )}
+
             <select
               value={selectedOutpost}
               onChange={(e) => {

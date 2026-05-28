@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Search, Activity, Sprout, AlertCircle, ChevronRight, Loader2 } from 'lucide-react';
 import { database } from '../data/database';
+import { getLocalizedRemedy } from '../utils/regionalHelper';
 
 // Fast client-side Levenshtein Distance for fuzzy matching spelling errors
 const getLevenshteinDistance = (a, b) => {
@@ -30,7 +31,7 @@ const getLevenshteinDistance = (a, b) => {
   return matrix[lenB][lenA];
 };
 
-export default function Navigator({ onNavigate }) {
+export default function Navigator({ onNavigate, selectedRegion }) {
   const [query, setQuery] = useState('');
   const [activeTab, setActiveTab] = useState('all');
   const [visibleCount, setVisibleCount] = useState(12);
@@ -38,6 +39,9 @@ export default function Navigator({ onNavigate }) {
 
   const cleanStr = (str) => (str || '').toLowerCase().trim();
   const searchTerms = cleanStr(query).split(' ').filter(Boolean);
+
+  // Localize database remedies dynamically using regional county overrides
+  const localizedRemedies = database.remedies.map(r => getLocalizedRemedy(r, selectedRegion));
 
   // Advanced fuzzy matching checks substrings or Levenshtein distance
   const matchesFuzzy = (targetText) => {
@@ -75,13 +79,14 @@ export default function Navigator({ onNavigate }) {
     c.symptoms.some(sId => matchesFuzzy(database.symptoms.find(s => s.id === sId)?.name))
   );
 
-  // 2. Filter Remedies
-  const filteredRemedies = database.remedies.filter(r => 
+  // 2. Filter Remedies (uses localized name, details, and Swahili/tribal synonyms)
+  const filteredRemedies = localizedRemedies.filter(r => 
     matchesFuzzy(r.name) || 
     matchesFuzzy(r.scientificName) || 
     matchesFuzzy(r.category) || 
     matchesFuzzy(r.description) || 
-    r.activeConstituents.some(c => matchesFuzzy(c))
+    r.activeConstituents.some(c => matchesFuzzy(c)) ||
+    (r.synonyms && r.synonyms.some(s => matchesFuzzy(s)))
   );
 
   // 3. Filter Symptoms
@@ -229,6 +234,16 @@ export default function Navigator({ onNavigate }) {
 
           if (match.type === 'remedy') {
             const r = match.data;
+            
+            const getAvailabilityBadge = (avail) => {
+              switch (avail) {
+                case 'abundant': return 'bg-emerald-50 text-emerald-700 border-emerald-250 font-bold';
+                case 'scarce': return 'bg-rose-50 text-rose-700 border-rose-250 font-bold';
+                case 'moderate':
+                default: return 'bg-amber-50 text-amber-700 border-amber-250 font-bold';
+              }
+            };
+
             return (
               <div 
                 key={`rem-${r.id}`} 
@@ -237,18 +252,30 @@ export default function Navigator({ onNavigate }) {
               >
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-[10px] uppercase font-extrabold tracking-wider px-2 py-0.5 rounded bg-sky-50 text-sky-800 border border-sky-100">
-                      {r.category === 'botanical' ? 'Botanical' : 'Pharmaceutical'}
-                    </span>
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[10px] uppercase font-extrabold tracking-wider px-2 py-0.5 rounded bg-sky-50 text-sky-800 border border-sky-100">
+                        {r.category === 'botanical' ? 'Botanical' : 'Pharmaceutical'}
+                      </span>
+                      {r.category === 'botanical' && (
+                        <span className={`text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded border ${getAvailabilityBadge(r.availability)}`}>
+                          {r.availability}
+                        </span>
+                      )}
+                    </div>
                     <Sprout className="h-4 w-4 text-sky-500 group-hover:scale-110 transition-transform" />
                   </div>
-                  <h3 className="text-lg font-bold group-hover:text-sky-600 transition-colors mb-1">
+                  <h3 className="text-lg font-bold group-hover:text-sky-600 transition-colors mb-1 font-outfit">
                     {r.name}
                   </h3>
-                  <p className="text-xs italic text-slate-400 mb-3 block truncate">
+                  {r.baselineName && r.baselineName !== r.name && (
+                    <span className="text-[10px] text-slate-400 block mb-1.5 font-medium italic">
+                      Baseline: {r.baselineName}
+                    </span>
+                  )}
+                  <p className="text-xs italic text-slate-450 mb-3 block truncate">
                     {r.scientificName}
                   </p>
-                  <p className="text-xs text-slate-500 line-clamp-3 mb-4">
+                  <p className="text-xs text-slate-500 line-clamp-3 mb-4 leading-relaxed">
                     {r.description}
                   </p>
                 </div>
@@ -256,7 +283,7 @@ export default function Navigator({ onNavigate }) {
                 <div className="flex items-center justify-between pt-3 border-t border-slate-100/50">
                   <div className="flex flex-wrap gap-1">
                     {r.activeConstituents.slice(0, 2).map((item, idx) => (
-                      <span key={idx} className="text-[9px] bg-slate-100 px-1.5 py-0.5 rounded text-slate-500 font-medium">
+                      <span key={idx} className="text-[9px] bg-slate-100 px-1.5 py-0.5 rounded text-slate-500 font-bold">
                         {item}
                       </span>
                     ))}

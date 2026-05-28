@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import { Filter, Star, Info, BookOpen, Layers, CheckCircle } from 'lucide-react';
 import { database } from '../data/database';
+import { getLocalizedRemedy } from '../utils/regionalHelper';
 
-export default function EvidenceMatrix({ onNavigate }) {
+export default function EvidenceMatrix({ onNavigate, selectedRegion }) {
   const [qualityFilter, setQualityFilter] = useState('all');
   const [strengthFilter, setStrengthFilter] = useState('all');
   const [typeFilter, setTypeFilter] = useState('all');
   const [expandedId, setExpandedId] = useState(null);
 
-  const getRemedyName = (id) => database.remedies.find(r => r.id === id)?.name || id;
+  const getRemedyName = (id) => {
+    const baseR = database.remedies.find(r => r.id === id);
+    if (!baseR) return id;
+    const r = getLocalizedRemedy(baseR, selectedRegion);
+    return r.name;
+  };
   const getRemedyType = (id) => database.remedies.find(r => r.id === id)?.category || 'botanical';
   const getConditionName = (id) => database.conditions.find(c => c.id === id)?.name || id;
   const getSymptomName = (id) => database.symptoms.find(s => s.id === id)?.name || id;

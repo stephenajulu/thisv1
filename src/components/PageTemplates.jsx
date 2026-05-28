@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Activity, Sprout, AlertTriangle, ShieldCheck, BookOpen, HeartPulse, Clock, Sparkles, Printer, AlertOctagon, Send, Check, WifiOff, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Activity, Sprout, AlertTriangle, ShieldCheck, BookOpen, HeartPulse, Clock, Sparkles, Printer, AlertOctagon, Send, Check, WifiOff, AlertCircle, MapPin } from 'lucide-react';
 import { database } from '../data/database';
+import { getLocalizedRemedy, getLocalizedCondition } from '../utils/regionalHelper';
 
 // Helper to sync pending flags to the backend API when online
 export async function syncPendingFlags() {
@@ -399,8 +400,9 @@ function ImproveModal({ entityName, onClose }) {
   );
 }
 
-export function ConditionPage({ id, onBack, onNavigate }) {
-  const c = database.conditions.find(cond => cond.id === id);
+export function ConditionPage({ id, onBack, onNavigate, selectedRegion }) {
+  const baseCondition = database.conditions.find(cond => cond.id === id);
+  const c = getLocalizedCondition(baseCondition, selectedRegion);
   const [showFlag, setShowFlag] = useState(false);
   const [showImprove, setShowImprove] = useState(false);
 
@@ -558,7 +560,8 @@ export function ConditionPage({ id, onBack, onNavigate }) {
             
             <div className="divide-y divide-slate-100">
               {linkedOutcomes.map(row => {
-                const remedy = database.remedies.find(r => r.id === row.remedyId);
+                const baseRemedy = database.remedies.find(r => r.id === row.remedyId);
+                const remedy = getLocalizedRemedy(baseRemedy, selectedRegion);
                 return (
                   <div key={row.id} className="py-4 first:pt-0 last:pb-0 space-y-2">
                     <div className="flex flex-wrap items-center justify-between gap-2">
@@ -625,8 +628,9 @@ export function ConditionPage({ id, onBack, onNavigate }) {
   );
 }
 
-export function RemedyPage({ id, onBack, onNavigate }) {
-  const r = database.remedies.find(rem => rem.id === id);
+export function RemedyPage({ id, onBack, onNavigate, selectedRegion }) {
+  const baseRemedy = database.remedies.find(rem => rem.id === id);
+  const r = getLocalizedRemedy(baseRemedy, selectedRegion);
   const [showFlag, setShowFlag] = useState(false);
   const [showImprove, setShowImprove] = useState(false);
 
@@ -707,24 +711,46 @@ export function RemedyPage({ id, onBack, onNavigate }) {
 
       {/* Main Remedy Info */}
       <div className="glass-panel p-6 border-l-4 border-l-sky-500 bg-white">
-        <span className="text-[10px] uppercase font-extrabold tracking-wider px-2.5 py-0.5 rounded bg-sky-50 text-sky-800 border border-sky-100 mb-3 inline-block">
-          {r.category === 'botanical' ? 'Traditional Natural Plant' : 'Modern Pharmaceutical'}
-        </span>
-        <h2 className="text-2xl md:text-3xl font-extrabold text-[hsl(var(--primary-green))] mb-1">
+        <div className="flex flex-wrap items-center gap-2 mb-3">
+          <span className="text-[10px] uppercase font-extrabold tracking-wider px-2.5 py-0.5 rounded bg-sky-50 text-sky-800 border border-sky-100 inline-block font-outfit">
+            {r.category === 'botanical' ? 'Traditional Natural Plant' : 'Modern Pharmaceutical'}
+          </span>
+          {r.category === 'botanical' && (
+            <span className={`text-[9px] uppercase font-extrabold tracking-wider px-2.5 py-0.5 rounded border font-outfit ${
+              r.availability === 'abundant' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
+              r.availability === 'scarce' ? 'bg-rose-50 text-rose-700 border-rose-200 animate-pulse' :
+              'bg-amber-50 text-amber-700 border-amber-200'
+            }`}>
+              Availability: {r.availability}
+            </span>
+          )}
+        </div>
+        
+        <h2 className="text-2xl md:text-3xl font-extrabold text-[hsl(var(--primary-green))] mb-1 font-outfit flex items-center gap-2">
           {r.name}
+          {selectedRegion && selectedRegion !== 'nairobi' && (
+            <span className="text-[10px] uppercase font-extrabold tracking-wider px-2.5 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-100 animate-pulse">
+              {selectedRegion} context
+            </span>
+          )}
         </h2>
+        {r.baselineName && r.baselineName !== r.name && (
+          <span className="text-xs text-slate-400 block mb-2 font-bold italic font-outfit">
+            English Botanical Baseline: {r.baselineName}
+          </span>
+        )}
         <p className="text-sm italic text-slate-400 mb-2">
           {r.scientificName}
         </p>
 
         {/* Synonyms list */}
         {r.synonyms && r.synonyms.length > 0 && (
-          <p className="text-xs text-slate-500 mb-4 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100/50 inline-block">
+          <p className="text-xs text-slate-500 mb-4 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100/50 inline-block font-semibold">
             <strong>Synonyms / Local Names:</strong> {r.synonyms.join(', ')}
           </p>
         )}
 
-        <p className="text-sm text-slate-600 leading-relaxed max-w-4xl">
+        <p className="text-sm text-slate-650 leading-relaxed max-w-4xl font-medium">
           {r.description}
         </p>
       </div>
@@ -732,6 +758,18 @@ export function RemedyPage({ id, onBack, onNavigate }) {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Preparation & Properties */}
         <div className="lg:col-span-4 space-y-4">
+          {/* Local Ecological Advisory Card */}
+          {r.ecologicalAdvisory && (
+            <div className="glass-panel p-5 space-y-3 border-l-4 border-l-emerald-600 bg-emerald-50/10 no-print">
+              <h3 className="text-sm font-extrabold text-emerald-900 uppercase tracking-wider flex items-center gap-1.5 border-b border-emerald-100 pb-2 font-outfit">
+                <MapPin className="h-4 w-4 text-emerald-600 animate-bounce" />
+                Local Ecological Advisory
+              </h3>
+              <p className="text-xs text-slate-650 leading-relaxed font-semibold bg-emerald-50/30 p-3 rounded-lg border border-emerald-150">
+                {r.ecologicalAdvisory}
+              </p>
+            </div>
+          )}
           {/* Active constituents */}
           <div className="glass-panel p-5 space-y-3 bg-white">
             <h3 className="text-sm font-extrabold text-[hsl(var(--primary-green))] uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-100 pb-2">

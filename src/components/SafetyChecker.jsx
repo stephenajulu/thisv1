@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { ShieldAlert, AlertTriangle, AlertOctagon, Heart, Users, RefreshCw } from 'lucide-react';
 import { database } from '../data/database';
+import { getLocalizedRemedy } from '../utils/regionalHelper';
 
-export default function SafetyChecker() {
+export default function SafetyChecker({ selectedRegion }) {
   const [selectedPopulation, setSelectedPopulation] = useState('none');
   const [selectedRemedy, setSelectedRemedy] = useState('none');
 
   const populationObj = database.populations.find(p => p.id === selectedPopulation);
-  const remedyObj = database.remedies.find(r => r.id === selectedRemedy);
+  const baseRemedyObj = database.remedies.find(r => r.id === selectedRemedy);
+  const remedyObj = getLocalizedRemedy(baseRemedyObj, selectedRegion);
 
   // Relational safety caution lookup (No hardcoding)
   const getCustomIntersectionAlert = () => {
@@ -70,9 +72,12 @@ export default function SafetyChecker() {
               className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-xs font-bold outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white"
             >
               <option value="none">-- Select Treatment --</option>
-              {database.remedies.map(r => (
-                <option key={r.id} value={r.id}>{r.name} ({r.scientificName.split(' ')[0]})</option>
-              ))}
+              {database.remedies.map(r => {
+                const locR = getLocalizedRemedy(r, selectedRegion);
+                return (
+                  <option key={r.id} value={r.id}>{locR.name} ({r.scientificName.split(' ')[0]})</option>
+                );
+              })}
             </select>
 
             {(selectedPopulation !== 'none' || selectedRemedy !== 'none') && (
