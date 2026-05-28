@@ -320,6 +320,31 @@ export default function Navigator({ onNavigate }) {
         </div>
       )}
 
+      {/* Collaborative Contributions Banner */}
+      <div className="glass-panel p-5 mt-8 bg-gradient-to-r from-emerald-50/20 to-sky-50/10 border border-emerald-100/60 flex flex-col md:flex-row items-center justify-between gap-4 animate-scale-up">
+        <div className="space-y-1 text-center md:text-left">
+          <h4 className="text-sm font-extrabold text-[hsl(var(--primary-green))] uppercase tracking-wide flex items-center gap-1.5 justify-center md:justify-start">
+            <Sprout className="h-4 w-4 text-emerald-700 animate-pulse animate-spin-slow" />
+            Contribute to the Medical Registry
+          </h4>
+          <p className="text-[11px] text-slate-500 max-w-2xl leading-relaxed">
+            Are we missing an ethnobotanical remedy, an ICD-11 vector condition, or scientific outcome matrices? Help clinicians and rural outposts worldwide by contributing your empirical research to our peer-review repository.
+          </p>
+        </div>
+        <button
+          onClick={() => {
+            if (window.netlifyIdentity) {
+              window.netlifyIdentity.open();
+            } else {
+              window.location.href = '/admin/';
+            }
+          }}
+          className="px-4 py-2 bg-emerald-850 hover:bg-emerald-950 text-white rounded-xl text-xs font-bold shadow flex items-center gap-1.5 shrink-0 transition-all hover:scale-[1.03] cursor-pointer"
+        >
+          Join Peer-Review Board
+        </button>
+      </div>
+
       {/* Zero State */}
       {totalResults === 0 && (
         <div className="text-center py-12 glass-panel max-w-md mx-auto">

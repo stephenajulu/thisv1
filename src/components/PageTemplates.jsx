@@ -166,7 +166,7 @@ function FlagModal({ entityName, onClose }) {
                 <div className="w-12 h-12 bg-amber-100 text-amber-800 rounded-full flex items-center justify-center mx-auto animate-pulse">
                   <WifiOff className="h-6 w-6" />
                 </div>
-                <h3 className="text-lg font-bold text-slate-850">Report Queued Offline</h3>
+                <h3 className="text-lg font-bold text-slate-855">Report Queued Offline</h3>
                 <p className="text-xs text-slate-500 leading-relaxed max-w-xs mx-auto font-medium">
                   You are currently offline in the field. Your clinical advisory report for "{entityName}" has been safely queued in local storage.
                 </p>
@@ -187,7 +187,7 @@ function FlagModal({ entityName, onClose }) {
             <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
               <AlertOctagon className="h-5 w-5 text-rose-600 animate-pulse" />
               <div>
-                <h3 className="font-extrabold text-sm text-slate-850">Flag for Peer Review</h3>
+                <h3 className="font-extrabold text-sm text-slate-855">Flag for Peer Review</h3>
                 <span className="text-[10px] text-slate-400">Reporting clinical data in "{entityName}"</span>
               </div>
             </div>
@@ -278,9 +278,131 @@ function FlagModal({ entityName, onClose }) {
   );
 }
 
+// A shared visual Improve Modal so clinicians can submit changes or launch the visual CMS manager
+function ImproveModal({ entityName, onClose }) {
+  const [user, setUser] = useState(() => {
+    const userStr = localStorage.getItem('gotrue.user');
+    if (userStr) {
+      try {
+        return JSON.parse(userStr);
+      } catch (e) {}
+    }
+    return null;
+  });
+
+  const handleLogin = () => {
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.open();
+      // Listen to login event to update state
+      window.netlifyIdentity.on('login', (loggedInUser) => {
+        setUser(loggedInUser);
+        window.netlifyIdentity.close();
+      });
+    } else {
+      window.location.href = '/admin/';
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-emerald-950/40 backdrop-blur-sm p-4 animate-fade-in no-print">
+      <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl border border-slate-200 space-y-4">
+        <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
+          <Sprout className="h-5 w-5 text-emerald-800 animate-pulse animate-spin-slow" />
+          <div>
+            <h3 className="font-extrabold text-sm text-slate-855 font-outfit">Improve Clinical Database</h3>
+            <span className="text-[10px] text-slate-450">Contributing scientific edits to "{entityName}"</span>
+          </div>
+        </div>
+
+        {user ? (
+          <div className="space-y-4">
+            <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-3.5 text-xs text-emerald-900 space-y-1">
+              <span className="font-bold block">✓ Authenticated Editor</span>
+              <p className="opacity-90 leading-relaxed">
+                Logged in as: <strong className="font-bold text-slate-800">{user.email}</strong>
+              </p>
+            </div>
+            
+            <p className="text-xs text-slate-500 leading-relaxed">
+              As an authorized medical board peer-reviewer, you can click below to load the visual back-office manager. Select this collection entry to easily type your scientific improvements. Once committed, our Git Gateway will automatically push the changes to PWA databases worldwide!
+            </p>
+
+            <div className="flex flex-col gap-2 pt-2">
+              <a 
+                href="/admin/"
+                className="w-full py-2 bg-emerald-800 hover:bg-emerald-900 text-white rounded-xl text-xs font-bold shadow text-center flex items-center justify-center gap-1.5 transition-colors"
+              >
+                Launch Visual CMS Manager
+              </a>
+              <button 
+                onClick={onClose}
+                className="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-colors"
+              >
+                Close Panel
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            <p className="text-xs text-slate-500 leading-relaxed">
+              THIS is a collaborative, clinical-grade registry. To prevent medical vandalism and maintain scientific accuracy (GRADE standards), database edits are restricted to authorized clinicians, botanists, and medical researchers.
+            </p>
+
+            <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-[10px] text-slate-600 leading-relaxed font-medium">
+              <strong>Registration Protocol:</strong> Registering requires an invitation from a SuperAdmin. If you are an active practitioner, you can register or log in using Netlify Identity below.
+            </div>
+
+            <div className="flex flex-col gap-2 pt-2">
+              <button
+                onClick={handleLogin}
+                className="w-full py-2 bg-emerald-800 hover:bg-emerald-900 text-white rounded-xl text-xs font-bold shadow flex items-center justify-center gap-1.5 transition-all"
+              >
+                Login / Sign Up as Editor
+              </button>
+              
+              <div className="relative flex py-1.5 items-center">
+                <div className="flex-grow border-t border-slate-200"></div>
+                <span className="flex-shrink mx-3 text-[10px] text-slate-400 font-bold uppercase tracking-wider">or</span>
+                <div className="flex-grow border-t border-slate-200"></div>
+              </div>
+
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-3 text-center space-y-2">
+                <span className="text-[10px] text-slate-505 font-medium block leading-normal">
+                  Want to submit a correction immediately without an account?
+                </span>
+                <button
+                  onClick={() => {
+                    onClose();
+                    setTimeout(() => {
+                      const flagBtn = document.querySelector('[data-flag-trigger="true"]');
+                      if (flagBtn) flagBtn.click();
+                    }, 100);
+                  }}
+                  className="px-4 py-1.5 bg-white hover:bg-rose-50 text-rose-600 border border-rose-100 rounded-lg text-[10px] font-extrabold shadow-sm transition-all"
+                >
+                  ⚠️ Submit Quick Bedside Flag
+                </button>
+              </div>
+
+              <button 
+                type="button"
+                onClick={onClose}
+                className="mt-2 py-1.5 bg-slate-105 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export function ConditionPage({ id, onBack, onNavigate }) {
   const c = database.conditions.find(cond => cond.id === id);
   const [showFlag, setShowFlag] = useState(false);
+  const [showImprove, setShowImprove] = useState(false);
 
   if (!c) return <div className="p-8 text-center text-sm font-semibold">Condition not found.</div>;
 
@@ -320,9 +442,18 @@ export function ConditionPage({ id, onBack, onNavigate }) {
         </button>
 
         <div className="flex gap-2">
+          {/* Improve Database button */}
+          <button 
+            onClick={() => setShowImprove(true)}
+            className="px-4 py-2 bg-white hover:bg-emerald-50 text-emerald-800 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all border border-emerald-100 shadow-sm"
+          >
+            <Sprout className="h-3.5 w-3.5 text-emerald-600" /> Improve Entry
+          </button>
+
           {/* Flag button */}
           <button 
             onClick={() => setShowFlag(true)}
+            data-flag-trigger="true"
             className="px-4 py-2 bg-white hover:bg-rose-50 text-rose-600 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all border border-rose-100 shadow-sm"
           >
             <AlertOctagon className="h-3.5 w-3.5" /> Flag Review
@@ -489,6 +620,7 @@ export function ConditionPage({ id, onBack, onNavigate }) {
       </div>
 
       {showFlag && <FlagModal entityName={c.name} onClose={() => setShowFlag(false)} />}
+      {showImprove && <ImproveModal entityName={c.name} onClose={() => setShowImprove(false)} />}
     </div>
   );
 }
@@ -496,6 +628,7 @@ export function ConditionPage({ id, onBack, onNavigate }) {
 export function RemedyPage({ id, onBack, onNavigate }) {
   const r = database.remedies.find(rem => rem.id === id);
   const [showFlag, setShowFlag] = useState(false);
+  const [showImprove, setShowImprove] = useState(false);
 
   if (!r) return <div className="p-8 text-center text-sm font-semibold">Remedy not found.</div>;
 
@@ -532,9 +665,18 @@ export function RemedyPage({ id, onBack, onNavigate }) {
         </button>
 
         <div className="flex gap-2">
+          {/* Improve Database button */}
+          <button 
+            onClick={() => setShowImprove(true)}
+            className="px-4 py-2 bg-white hover:bg-emerald-50 text-emerald-800 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all border border-emerald-100 shadow-sm"
+          >
+            <Sprout className="h-3.5 w-3.5 text-emerald-600" /> Improve Entry
+          </button>
+
           {/* Flag button */}
           <button 
             onClick={() => setShowFlag(true)}
+            data-flag-trigger="true"
             className="px-4 py-2 bg-white hover:bg-rose-50 text-rose-600 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all border border-rose-100 shadow-sm"
           >
             <AlertOctagon className="h-3.5 w-3.5" /> Flag Review
@@ -688,6 +830,7 @@ export function RemedyPage({ id, onBack, onNavigate }) {
       </div>
 
       {showFlag && <FlagModal entityName={r.name} onClose={() => setShowFlag(false)} />}
+      {showImprove && <ImproveModal entityName={r.name} onClose={() => setShowImprove(false)} />}
     </div>
   );
 }
