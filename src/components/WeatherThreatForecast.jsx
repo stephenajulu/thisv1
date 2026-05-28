@@ -1,11 +1,113 @@
-import React, { useState } from 'react';
-import { Thermometer, CloudRain, Droplets, AlertTriangle, ShieldCheck, RefreshCw, ChevronRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Thermometer, CloudRain, Droplets, AlertTriangle, ShieldCheck, RefreshCw, ChevronRight, MapPin, Navigation } from 'lucide-react';
 import { database } from '../data/database';
+
+const OUTPOSTS = {
+  nairobi: { name: 'Nairobi (Highlands Hub)', lat: -1.2921, lon: 36.8219 },
+  mombasa: { name: 'Mombasa (Coastal Wetlands)', lat: -4.0435, lon: 39.6682 },
+  lodwar: { name: 'Lodwar (Turkana Arid Border)', lat: 3.1197, lon: 35.5973 },
+  kakamega: { name: 'Kakamega (Tropical Rainforest)', lat: 0.2827, lon: 34.7519 },
+  kisumu: { name: 'Kisumu (Lakeside Basin)', lat: -0.1022, lon: 34.7617 },
+  garissa: { name: 'Garissa (Arid Savannah)', lat: -0.4536, lon: 39.6461 },
+};
 
 export default function WeatherThreatForecast() {
   const [temperature, setTemperature] = useState(28);
   const [humidity, setHumidity] = useState(70);
   const [rainfall, setRainfall] = useState(150);
+
+  // Live Sync States
+  const [selectedOutpost, setSelectedOutpost] = useState(() => localStorage.getItem('this_selected_outpost') || 'kakamega');
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [syncStatus, setSyncStatus] = useState('');
+  const [syncError, setSyncError] = useState('');
+  const [lastSyncedData, setLastSyncedData] = useState(null);
+
+  const syncWeatherData = async (outpostId = selectedOutpost, forceGps = false) => {
+    setIsSyncing(true);
+    setSyncError('');
+    setSyncStatus('Detecting outpost coordinates...');
+    
+    let lat, lon, labelName;
+
+    if (outpostId === 'device-gps' || forceGps) {
+      if (!navigator.geolocation) {
+        setSyncError('GPS Geolocation is not supported by your device browser.');
+        setIsSyncing(false);
+        return;
+      }
+      try {
+        const pos = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 8000 });
+        });
+        lat = pos.coords.latitude.toFixed(4);
+        lon = pos.coords.longitude.toFixed(4);
+        labelName = `Device GPS (${lat}, ${lon})`;
+      } catch (err) {
+        setSyncError('GPS timeout or permission denied. Falling back to pre-cached outpost.');
+        setIsSyncing(false);
+        return;
+      }
+    } else {
+      const op = OUTPOSTS[outpostId];
+      if (!op) {
+        setSyncError('Invalid outpost selection.');
+        setIsSyncing(false);
+        return;
+      }
+      lat = op.lat;
+      lon = op.lon;
+      labelName = op.name;
+    }
+
+    setSyncStatus(`Connecting to Open-Meteo atmospheric servers...`);
+    
+    try {
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m&daily=precipitation_sum&timezone=auto`;
+      const response = await fetch(url);
+      if (!response.ok) throw new Error('API server handshake error');
+      
+      const data = await response.json();
+      
+      const currentTemp = Math.round(data.current.temperature_2m);
+      const currentHumidity = Math.round(data.current.relative_humidity_2m);
+      
+      // Calculate 7-day sum of precipitation and multiply by 4 to estimate monthly equivalent
+      const precipArray = data.daily?.precipitation_sum || [];
+      const weeklyPrecipSum = precipArray.reduce((sum, val) => sum + (Number(val) || 0), 0);
+      const monthlyEquivalentPrecip = Math.round(weeklyPrecipSum * 4);
+
+      // Update Sliders safely
+      setTemperature(Math.max(10, Math.min(45, currentTemp)));
+      setHumidity(Math.max(10, Math.min(100, currentHumidity)));
+      setRainfall(Math.max(0, Math.min(400, monthlyEquivalentPrecip)));
+
+      const syncStats = {
+        location: labelName,
+        temp: currentTemp,
+        humidity: currentHumidity,
+        rainfall: monthlyEquivalentPrecip,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+      setLastSyncedData(syncStats);
+      setSyncStatus('Outbreak threat dials updated successfully!');
+      localStorage.setItem('this_selected_outpost', outpostId);
+    } catch (err) {
+      console.error("Open-Meteo fetch failed:", err);
+      setSyncError('Offline Mode: Unable to connect to Open-Meteo. Using pre-cached manual dials.');
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
+  // Auto-sync on mount if network is active
+  useEffect(() => {
+    if (navigator.onLine) {
+      syncWeatherData(selectedOutpost);
+    } else {
+      setSyncError('Offline Mode: Using cached environmental baseline sliders.');
+    }
+  }, []);
 
   const calculateDynamicVectorRisks = () => {
     const results = [];
@@ -87,19 +189,109 @@ export default function WeatherThreatForecast() {
     setTemperature(28);
     setHumidity(70);
     setRainfall(150);
+    setSyncError('');
+    setSyncStatus('');
+    setLastSyncedData(null);
   };
 
   return (
     <div className="animate-fade-in space-y-6">
-      {/* Header */}
+      {/* Header Banner */}
       <div className="glass-panel p-6 border-l-4 border-l-emerald-800 bg-white">
         <h2 className="text-xl font-bold mb-1 flex items-center gap-2 text-slate-800">
           <CloudRain className="h-5.5 w-5.5 text-emerald-800" />
           Climate Weather Vector Threat Simulator
         </h2>
         <p className="text-xs text-slate-500">
-          Simulate environmental parameter shifts (temperature, humidity, and rainfall) to calculate real-time biological risk profiles for vector and water-borne pathogens.
+          Simulate environmental parameter shifts or sync live regional meteorological REST APIs to calculate dynamic biological risk profiles for vector and water-borne pathogens.
         </p>
+      </div>
+
+      {/* ========================================================
+          LIVE METEOROLOGICAL SYNC PANEL
+          ======================================================== */}
+      <div className="glass-panel p-5 bg-white border border-slate-200 shadow-md space-y-4">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div className="space-y-1">
+            <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
+              <MapPin className="h-4 w-4 text-emerald-700 animate-bounce" />
+              Live Climate Sync (Open-Meteo API)
+            </h3>
+            <p className="text-xs text-slate-550 leading-relaxed">
+              Auto-fetch live atmospheric parameters based on regional Kenyan clinical preset coordinates or direct device Geolocation scans.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2.5 w-full md:w-auto">
+            <select
+              value={selectedOutpost}
+              onChange={(e) => {
+                setSelectedOutpost(e.target.value);
+                if (e.target.value !== 'device-gps') {
+                  syncWeatherData(e.target.value);
+                }
+              }}
+              className="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 flex-1 md:flex-initial"
+            >
+              <option value="kakamega">Kakamega (Tropical Rainforest)</option>
+              <option value="mombasa">Mombasa (Coastal Wetlands)</option>
+              <option value="lodwar">Lodwar (Turkana Arid Border)</option>
+              <option value="kisumu">Kisumu (Lakeside Basin)</option>
+              <option value="garissa">Garissa (Arid Savannah)</option>
+              <option value="nairobi">Nairobi (Highlands Hub)</option>
+              <option value="device-gps">★ Use My Live Device GPS</option>
+            </select>
+
+            <button
+              onClick={() => syncWeatherData(selectedOutpost)}
+              disabled={isSyncing}
+              className={`px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider transition-all flex items-center gap-1.5 shadow-md justify-center flex-1 md:flex-initial cursor-pointer ${
+                isSyncing 
+                  ? 'bg-slate-100 border border-slate-200 text-slate-400 cursor-wait'
+                  : 'bg-emerald-700 hover:bg-emerald-800 text-white'
+              }`}
+            >
+              <RefreshCw className={`h-4 w-4 ${isSyncing ? 'animate-spin' : ''}`} />
+              {isSyncing ? "Syncing..." : "Sync Climate Data"}
+            </button>
+          </div>
+        </div>
+
+        {/* Sync Status Logs / Messages */}
+        {syncStatus && !syncError && (
+          <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center gap-2 text-xs font-bold text-emerald-950 animate-scale-up">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0 animate-ping" />
+            <span>{syncStatus}</span>
+          </div>
+        )}
+
+        {syncError && (
+          <div className="p-3 bg-amber-50 border border-amber-250 text-amber-950 rounded-xl flex items-center gap-2 text-xs font-bold animate-scale-up">
+            <AlertTriangle className="h-4.5 w-4.5 text-amber-600 shrink-0" />
+            <span>{syncError}</span>
+          </div>
+        )}
+
+        {lastSyncedData && (
+          <div className="p-4 bg-slate-50 border border-slate-150 rounded-2xl grid grid-cols-2 md:grid-cols-4 gap-4 text-center animate-scale-up">
+            <div className="space-y-0.5">
+              <span className="text-[10px] text-slate-400 font-extrabold uppercase tracking-wider block">Synced Post</span>
+              <strong className="text-xs font-bold text-slate-800 block truncate">{lastSyncedData.location}</strong>
+            </div>
+            <div className="space-y-0.5">
+              <span className="text-[10px] text-slate-400 font-extrabold uppercase tracking-wider block">Live Temp</span>
+              <strong className="text-xs font-bold text-rose-700 block">{lastSyncedData.temp} °C</strong>
+            </div>
+            <div className="space-y-0.5">
+              <span className="text-[10px] text-slate-400 font-extrabold uppercase tracking-wider block">Live Humidity</span>
+              <strong className="text-xs font-bold text-sky-700 block">{lastSyncedData.humidity} %</strong>
+            </div>
+            <div className="space-y-0.5">
+              <span className="text-[10px] text-slate-400 font-extrabold uppercase tracking-wider block">Monthly Rain Equiv.</span>
+              <strong className="text-xs font-bold text-blue-700 block">{lastSyncedData.rainfall} mm <span className="text-[9px] font-normal text-slate-400 block mt-0.5">({lastSyncedData.timestamp})</span></strong>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -188,7 +380,7 @@ export default function WeatherThreatForecast() {
 
             <button 
               onClick={handleReset}
-              className="w-full py-2.5 bg-slate-55 hover:bg-slate-100 border border-slate-200 text-slate-700 rounded-xl text-xs font-black flex items-center justify-center gap-1 transition-colors mt-2"
+              className="w-full py-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 rounded-xl text-xs font-black flex items-center justify-center gap-1 transition-colors mt-2 cursor-pointer shadow-sm"
             >
               <RefreshCw className="h-3.5 w-3.5 text-slate-500" /> Reset Parameters
             </button>
@@ -200,7 +392,7 @@ export default function WeatherThreatForecast() {
           <div className="glass-panel p-5 space-y-4 bg-white shadow-sm border border-slate-100">
             <h3 className="text-sm font-extrabold text-emerald-950 uppercase tracking-wider border-b border-slate-100 pb-2 flex items-center gap-2">
               <ShieldCheck className="h-4.5 w-4.5 text-emerald-750" />
-              2. Outbreak Threat Level index
+              2. Outbreak Threat Level Index
             </h3>
 
             <div className="space-y-4">
@@ -208,7 +400,7 @@ export default function WeatherThreatForecast() {
                 <div key={r.id} className="space-y-1.5 p-3 rounded-xl border border-slate-100 hover:bg-slate-50/50 transition-colors">
                   <div className="flex justify-between items-center text-xs font-extrabold text-slate-750">
                     <span className="flex items-center gap-1">
-                      <ChevronRight className="h-3.5 w-3.5 text-emerald-700" />
+                      <ChevronRight className="h-3.5 w-3.5 text-emerald-700 animate-pulse" />
                       {r.name} Outbreak Risk
                     </span>
                     <span className={`px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-wider border ${r.color}`}>
@@ -219,17 +411,14 @@ export default function WeatherThreatForecast() {
                   <div className="flex items-center gap-3">
                     <div className="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden border border-slate-200/50 relative shadow-inner">
                       <div 
-                        className={`h-full rounded-full transition-all duration-500 ${
-                          r.text === "Severe" ? 'bg-rose-500' :
-                          r.text === "High" ? 'bg-amber-50' : 'bg-sky-500'
-                        }`}
+                        className={`h-full rounded-full transition-all duration-500`}
                         style={{ 
                           width: `${r.score}%`,
-                          backgroundColor: r.text === 'Severe' ? 'var(--color-rose-500)' : r.text === 'High' ? 'var(--color-amber-500)' : 'var(--color-sky-500)'
+                          backgroundColor: r.text === 'Severe' ? '#ef4444' : r.text === 'High' ? '#f59e0b' : r.text === 'Moderate' ? '#0ea5e9' : '#10b981'
                         }}
                       />
                     </div>
-                    <span className="text-[10px] font-black text-slate-500 shrink-0 w-8 text-right">
+                    <span className="text-[10px] font-black text-slate-500 shrink-0 w-8 text-right font-mono">
                       {r.score}%
                     </span>
                   </div>
@@ -239,14 +428,14 @@ export default function WeatherThreatForecast() {
           </div>
 
           {/* Clinical Advisories Box */}
-          <div className="glass-panel p-5 space-y-3 bg-emerald-50/15 border border-emerald-100/50">
-            <h4 className="text-xs font-black uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
-              <AlertTriangle className="h-4.5 w-4.5 text-rose-500" />
+          <div className="glass-panel p-5 space-y-3 bg-emerald-50/15 border border-emerald-100/50 bg-white">
+            <h4 className="text-xs font-black uppercase tracking-wider text-slate-800 flex items-center gap-1.5 border-b border-slate-100 pb-2">
+              <AlertTriangle className="h-4.5 w-4.5 text-rose-500 shrink-0" />
               Proactive Outpost Intervention Guide
             </h4>
             <div className="space-y-2.5">
               {advisories.map((act, idx) => (
-                <div key={idx} className="text-xs text-slate-750 flex items-start gap-2.5 bg-white p-3.5 rounded-xl border border-slate-150 shadow-sm leading-relaxed">
+                <div key={idx} className="text-xs text-slate-750 flex items-start gap-2.5 bg-slate-50 p-3.5 rounded-xl border border-slate-150 shadow-sm leading-relaxed font-semibold">
                   <div className="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0 mt-1.5" />
                   <span>{act}</span>
                 </div>
