@@ -17,8 +17,79 @@ import {
   Timer,
   Utensils,
   ChevronRight,
-  ClipboardList
+  ClipboardList,
+  MapPin
 } from 'lucide-react';
+
+// Real-time Bedside IV Drip rate fluid visualizer (GRADE Plan C)
+function DripVisualizer({ volumeMl, durationMin, dropFactor }) {
+  const flowRate = (volumeMl / (durationMin / 60)).toFixed(1);
+  const dripRate = Math.round((flowRate * dropFactor) / 60);
+  const intervalMs = dripRate > 0 ? (60000 / dripRate) : 0;
+
+  const [dropTick, setDropTick] = useState(false);
+
+  useEffect(() => {
+    if (intervalMs <= 0) return;
+    
+    const timer = setInterval(() => {
+      setDropTick(true);
+      setTimeout(() => setDropTick(false), 200); // Snap-back drop bubble
+    }, intervalMs);
+
+    return () => clearInterval(timer);
+  }, [intervalMs]);
+
+  const dropStyle = dropTick ? {
+    transform: 'translateY(88px)',
+    opacity: 0,
+    transition: 'transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 320ms ease-out'
+  } : {
+    transform: 'translateY(0px)',
+    opacity: 1,
+    transition: 'none'
+  };
+
+  return (
+    <div className="flex flex-col items-center justify-center p-4 bg-slate-900 border border-slate-800 rounded-3xl shadow-lg relative overflow-hidden w-full max-w-[170px] mx-auto text-center no-print">
+      {/* Dynamic IV Bag Visualizer */}
+      <div className="w-8 h-2 bg-slate-700/60 rounded-t-lg border-t border-slate-600 border-x" />
+      <div className="w-14 h-20 bg-gradient-to-b from-sky-400/20 to-sky-300/5 rounded-b-xl border border-sky-400/35 relative flex items-center justify-center shadow-lg shadow-sky-500/5 select-none">
+        <span className="text-[9px] font-black text-sky-300/70 tracking-widest uppercase">R/L IV</span>
+        <div className="absolute bottom-1 w-full bg-sky-400/20 h-6 rounded-b-lg border-t border-sky-400/10 animate-pulse" />
+      </div>
+      
+      {/* Drop Chamber tube connector */}
+      <div className="w-1 h-3 bg-slate-700/80" />
+      
+      {/* Drip Chamber */}
+      <div className="w-9 h-24 bg-gradient-to-b from-slate-800/80 to-slate-950/80 border border-slate-750 rounded-2xl flex flex-col justify-between items-center py-2.5 relative shadow-inner overflow-hidden">
+        {/* Nozzle */}
+        <div className="w-2 h-2.5 bg-slate-500 rounded-b" />
+        
+        {/* Drop Bubble */}
+        <div 
+          className="w-2 h-2 bg-sky-400 rounded-full shadow-lg shadow-sky-500/50 absolute top-[12px]"
+          style={dropStyle}
+        />
+        
+        {/* Chamber Pool */}
+        <div className="w-full bg-sky-500/10 h-5 border-t border-sky-500/20 rounded-b-xl relative overflow-hidden flex items-center justify-center animate-pulse">
+          <div className="w-full h-0.5 bg-sky-400/30 absolute top-0" />
+        </div>
+      </div>
+      
+      {/* Stats */}
+      <div className="mt-3 space-y-0.5 select-none">
+        <span className="text-[8px] font-black text-slate-500 uppercase tracking-widest block font-outfit">Chamber Rate</span>
+        <strong className="text-xs font-black text-emerald-400 block tracking-tight font-outfit">{dripRate} gtt/min</strong>
+        <span className="text-[8px] font-bold text-slate-450 block">
+          {dripRate > 0 ? `1 drop every ${(60 / dripRate).toFixed(1)}s` : 'Infusion paused'}
+        </span>
+      </div>
+    </div>
+  );
+}
 
 export default function DosageCalculator() {
   const [weight, setWeight] = useState(15);
@@ -28,6 +99,13 @@ export default function DosageCalculator() {
   // ORS State variables
   const [orsPlan, setOrsPlan] = useState('planB'); // 'planA', 'planB', 'planC'
   const [orsMode, setOrsMode] = useState('weight'); // 'weight', 'ageBand'
+
+  // Plan C dynamic IV drip states
+  const [planCPhase, setPlanCPhase] = useState('phase1'); // 'phase1', 'phase2'
+  const [dropFactor, setDropFactor] = useState(60); // 60, 20, 15, 'custom'
+  const [customDropFactor, setCustomDropFactor] = useState('60');
+  const [hasSevereMalnutrition, setHasSevereMalnutrition] = useState(false);
+  const [hasSevereAnemia, setHasSevereAnemia] = useState(false);
   const [orsPlanBProgress, setOrsPlanBProgress] = useState({
     hour1: false,
     hour2: false,
@@ -624,40 +702,239 @@ export default function DosageCalculator() {
                   )}
 
                   {/* PLAN C Critical Infusion & Nasogastric Advice */}
-                  {orsPlan === 'planC' && (
-                    <div className="space-y-4 animate-fade-in">
-                      <div className="glass-panel p-4 bg-rose-50 border border-rose-200 text-rose-950 space-y-3 rounded-xl">
-                        <div className="flex gap-2 items-start">
-                          <AlertOctagon className="h-5 w-5 text-rose-600 shrink-0 mt-0.5 animate-bounce" />
-                          <div>
-                            <span className="text-[10px] font-black text-rose-700 uppercase tracking-widest block">PLAN C EMERGENCY IV CRITICAL STEP</span>
-                            <h4 className="font-extrabold text-sm mt-0.5">Start Intravenous Infusion Immediately!</h4>
-                            <p className="text-[11px] leading-relaxed opacity-90 mt-1">
-                              If patient can drink, administer ORS orally while the IV line is established. Preferred fluid is <strong>Ringer's Lactate Solution</strong>. If unavailable, use <strong>Normal Saline</strong>. Do not use 5% Dextrose.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
+                  {orsPlan === 'planC' && (() => {
+                    const isInfant = ageMonths < 12;
+                    
+                    // Total Volume: 100 ml/kg
+                    const totalVolumeMl = weight * 100;
+                    
+                    // Phase 1: 30 ml/kg
+                    const phase1VolumeMl = weight * 30;
+                    const phase1DurationMin = isInfant ? 60 : 30;
+                    
+                    // Phase 2: 70 ml/kg
+                    const phase2VolumeMl = weight * 70;
+                    const phase2DurationMin = isInfant ? 300 : 150;
+                    
+                    const activeVolumeMl = planCPhase === 'phase1' ? phase1VolumeMl : phase2VolumeMl;
+                    const activeDurationMin = planCPhase === 'phase1' ? phase1DurationMin : phase2DurationMin;
+                    const activeDropFactor = dropFactor === 'custom' ? (Number(customDropFactor) || 60) : dropFactor;
 
-                      {/* Nasogastric tube advice */}
-                      <div className="p-4 bg-amber-50/50 border border-amber-200 text-amber-950 rounded-xl space-y-2">
-                        <div className="flex gap-2 items-start">
-                          <HelpCircle className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
-                          <div>
-                            <span className="text-[10px] font-black text-amber-700 uppercase tracking-widest block">FALLBACK: IV ACCESS UNAVAILABLE</span>
-                            <h4 className="font-extrabold text-sm mt-0.5">Nasogastric (NG) Tube or Oral Treatment Protocol</h4>
-                            <p className="text-[11px] leading-relaxed opacity-95 mt-1 text-slate-700">
-                              If IV fluid is completely unavailable or clinician lacks access, immediately place a nasogastric tube or administer ORS orally.
-                              <br />
-                              • <strong>Administer ORS at:</strong> <span className="font-extrabold text-amber-900 bg-white border border-amber-200 px-1.5 py-0.5 rounded">{weight * 20} ml per hour</span> (20 ml/kg/hr) for exactly 6 hours.
-                              <br />
-                              • Re-evaluate the patient every 1-2 hours. If there is repeated vomiting or abdominal distension, administer fluid slower.
-                            </p>
+                    const phase1FlowRate = (phase1VolumeMl / (phase1DurationMin / 60)).toFixed(1);
+                    const phase2FlowRate = (phase2VolumeMl / (phase2DurationMin / 60)).toFixed(1);
+
+                    return (
+                      <div className="space-y-4 animate-fade-in">
+                        {/* Emergency Alert Callout */}
+                        <div className="glass-panel p-4 bg-rose-50 border border-rose-200 text-rose-950 space-y-3 rounded-xl">
+                          <div className="flex gap-2 items-start">
+                            <AlertOctagon className="h-5 w-5 text-rose-600 shrink-0 mt-0.5 animate-bounce" />
+                            <div>
+                              <span className="text-[10px] font-black text-rose-700 uppercase tracking-widest block">PLAN C EMERGENCY IV INFUSION</span>
+                              <h4 className="font-extrabold text-sm mt-0.5">WHO Intravenous Shock Protocol Active</h4>
+                              <p className="text-[11px] leading-relaxed opacity-90 mt-1">
+                                Give <strong>Ringer's Lactate Solution</strong> (or Normal Saline if unavailable) immediately. Total Target Fluid Volume: <strong className="font-bold text-rose-750">{totalVolumeMl} mL</strong> over <strong className="font-bold text-rose-750">{isInfant ? '6 hours' : '3 hours'}</strong>.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Bedside Safety Audits Toggles */}
+                        <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
+                          <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block font-outfit">1. Bedside Safety Assessments</span>
+                          <div className="flex flex-wrap gap-4 text-xs font-bold text-slate-700">
+                            <label className="flex items-center gap-2 cursor-pointer">
+                              <input 
+                                type="checkbox"
+                                checked={hasSevereMalnutrition}
+                                onChange={(e) => setHasSevereMalnutrition(e.target.checked)}
+                                className="rounded border-slate-350 text-rose-600 focus:ring-rose-500 h-4 w-4"
+                              />
+                              <span className="flex items-center gap-1 font-outfit">
+                                🔴 Patient has Severe Malnutrition (SAM)
+                              </span>
+                            </label>
+                            <label className="flex items-center gap-2 cursor-pointer">
+                              <input 
+                                type="checkbox"
+                                checked={hasSevereAnemia}
+                                onChange={(e) => setHasSevereAnemia(e.target.checked)}
+                                className="rounded border-slate-350 text-rose-650 focus:ring-rose-500 h-4 w-4"
+                              />
+                              <span className="flex items-center gap-1 font-outfit">
+                                ⚠️ Patient has Severe Anemia
+                              </span>
+                            </label>
+                          </div>
+                        </div>
+
+                        {/* Malnutrition Contraindication Shield */}
+                        {hasSevereMalnutrition ? (
+                          <div className="p-4 bg-rose-950 text-rose-100 border border-rose-900 rounded-2xl flex gap-3 animate-pulse">
+                            <AlertOctagon className="h-6 w-6 text-rose-400 shrink-0 mt-0.5" />
+                            <div className="space-y-1">
+                              <h4 className="font-black text-xs uppercase tracking-widest text-rose-400 font-outfit">CRITICAL CONTRAINDICATION: IV FLUIDS IN SAM</h4>
+                              <p className="text-[11px] leading-relaxed opacity-90 font-medium">
+                                **DO NOT ADMINISTER RAPID IV FLUIDS.** High-volume IV rehydration is strictly contraindicated in severely acute malnourished (SAM) children. It triggers fatal fluid volume expansion and heart failure.
+                              </p>
+                              <p className="text-[11px] leading-relaxed text-amber-300 font-bold">
+                                **Standard Protocol**: Rehydrate slowly orally or via Nasogastric (NG) tube using **ReSoMal** (5-10 ml/kg/hour) for up to 10 hours unless the child is in deep hypovolemic shock.
+                              </p>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+                            {/* Infusion Rate Parameters and Presets */}
+                            <div className="lg:col-span-8 space-y-4">
+                              {/* Severe Anemia caution */}
+                              {hasSevereAnemia && (
+                                <div className="p-3 bg-amber-50 border border-amber-200 text-amber-900 rounded-xl flex gap-2 text-xs font-bold leading-normal animate-fade-in">
+                                  <AlertTriangle className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
+                                  <div>
+                                    <span className="text-[9px] uppercase tracking-wider block font-black">Severe Anemia Warning</span>
+                                    <span>High volume expansion risk. Reduce IV rate or monitor lung sounds hourly for moist crackles indicating fluid backup.</span>
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* Drip calculations grid */}
+                              <div className="p-4 bg-white border border-slate-200 rounded-2xl shadow-sm space-y-4">
+                                <div className="flex border-b border-slate-100 pb-1.5 justify-between items-center">
+                                  <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">2. Infusion Dosing Schedule</span>
+                                  <span className="text-[10px] font-bold text-slate-500 bg-slate-50 border px-2 py-0.5 rounded font-outfit">
+                                    WHO Patient Class: {isInfant ? 'Infant (<12m)' : 'Child (≥12m)'}
+                                  </span>
+                                </div>
+
+                                {/* Infusion Phase Selector Tabs */}
+                                <div className="grid grid-cols-2 gap-2">
+                                  <button
+                                    onClick={() => setPlanCPhase('phase1')}
+                                    className={`p-2.5 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
+                                      planCPhase === 'phase1' 
+                                        ? 'bg-rose-50 border-rose-300 text-rose-800 font-black shadow-sm'
+                                        : 'bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-655'
+                                    }`}
+                                  >
+                                    Phase 1: Rapid Bolus (30 ml/kg)
+                                    <span className="text-[9px] font-normal block text-slate-450 mt-0.5">
+                                      Volume: {phase1VolumeMl} mL | Duration: {phase1DurationMin} min
+                                    </span>
+                                  </button>
+                                  
+                                  <button
+                                    onClick={() => setPlanCPhase('phase2')}
+                                    className={`p-2.5 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
+                                      planCPhase === 'phase2' 
+                                        ? 'bg-rose-50 border-rose-300 text-rose-800 font-black shadow-sm'
+                                        : 'bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-655'
+                                    }`}
+                                  >
+                                    Phase 2: Maintenance (70 ml/kg)
+                                    <span className="text-[9px] font-normal block text-slate-450 mt-0.5">
+                                      Volume: {phase2VolumeMl} mL | Duration: {phase2DurationMin} min
+                                    </span>
+                                  </button>
+                                </div>
+
+                                {/* Flow rate summary stats */}
+                                <div className="grid grid-cols-3 gap-3 p-3 bg-slate-50 border border-slate-100 rounded-xl text-center text-xs">
+                                  <div>
+                                    <span className="text-[9px] font-bold text-slate-400 block uppercase">Phase Volume</span>
+                                    <strong className="text-slate-800 block text-sm font-black font-outfit">{activeVolumeMl} mL</strong>
+                                  </div>
+                                  <div>
+                                    <span className="text-[9px] font-bold text-slate-400 block uppercase">Infusion Time</span>
+                                    <strong className="text-slate-800 block text-sm font-black font-outfit">{activeDurationMin} mins</strong>
+                                  </div>
+                                  <div>
+                                    <span className="text-[9px] font-bold text-slate-400 block uppercase">Calculated Flow</span>
+                                    <strong className="text-rose-700 block text-sm font-black font-outfit">{(activeVolumeMl / (activeDurationMin / 60)).toFixed(1)} mL/hr</strong>
+                                  </div>
+                                </div>
+
+                                {/* Drop Factor Preset Toggles */}
+                                <div className="space-y-2">
+                                  <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block">3. IV Tube Drop Factor (drops/mL)</span>
+                                  <div className="flex flex-wrap gap-2 text-xs">
+                                    {[
+                                      { id: 60, label: 'Microdrip (60 gtt/mL)' },
+                                      { id: 20, label: 'Macrodrip (20 gtt/mL)' },
+                                      { id: 15, label: 'Macrodrip (15 gtt/mL)' }
+                                    ].map(opt => (
+                                      <button
+                                        key={opt.id}
+                                        onClick={() => setDropFactor(opt.id)}
+                                        className={`px-3 py-1.5 rounded-lg border font-bold transition-all cursor-pointer ${
+                                          dropFactor === opt.id 
+                                            ? 'bg-emerald-50 border-emerald-300 text-emerald-800 font-extrabold shadow-sm'
+                                            : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50'
+                                        }`}
+                                      >
+                                        {opt.label}
+                                      </button>
+                                    ))}
+                                    
+                                    <button
+                                      onClick={() => setDropFactor('custom')}
+                                      className={`px-3 py-1.5 rounded-lg border font-bold transition-all cursor-pointer ${
+                                        dropFactor === 'custom'
+                                          ? 'bg-emerald-50 border-emerald-300 text-emerald-800 font-extrabold shadow-sm'
+                                          : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50'
+                                      }`}
+                                    >
+                                      Custom Factor
+                                    </button>
+                                  </div>
+
+                                  {dropFactor === 'custom' && (
+                                    <div className="flex items-center gap-2 p-2 bg-slate-50 border border-slate-200 rounded-xl w-full max-w-[200px] animate-scale-up mt-2">
+                                      <span className="text-[10px] font-bold text-slate-500 uppercase">Drops/mL:</span>
+                                      <input 
+                                        type="number"
+                                        min={1}
+                                        max={150}
+                                        value={customDropFactor}
+                                        onChange={(e) => setCustomDropFactor(e.target.value)}
+                                        className="w-16 bg-white border border-slate-250 rounded px-1.5 py-0.5 text-xs text-slate-700 outline-none focus:ring-2 focus:ring-emerald-500 font-bold"
+                                      />
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Drip chamber visualizer */}
+                            <div className="lg:col-span-4 flex items-center justify-center">
+                              <DripVisualizer 
+                                volumeMl={activeVolumeMl} 
+                                durationMin={activeDurationMin} 
+                                dropFactor={activeDropFactor} 
+                              />
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Nasogastric Tube Fallback Drawer */}
+                        <div className="p-4 bg-amber-50/50 border border-amber-200 text-amber-950 rounded-xl space-y-2">
+                          <div className="flex gap-2 items-start">
+                            <HelpCircle className="h-5 w-5 text-amber-605 shrink-0 mt-0.5" />
+                            <div>
+                              <h4 className="font-extrabold text-sm mt-0.5 font-outfit">FALLBACK: IV ACCESS UNAVAILABLE</h4>
+                              <span className="text-[10px] font-black text-amber-700 uppercase tracking-widest block mt-0.5">Nasogastric (NG) Tube or Oral Treatment Protocol</span>
+                              <p className="text-[11px] leading-relaxed opacity-95 mt-1 text-slate-700 font-medium">
+                                If IV fluid is completely unavailable or clinician lacks access, immediately place a nasogastric tube or administer ORS orally.
+                                <br />
+                                • <strong>Administer ORS at:</strong> <span className="font-extrabold text-amber-905 bg-white border border-amber-250 px-1.5 py-0.5 rounded">{weight * 20} ml per hour</span> (20 ml/kg/hr) for exactly 6 hours.
+                                <br />
+                                • Re-evaluate the patient every 1-2 hours. If there is repeated vomiting or abdominal distension, administer fluid slower.
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  )}
+                    );
+                  })()}
 
                 </div>
               )}
