@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ShieldCheck, Layers, ShieldAlert, Stethoscope, Activity, Sprout, Settings, Calculator, CloudRain, ChevronDown, MapPin } from 'lucide-react';
+import { ShieldCheck, Layers, ShieldAlert, Stethoscope, Activity, Sprout, Settings, Calculator, CloudRain, ChevronDown, MapPin, Sparkles } from 'lucide-react';
 import Navigator from './components/Navigator';
 import EvidenceMatrix from './components/EvidenceMatrix';
 import SafetyChecker from './components/SafetyChecker';
@@ -11,6 +11,7 @@ import { isProUnlocked, clearProMembership } from './utils/membership';
 import ProPaywall from './components/ProPaywall';
 import VisualAtlas from './components/VisualAtlas';
 import EpidemicHeatmap from './components/EpidemicHeatmap';
+import SynergyMatrix from './components/SynergyMatrix';
 
 export default function App() {
   const [activePage, setActivePage] = useState('dashboard');
@@ -152,7 +153,7 @@ export default function App() {
                 <button
                   onClick={() => setShowToolkit(!showToolkit)}
                   className={`px-3 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
-                    ['dosage', 'weather', 'clinician'].includes(activePage)
+                    ['dosage', 'weather', 'clinician', 'synergy', 'atlas', 'heatmap'].includes(activePage)
                       ? 'bg-white text-[hsl(var(--primary-green))] shadow-sm border border-slate-200/50'
                       : 'text-slate-500 hover:text-slate-800'
                   }`}
@@ -164,13 +165,14 @@ export default function App() {
 
                 {/* Floating Absolute Dropdown */}
                 {showToolkit && (
-                  <div className="absolute top-[90%] right-0 lg:left-0 pt-2.5 w-48 z-50 animate-fade-in no-print">
+                  <div className="absolute top-[90%] right-0 lg:left-0 pt-2.5 w-52 z-50 animate-fade-in no-print">
                     <div className="bg-white/95 border border-slate-200/60 shadow-lg rounded-xl py-1.5 flex flex-col backdrop-blur-md">
                       {[
                         { id: 'dosage', label: 'Dosage Calculator', icon: Calculator },
                         { id: 'weather', label: 'Weather Forecast', icon: CloudRain },
                         { id: 'atlas', label: 'Visual Medical Atlas', icon: Layers },
                         { id: 'heatmap', label: 'Epidemic Outbreak Map', icon: Activity },
+                        { id: 'synergy', label: 'Synergy Explorer', icon: Sparkles },
                         { id: 'clinician', label: 'Clinician Quick-Ref', icon: Stethoscope }
                       ].map(sub => (
                         <button
@@ -308,6 +310,10 @@ export default function App() {
 
           {activePage === 'heatmap' && (
             proUnlocked ? <EpidemicHeatmap selectedRegion={selectedRegion} /> : <ProPaywall onUnlockSuccess={handleUnlockSuccess} />
+          )}
+
+          {activePage === 'synergy' && (
+            proUnlocked ? <SynergyMatrix /> : <ProPaywall onUnlockSuccess={handleUnlockSuccess} />
           )}
 
           {activePage === 'condition' && (
