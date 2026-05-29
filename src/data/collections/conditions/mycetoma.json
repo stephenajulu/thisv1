@@ -1,0 +1,25 @@
+{
+  "id": "mycetoma",
+  "name": "Mycetoma (Madura Foot)",
+  "scientificName": "Eumycetoma / Actinomycetoma",
+  "icd11": "1F27",
+  "category": "Climate-linked Health Issue",
+  "description": "A chronic, progressive granulomatous subcutaneous tissue disease caused by fungi or bacteria. Typically affects feet of barefoot farmers, forming multiple sinuses that discharge purulent fluid and fungal grains.",
+  "symptoms": [
+    "skin-ulcer",
+    "fatigue",
+    "joint-pain"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Arid Climate & Thorny Acacia Plains",
+      "impact": "Fungi live in thorny shrubs. Spores enter subcutaneous tissues through punctures from acacia thorns or agricultural splinters."
+    }
+  ],
+  "prevention": [
+    "Wearing protective leather boots in fields",
+    "Immediate cleaning and antiseptic care for thorn pricks",
+    "Aggressive surveillance of rural farming populations"
+  ],
+  "triageAdvisory": "Characterized by painless woody swelling, multiple discharging sinuses, and black/yellow granular discharge. Run tissue biopsy and culture. Eumycetoma requires long-term Itraconazole; Actinomycetoma requires prolonged combined antibiotics."
+}

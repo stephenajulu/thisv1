@@ -1,0 +1,25 @@
+{
+  "id": "tungiasis",
+  "name": "Tungiasis (Jigger Infestation)",
+  "scientificName": "Tunga penetrans infestation",
+  "icd11": "1G81",
+  "category": "Climate-linked Health Issue",
+  "description": "An inflammatory skin ectoparasitosis caused by the burrowing of gravid female Tunga penetrans (sand fleas) into feet or hands. Causes severe pain, intense pruritus, secondary bacterial infections, and difficulty walking.",
+  "symptoms": [
+    "pruritus",
+    "skin-ulcer",
+    "joint-pain"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Dry Sandy Soils & Loose Dirt Floors",
+      "impact": "Sand fleas multiply rapidly in dry, dusty soil during high-temperature seasons, especially in unpaved household dirt floors."
+    }
+  ],
+  "prevention": [
+    "Paving loose dirt floors inside houses",
+    "Wearing closed shoes and washing feet regularly",
+    "Spraying homes with insecticide or applying neem seed oil barriers"
+  ],
+  "triageAdvisory": "Look for painful circular lesions with central black dots (flea respiratory stigmata) in periungual toe folds. Disinfect skin, carefully extract flea using sterile instruments, or smother locally using petroleum jelly."
+}

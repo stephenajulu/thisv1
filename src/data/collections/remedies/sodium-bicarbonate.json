@@ -1,0 +1,14 @@
+{
+  "id": "sodium-bicarbonate",
+  "name": "Sodium Bicarbonate",
+  "scientificName": "Sodium bicarbonate (Baking Soda)",
+  "category": "botanical",
+  "description": "An alkaline chemical compound. Serves as a mild anti-pruritic topical paste by neutralizing acidic insect secretions and soothing inflammatory sunburn dermis.",
+  "activeConstituents": [
+    "Sodium bicarbonate"
+  ],
+  "preparation": "Mix 3 teaspoons of sodium bicarbonate powder with 1 teaspoon of clean water to form a thick paste. Spread gently over itchy skin lesions or sunburn rashes. Rinse after 10 minutes.",
+  "safetyRating": "Very High Safety",
+  "safetyAlert": "Extremely safe topically. Do not apply over broken skin or open bleeding ulcers.",
+  "interactions": "None recorded topically. Enhances systemic bicarbonate levels if ingested in large quantities."
+}

@@ -1,0 +1,11 @@
+{
+  "id": "m-42",
+  "remedyId": "diethylcarbamazine-syrup",
+  "conditionId": "loiasis",
+  "targetSymptomId": "blindness",
+  "gradeQuality": "Moderate",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "Unaligned",
+  "clinicalSummary": "Clinical trials demonstrate that a standard 12-day regimen of oral Diethylcarbamazine (6mg/kg daily) successfully kills both microfilariae and adult Loa loa worms, resolving visual irritation and preventing permanent ocular microfilarial blindness.",
+  "citation": "New England Journal of Medicine, 2011"
+}

@@ -1,0 +1,11 @@
+{
+  "id": "m-47",
+  "remedyId": "griseofulvin",
+  "conditionId": "dermatophytosis",
+  "targetSymptomId": "skin-ulcer",
+  "gradeQuality": "High",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "Unaligned",
+  "clinicalSummary": "Randomized trials show oral Griseofulvin (10-20mg/kg daily for 6-8 weeks) remains a highly reliable gold standard therapy for pediatric tinea capitis, resolving scalp scaling, circular alopecia, and preventing fungal kerion abscesses.",
+  "citation": "Pediatric Dermatology, 2015"
+}

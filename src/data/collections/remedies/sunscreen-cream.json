@@ -1,0 +1,15 @@
+{
+  "id": "sunscreen-cream",
+  "name": "Broad-Spectrum Sunscreen",
+  "scientificName": "SPF 30+ UV barrier cream",
+  "category": "pharmaceutical",
+  "description": "A topical chemical and physical UV barrier cream. Incorporates Zinc Oxide or Titanium Dioxide which reflects and disperses harmful UVA and UVB radiation, preventing solar dermatitis, sunburn skin damage, and UV hives.",
+  "activeConstituents": [
+    "Zinc Oxide",
+    "Titanium Dioxide"
+  ],
+  "preparation": "Apply a uniform layer over all sun-exposed skin zones (face, neck, ears, hands) 15 minutes before outdoors agricultural labor. Reapply every 2 hours.",
+  "safetyRating": "Very High Safety",
+  "safetyAlert": "Safe for all vulnerable populations. Do not apply near eyes to prevent stinging. Discontinue if localized contact rash occurs.",
+  "interactions": "None. Serves as an inert topical protective barrier."
+}

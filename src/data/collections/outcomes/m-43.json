@@ -1,0 +1,11 @@
+{
+  "id": "m-43",
+  "remedyId": "itraconazole",
+  "conditionId": "mycetoma",
+  "targetSymptomId": "skin-ulcer",
+  "gradeQuality": "Moderate",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "Unaligned",
+  "clinicalSummary": "Clinical cohort reviews prove long-term Itraconazole therapy (200mg twice daily for 12 months) halts eumycetoma fungal growth, closing discharging sinuses and reducing lower limb mass, preventing surgical amputation in up to 70% of Madura Foot patients.",
+  "citation": "PLOS Neglected Tropical Diseases, 2016"
+}

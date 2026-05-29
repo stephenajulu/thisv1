@@ -1,0 +1,11 @@
+{
+  "id": "m-46",
+  "remedyId": "thiabendazole",
+  "conditionId": "strongyloidiasis",
+  "targetSymptomId": "abdominal-pain",
+  "gradeQuality": "Moderate",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "Unaligned",
+  "clinicalSummary": "Clinical registry reports indicate that oral Thiabendazole (25mg/kg twice daily for 2 days) achieves a >80% larval clearance rate, resolving chronic abdominal cramps and avoiding severe disseminated helminthic hyperinfection.",
+  "citation": "World Journal of Gastroenterology, 2012"
+}

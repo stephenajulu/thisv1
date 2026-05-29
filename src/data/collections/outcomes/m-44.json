@@ -1,0 +1,11 @@
+{
+  "id": "m-44",
+  "remedyId": "petroleum-jelly",
+  "conditionId": "podoconiosis",
+  "targetSymptomId": "lymphadenopathy",
+  "gradeQuality": "High",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Randomized controlled trials in volcanic highlands show that standard daily leg hygiene washes followed by liberal application of topical Petroleum Jelly emollient prevents skin cracking and secondary bacterial entry, reducing acute inflammatory attacks by 50%.",
+  "citation": "The Lancet Global Health, 2018"
+}

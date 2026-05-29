@@ -1,0 +1,14 @@
+{
+  "id": "petroleum-jelly",
+  "name": "Petroleum Jelly",
+  "scientificName": "Petrolatum ointment",
+  "category": "botanical",
+  "description": "A refined, inert hydrocarbon ointment base. Serves as a highly effective physical occlusive skin barrier. Smothers burrowing ectoparasites like jiggers (tungiasis), blocks larval soil entry, and traps epidermal moisture.",
+  "activeConstituents": [
+    "Refined Petrolatum"
+  ],
+  "preparation": "Cleanse affected lower legs and apply generous thick topical layer over burrowing lesions or dry, cracked skin twice daily.",
+  "safetyRating": "Very High Safety",
+  "safetyAlert": "Safe for all demographics. For external topical use only. Do not apply over deep, uncleaned purulent wounds to prevent anaerobic bacterial growth.",
+  "interactions": "None recorded. Highly stable topical base."
+}

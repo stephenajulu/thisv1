@@ -1,0 +1,25 @@
+{
+  "id": "paragonimiasis",
+  "name": "Paragonimiasis (Lung Fluke)",
+  "scientificName": "Paragonimus westermani infection",
+  "icd11": "1F6D",
+  "category": "Climate-linked Health Issue",
+  "description": "A food-borne parasitic lung infection caused by the lung fluke. Contracted by eating raw, pickled, or undercooked freshwater crabs or crayfish containing infective metacercariae larvae. Simulates tuberculosis.",
+  "symptoms": [
+    "cough",
+    "fatigue",
+    "abdominal-pain"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Freshwater Streams & High Temperatures",
+      "impact": "Warmer waters expand populations of intermediate snail hosts and freshwater crabs, facilitating fluke transmission cycles."
+    }
+  ],
+  "prevention": [
+    "Thoroughly cooking all freshwater crabs and crayfish",
+    "Avoiding contamination of water sources with feces or sputum",
+    "Safe food preparation practices in rural outposts"
+  ],
+  "triageAdvisory": "Clinical features: Chronic productive cough, rusty brown sputum, and chest pain mimicking tuberculosis. Confirm via sputum or stool microscopy for eggs. Treat with Praziquantel."
+}

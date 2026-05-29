@@ -5,13 +5,23 @@ const outcomeFiles = import.meta.glob('./collections/outcomes/*.json', { eager: 
 const interactionFiles = import.meta.glob('./collections/interactions/*.json', { eager: true });
 
 const conditions = Object.values(conditionFiles).map(module => module.default);
-const remedies = Object.values(remedyFiles).map(module => module.default);
+const staticRemedies = Object.values(remedyFiles).map(module => module.default);
 const outcomesMatrix = Object.values(outcomeFiles).map(module => module.default);
 const interactions = Object.values(interactionFiles).map(module => module.default);
 
 export const database = {
   conditions,
-  remedies,
+  get remedies() {
+    if (typeof window === 'undefined') return staticRemedies;
+    const approved = localStorage.getItem('this_ethnobotany_approved');
+    if (!approved) return staticRemedies;
+    try {
+      const list = JSON.parse(approved);
+      return [...staticRemedies, ...list];
+    } catch (e) {
+      return staticRemedies;
+    }
+  },
   interactions,
   symptoms: [
     { id: "high-fever", name: "High Fever", description: "Elevated core body temperature (>38.5°C). Primary defense indicator." },

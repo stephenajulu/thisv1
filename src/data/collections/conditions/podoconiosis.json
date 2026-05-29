@@ -1,0 +1,25 @@
+{
+  "id": "podoconiosis",
+  "name": "Podoconiosis (Non-Filarial Elephantiasis)",
+  "scientificName": "Endemic non-filarial elephantiasis",
+  "icd11": "EF23",
+  "category": "Climate-linked Health Issue",
+  "description": "A geobotanical inflammatory lymphadenopathy triggered by chronic barefeet exposure to alkaline volcanic red clay soils. The soil micro-particles penetrate skin and cause progressive, severe lymphatic blockage and swelling.",
+  "symptoms": [
+    "joint-pain",
+    "fatigue",
+    "lymphadenopathy"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Volcanic Highlands & Farming Soils",
+      "impact": "Barefoot farming in highland red soils exposes subsistence workers to toxic mineral micro-silicates that initiate dermal lymph vessel inflammation."
+    }
+  ],
+  "prevention": [
+    "Wearing thick leather shoes or boots consistently",
+    "Rigorous daily washing of feet with clean water and acidic antiseptic soap",
+    "Laying concrete floor slabs in rural houses"
+  ],
+  "triageAdvisory": "Clinical features: Bilateral, asymmetric swelling of lower legs. Rule out Wuchereria bancrofti filariasis first. Triage is centered on leg hygiene: wash daily, apply petroleum jelly, and elevate feet at night."
+}

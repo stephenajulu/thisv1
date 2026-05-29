@@ -1,0 +1,24 @@
+{
+  "id": "solar-urticaria",
+  "name": "Solar Urticaria (Sun Allergy)",
+  "scientificName": "Ultraviolet solar dermatitis urticaria",
+  "icd11": "EH90",
+  "category": "Climate-linked Health Issue",
+  "description": "A rare but debilitating physical urticaria triggered by skin exposure to solar radiation (specifically UVA and UVB wavelengths). Triggers rapid wheals, erythema, burning sensations, and intense pruritus on exposed skin within minutes of exposure.",
+  "symptoms": [
+    "pruritus",
+    "skin-ulcer"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Peak Solar Noon UV Index",
+      "impact": "High ultraviolet radiation at tropical latitudes triggers rapid chemical photoproduct formations in the skin, initiating IgE-mediated histamine releases."
+    }
+  ],
+  "prevention": [
+    "Seeking dense shade during peak UV hours (11:00 - 15:00)",
+    "Applying high-protection broad-spectrum sunscreens (SPF 30+)",
+    "Wearing protective wide-brimmed hats and dark long-sleeved clothing"
+  ],
+  "triageAdvisory": "Erythema and hive-like wheals erupt on sun-exposed zones. Diagnose via phototesting triggers. Treat acute episodes with high-dose non-sedating oral antihistamines. Apply cold compresses."
+}

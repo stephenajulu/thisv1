@@ -1,0 +1,11 @@
+{
+  "id": "m-45",
+  "remedyId": "petroleum-jelly",
+  "conditionId": "tungiasis",
+  "targetSymptomId": "pruritus",
+  "gradeQuality": "Moderate",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Field studies confirm that smothering active tungiasis lesions with a thick layers of Petroleum Jelly cuts off oxygen to burrowed gravid female sand fleas. The flea perishes in situ, reducing localized pain, secondary infections, and itching.",
+  "citation": "Journal of Tropical Medicine, 2020"
+}

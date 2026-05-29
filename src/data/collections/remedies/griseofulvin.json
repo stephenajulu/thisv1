@@ -1,0 +1,15 @@
+{
+  "id": "griseofulvin",
+  "name": "Griseofulvin",
+  "scientificName": "Griseofulvin (Antifungal)",
+  "category": "pharmaceutical",
+  "hepatotoxic": true,
+  "description": "An oral fungistatic pharmaceutical. Binds to fungal microtubules and keratin precursor cells, making them highly resistant to fungal invasion and successfully treating severe dermatophyte scalp infections (tinea capitis).",
+  "activeConstituents": [
+    "Griseofulvin"
+  ],
+  "preparation": "Oral administration of 500mg daily. Must be taken with fat-rich foods or milk to dramatically optimize systemic absorption.",
+  "safetyRating": "Moderate Caution",
+  "safetyAlert": "May cause headache, gastrointestinal upset, and mild hepatotoxicity. Monitor liver function during long-term regimens.",
+  "interactions": "Alcohol increases griseofulvin absorption but accelerates central nervous system depression. Reduces effectiveness of oral contraceptives."
+}

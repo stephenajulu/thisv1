@@ -1,0 +1,25 @@
+{
+  "id": "loiasis",
+  "name": "Loiasis (Calabar Swellings)",
+  "scientificName": "Loa loa infection",
+  "icd11": "1F62",
+  "category": "Vector-borne Disease",
+  "description": "A parasitic worm infection transmitted by Chrysops deerflies. Characterized by transient subcutaneous swellings (Calabar swellings) and the migration of adult worms across the conjunctiva of the eye.",
+  "symptoms": [
+    "joint-pain",
+    "pruritus",
+    "blindness"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "High Humidity & Forest Canopy",
+      "impact": "Chrysops deerflies thrive in humid tropical rainforests, multiplying rapidly in dense mud seasonal riverbeds."
+    }
+  ],
+  "prevention": [
+    "Chrysops deerfly control and repellents",
+    "Wearing thick, light-colored long-sleeve clothing",
+    "Prophylactic weekly diethylcarbamazine (DEC)"
+  ],
+  "triageAdvisory": "Check for visual worm migration or localized transient pruritic swellings. Confirm microfilariae in midday blood smear. If negative for onchocerciasis/lymphatic filariasis, administer Diethylcarbamazine (DEC)."
+}

@@ -79,3 +79,35 @@ collections:
       - { label: "Traditional-Modern Alignment", name: "traditionalAlignment", widget: "select", options: ["High", "Emerging", "Unaligned"] }
       - { label: "Human Clinical Efficacy Summary", name: "clinicalSummary", widget: "text" }
       - { label: "Reference Citation / PubMed URL", name: "citation", widget: "string" }
+
+  - name: "blog"
+    label: "Clinical Blog"
+    folder: "src/data/collections/blog"
+    create: true
+    format: "json"
+    slug: "{{id}}"
+    fields:
+      - { label: "Unique ID", name: "id", widget: "string" }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Author", name: "author", widget: "string" }
+      - { label: "Published Date (YYYY-MM-DD)", name: "date", widget: "string" }
+      - { label: "Read Time", name: "readTime", widget: "string" }
+      - { label: "Excerpt / Short Summary", name: "excerpt", widget: "text" }
+      - { label: "Full Article Body", name: "body", widget: "text" }
+      - { label: "Linked Conditions (IDs)", name: "linkedConditions", widget: "list", field: { name: "conditionId", widget: "string" } }
+      - { label: "Linked Remedies (IDs)", name: "linkedRemedies", widget: "list", field: { name: "remedyId", widget: "string" } }
+
+  - name: "notes"
+    label: "Community Vault Notes"
+    folder: "src/data/collections/notes"
+    create: true
+    format: "json"
+    slug: "{{id}}"
+    fields:
+      - { label: "Note ID", name: "id", widget: "string" }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Author / Researcher", name: "author", widget: "string" }
+      - { label: "Date Created (YYYY-MM-DD)", name: "date", widget: "string" }
+      - { label: "Category", name: "category", widget: "select", options: ["ethnobotany", "toxicology", "epidemiology", "pharmacology"] }
+      - { label: "Full Journal Text (with [[wiki-links]])", name: "body", widget: "text" }
+

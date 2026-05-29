@@ -1,0 +1,25 @@
+{
+  "id": "strongyloidiasis",
+  "name": "Strongyloidiasis Threadworm Infection",
+  "scientificName": "Strongyloides stercoralis infection",
+  "icd11": "1F67",
+  "category": "Climate-linked Health Issue",
+  "description": "A parasitic roundworm infection transmitted through skin contact with contaminated soil. The worm is unique in its ability to replicate inside the human host (auto-infection), leading to persistent chronic disease and life-threatening hyperinfection.",
+  "symptoms": [
+    "abdominal-pain",
+    "cough",
+    "pruritus"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "Tropical Heat & Humid Soil",
+      "impact": "Larvae survive and multiply in warm, damp, organic soil. Flooding events and inadequate sanitation spread larvae to populated farm zones."
+    }
+  ],
+  "prevention": [
+    "Wearing shoes consistently in agricultural zones",
+    "Proper disposal of human waste",
+    "Prophylactic screening of immunosuppressed individuals"
+  ],
+  "triageAdvisory": "Clinical features: Recurrent rash (larva currens), epigastric pain, and cough. Perform stool agar plate culture or ELISA. Treat immediately with single-dose Ivermectin or prolonged Thiabendazole to avoid fatal hyperinfection."
+}

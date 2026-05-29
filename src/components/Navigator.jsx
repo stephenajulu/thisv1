@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Search, Activity, Sprout, AlertCircle, ChevronRight, Loader2 } from 'lucide-react';
 import { database } from '../data/database';
 import { getLocalizedRemedy } from '../utils/regionalHelper';
+import { useI18n } from '../utils/i18n';
 
 // Fast client-side Levenshtein Distance for fuzzy matching spelling errors
 const getLevenshteinDistance = (a, b) => {
@@ -31,7 +32,15 @@ const getLevenshteinDistance = (a, b) => {
   return matrix[lenB][lenA];
 };
 
+const boostedConditionsByRegion = {
+  lodwar: ['dehydration', 'malnutrition-sam', 'heat-stroke'],
+  mombasa: ['lymphatic-filariasis', 'dengue', 'chikungunya'],
+  kakamega: ['ascariasis', 'hookworm', 'leptospirosis'],
+  nairobi: []
+};
+
 export default function Navigator({ onNavigate, selectedRegion }) {
+  const { t } = useI18n();
   const [query, setQuery] = useState('');
   const [activeTab, setActiveTab] = useState('all');
   const [visibleCount, setVisibleCount] = useState(12);
@@ -70,13 +79,17 @@ export default function Navigator({ onNavigate, selectedRegion }) {
     setVisibleCount(12);
   }, [query, activeTab]);
 
-  // 1. Filter Conditions
+  // 1. Filter Conditions (handles both array of string and array of object symptoms schemas)
   const filteredConditions = database.conditions.filter(c => 
     matchesFuzzy(c.name) || 
     matchesFuzzy(c.scientificName) || 
     matchesFuzzy(c.category) || 
     matchesFuzzy(c.description) ||
-    c.symptoms.some(sId => matchesFuzzy(database.symptoms.find(s => s.id === sId)?.name))
+    c.symptoms.some(sObj => {
+      const sId = sObj.id || sObj;
+      const symptomNode = database.symptoms.find(s => s.id === sId);
+      return symptomNode && matchesFuzzy(symptomNode.name);
+    })
   );
 
   // 2. Filter Remedies (uses localized name, details, and Swahili/tribal synonyms)
@@ -97,6 +110,12 @@ export default function Navigator({ onNavigate, selectedRegion }) {
 
   const totalResults = filteredConditions.length + filteredRemedies.length + filteredSymptoms.length;
 
+  const isBoosted = (match) => {
+    if (match.type !== 'condition') return false;
+    const list = boostedConditionsByRegion[selectedRegion] || [];
+    return list.includes(match.data.id);
+  };
+
   // compile all unified matches based on the toggled category tab
   const allMatches = [];
   if (activeTab === 'all' || activeTab === 'conditions') {
@@ -109,8 +128,14 @@ export default function Navigator({ onNavigate, selectedRegion }) {
     filteredSymptoms.forEach(s => allMatches.push({ type: 'symptom', data: s }));
   }
 
-  // Sort them alphabetically to provide clinical stability
-  allMatches.sort((a, b) => a.data.name.localeCompare(b.data.name));
+  // Sort: Boosted/Endemic conditions bubble to the top of the list first, followed alphabetically
+  allMatches.sort((a, b) => {
+    const aBoosted = isBoosted(a);
+    const bBoosted = isBoosted(b);
+    if (aBoosted && !bBoosted) return -1;
+    if (!aBoosted && bBoosted) return 1;
+    return a.data.name.localeCompare(b.data.name);
+  });
 
   // Extract the sliced visible subset
   const displayedMatches = allMatches.slice(0, visibleCount);
@@ -196,17 +221,29 @@ export default function Navigator({ onNavigate, selectedRegion }) {
         {displayedMatches.map(match => {
           if (match.type === 'condition') {
             const c = match.data;
+            const boosted = isBoosted(match);
             return (
               <div 
                 key={`cond-${c.id}`} 
                 onClick={() => onNavigate('condition', c.id)}
-                className="glass-panel p-5 cursor-pointer flex flex-col justify-between transition-all group animate-scale-up border-l-4 border-l-emerald-800 hover:-translate-y-0.5"
+                className={`glass-panel p-5 cursor-pointer flex flex-col justify-between transition-all group animate-scale-up border-l-4 hover:-translate-y-0.5 ${
+                  boosted 
+                    ? 'border-l-amber-600 bg-amber-50/10' 
+                    : 'border-l-emerald-800'
+                }`}
               >
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-[10px] uppercase font-extrabold tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-100">
-                      {c.category}
-                    </span>
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[10px] uppercase font-extrabold tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-100">
+                        {c.category}
+                      </span>
+                      {boosted && (
+                        <span className="text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 border border-amber-200 font-extrabold animate-pulse">
+                          ★ {t('endemicBadge') || 'Endemic in Region'}
+                        </span>
+                      )}
+                    </div>
                     <Activity className="h-4 w-4 text-emerald-700 animate-pulse" />
                   </div>
                   <h3 className="text-lg font-bold group-hover:text-emerald-600 transition-colors mb-1">
@@ -278,9 +315,17 @@ export default function Navigator({ onNavigate, selectedRegion }) {
                   <p className="text-xs text-slate-500 line-clamp-3 mb-4 leading-relaxed">
                     {r.description}
                   </p>
+                  
+                  {/* Dialect / Vernacular Plant Names Drawer (Low Clutter) */}
+                  {r.synonyms && r.synonyms.length > 0 && (
+                    <div className="mt-2 pt-2 border-t border-slate-100/50 text-[10px] text-slate-400">
+                      <strong className="text-slate-550 font-bold">{t('vernacularTitle') || 'Dialect / Vernacular Plant Names'}: </strong>
+                      <span className="font-semibold italic text-sky-800">{r.synonyms.join(', ')}</span>
+                    </div>
+                  )}
                 </div>
                 
-                <div className="flex items-center justify-between pt-3 border-t border-slate-100/50">
+                <div className="flex items-center justify-between pt-3 border-t border-slate-100/50 mt-2">
                   <div className="flex flex-wrap gap-1">
                     {r.activeConstituents.slice(0, 2).map((item, idx) => (
                       <span key={idx} className="text-[9px] bg-slate-100 px-1.5 py-0.5 rounded text-slate-500 font-bold">

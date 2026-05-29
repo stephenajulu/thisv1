@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "action": "Registry Initialization",
+    "user": "System Architect",
+    "timestamp": "2026-05-01 08:00:00",
+    "details": "Empirical and Traditional database loaded with 92 initial GRADE items."
+  },
+  {
+    "id": 2,
+    "action": "Security Lock Enabled",
+    "user": "Security Officer",
+    "timestamp": "2026-05-02 10:14:05",
+    "details": "Vitals registry configured for 100% offline local hashing and zero external network leaks."
+  },
+  {
+    "id": 3,
+    "action": "Clinician Mode Configured",
+    "user": "Clinical Director",
+    "timestamp": "2026-05-15 14:30:22",
+    "details": "WHO IMCI Standard guided triage wizard activated under PWA pro-tier bypass parameters."
+  },
+  {
+    "id": 4,
+    "action": "Regional Overrides Seeded",
+    "user": "Traditional Medicine Liaison",
+    "timestamp": "2026-05-20 09:45:10",
+    "details": "Swahili, Luhya, and Turkana botanical synonym sets mapped across 4 county context scopes."
+  },
+  {
+    "id": 5,
+    "action": "Decap CMS Sync",
+    "user": "Content Manager",
+    "timestamp": "2026-05-28 17:05:00",
+    "details": "Vetted traditional baobab bark decoction successfully merged into active outpost search index."
+  }
+]

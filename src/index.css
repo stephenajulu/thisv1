@@ -375,3 +375,91 @@ path[class*="fill-rose-500/25"] {
     border-color: rgba(245, 158, 11, 0.8);
   }
 }
+
+/* ========================================================
+   ACCESSIBILITY: LOW-VISION HIGH-CONTRAST MODE (WCAG AAA)
+   ======================================================== */
+body.high-contrast {
+  --bg-mint-soft: 0, 0%, 0%;
+  --slate-text: 0, 0%, 100%;
+  --primary-green: 0, 0%, 100%;
+  --glass-border: #facc15;
+  background: #000000 !important;
+  background-image: none !important;
+  color: #ffffff !important;
+}
+
+body.high-contrast h1,
+body.high-contrast h2,
+body.high-contrast h3,
+body.high-contrast h4,
+body.high-contrast h5,
+body.high-contrast h6 {
+  color: #ffff00 !important;
+}
+
+body.high-contrast .glass-panel {
+  background: #000000 !important;
+  border: 2px solid #ffff00 !important;
+  box-shadow: none !important;
+  color: #ffffff !important;
+}
+
+body.high-contrast p,
+body.high-contrast span,
+body.high-contrast label,
+body.high-contrast div,
+body.high-contrast table,
+body.high-contrast th,
+body.high-contrast td,
+body.high-contrast input,
+body.high-contrast textarea,
+body.high-contrast select {
+  color: #ffffff !important;
+}
+
+body.high-contrast a,
+body.high-contrast button {
+  border: 1px solid #ffff00 !important;
+  background-color: #000000 !important;
+  text-decoration: underline !important;
+  font-weight: 800 !important;
+  color: #ffffff !important;
+}
+
+body.high-contrast button:hover,
+body.high-contrast a:hover {
+  background-color: #ffff00 !important;
+  color: #000000 !important;
+}
+
+body.high-contrast input,
+body.high-contrast select,
+body.high-contrast textarea {
+  background-color: #000000 !important;
+  border: 2px solid #ffffff !important;
+  color: #ffffff !important;
+}
+
+body.high-contrast input:focus,
+body.high-contrast select:focus,
+body.high-contrast textarea:focus {
+  border-color: #ffff00 !important;
+}
+
+body.high-contrast svg {
+  border: 2px solid #ffff00 !important;
+  background-color: #000000 !important;
+}
+
+body.high-contrast svg line,
+body.high-contrast svg circle,
+body.high-contrast svg rect,
+body.high-contrast svg path {
+  stroke: #ffffff !important;
+}
+
+body.high-contrast svg text {
+  fill: #ffff00 !important;
+}
+

@@ -1,0 +1,15 @@
+{
+  "id": "thiabendazole",
+  "name": "Thiabendazole",
+  "scientificName": "Thiabendazole (Anthelmintic)",
+  "category": "pharmaceutical",
+  "hepatotoxic": true,
+  "description": "An anthelmintic drug designed to inhibit the helminth-specific enzyme fumarate reductase, preventing cell glucose uptake in intestinal nematodes.",
+  "activeConstituents": [
+    "Thiabendazole"
+  ],
+  "preparation": "Oral tablets: 25mg/kg twice daily after fat-rich meals, administered for 2-7 days depending on clinical parasite density.",
+  "safetyRating": "Moderate Caution",
+  "safetyAlert": "Frequently causes transient nausea, vomiting, dizziness, and mild liver enzyme elevations.",
+  "interactions": "Increases plasma concentration of active drugs like Theophylline."
+}

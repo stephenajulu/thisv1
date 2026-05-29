@@ -1,0 +1,11 @@
+{
+  "id": "m-49",
+  "remedyId": "sunscreen-cream",
+  "conditionId": "solar-urticaria",
+  "targetSymptomId": "pruritus",
+  "gradeQuality": "High",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "Unaligned",
+  "clinicalSummary": "Clinical photobiology trials prove that pre-exposure application of broad-spectrum high-SPF sunscreen containing physical blockers (Zinc Oxide) increases solar urticaria light-eruption thresholds by over 90%, preventing itching and hives during peak agricultural solar hours.",
+  "citation": "Photodermatology, Photoimmunology & Photomedicine, 2017"
+}

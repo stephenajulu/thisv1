@@ -4,12 +4,16 @@ import { registerSW } from 'virtual:pwa-register'
 import './index.css'
 import App from './App.jsx'
 
+import { I18nProvider } from './utils/i18n'
+
 // Auto-register service worker for 100% offline support
 registerSW({ immediate: true })
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <I18nProvider>
+      <App />
+    </I18nProvider>
   </StrictMode>,
 )
 

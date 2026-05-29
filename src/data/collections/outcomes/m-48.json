@@ -1,0 +1,11 @@
+{
+  "id": "m-48",
+  "remedyId": "tea-tree-oil",
+  "conditionId": "dermatophytosis",
+  "targetSymptomId": "pruritus",
+  "gradeQuality": "Low",
+  "recommendationStrength": "Conditional For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "In vitro and small clinical pilot studies show that topical 5-10% Tea Tree Oil essential preparations inhibit dermatophyte mycelial growth, reducing ringworm scales and soothing severe localized itching comparable to standard topical clotrimazole.",
+  "citation": "Australasian Journal of Dermatology, 2002"
+}

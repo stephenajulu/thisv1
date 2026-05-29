@@ -1,0 +1,24 @@
+{
+  "id": "dermatophytosis",
+  "name": "Fungal Ringworm (Tinea Capitis)",
+  "scientificName": "Trichophyton / Microsporum infection",
+  "icd11": "1F28",
+  "category": "Climate-linked Health Issue",
+  "description": "A highly contagious superficial fungal infection of the scalp and hair shafts. Thrives in warm, humid conditions. Triggers circular scaly patches, hair breakage, alopecia, and severe itching.",
+  "symptoms": [
+    "pruritus",
+    "skin-ulcer"
+  ],
+  "climateLinks": [
+    {
+      "trigger": "High Heat & Humidity",
+      "impact": "Sweating and skin dampness create a fertile environment for fungal spores to colonize the stratum corneum and hair follicles."
+    }
+  ],
+  "prevention": [
+    "Washing hair and skin regularly with soap",
+    "Avoiding sharing combs, towels, hats, or bedding",
+    "Keeping school classrooms and children's dormitories dry and well-ventilated"
+  ],
+  "triageAdvisory": "Confirm through Wood's lamp fluorescence or skin scraping microscopy. Treat superficial patches with topical antifungals. Extensive scalp ringworm (tinea capitis) requires oral Griseofulvin or Terbinafine."
+}

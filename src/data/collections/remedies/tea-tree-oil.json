@@ -1,0 +1,15 @@
+{
+  "id": "tea-tree-oil",
+  "name": "Tea Tree Oil",
+  "scientificName": "Melaleuca alternifolia oil",
+  "category": "botanical",
+  "description": "An essential oil extracted from Melaleuca alternifolia leaves. Contains rich concentrations of terpinen-4-ol, which disrupts fungal cell walls and bacteria membranes, making it a highly effective natural antiseptic and topical antifungal.",
+  "activeConstituents": [
+    "terpinen-4-ol",
+    "gamma-terpinene"
+  ],
+  "preparation": "Apply 2-3 drops of diluted tea tree oil (5-10% in carrier oil like coconut oil) topically over fungal lesions or insect bites twice daily.",
+  "safetyRating": "High Safety",
+  "safetyAlert": "External topical use only. Strict contraindication for oral ingestion (triggers ataxia and confusion). Inspect skin for contact dermatitis before widespread use.",
+  "interactions": "None recorded topically. Synergistic antibacterial effects when combined with standard zinc creams."
+}

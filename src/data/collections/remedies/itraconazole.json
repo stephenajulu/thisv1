@@ -1,0 +1,15 @@
+{
+  "id": "itraconazole",
+  "name": "Itraconazole",
+  "scientificName": "Itraconazole (Triazole Antifungal)",
+  "category": "pharmaceutical",
+  "hepatotoxic": true,
+  "description": "A systemic triazole antifungal pharmaceutical that blocks the synthesis of ergosterol in fungal cell membranes, causing cell leakage and death.",
+  "activeConstituents": [
+    "Itraconazole"
+  ],
+  "preparation": "Oral capsules: 200mg twice daily with full fat meals or acidic beverages to optimize gastric absorption.",
+  "safetyRating": "Moderate Caution",
+  "safetyAlert": "Contraindicated in patients with congestive heart failure. Requires regular liver function monitoring due to DILI risks.",
+  "interactions": "Antacids and proton pump inhibitors severely reduce gastrointestinal absorption. Contraindicated with Simvastatin."
+}

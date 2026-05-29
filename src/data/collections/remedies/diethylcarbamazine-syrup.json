@@ -1,0 +1,15 @@
+{
+  "id": "diethylcarbamazine-syrup",
+  "name": "Diethylcarbamazine Syrup",
+  "scientificName": "Diethylcarbamazine citrate liquid",
+  "category": "pharmaceutical",
+  "hepatotoxic": false,
+  "description": "An oral pediatric liquid formulation of Diethylcarbamazine. Targets microfilarial membranes, sensitizing them to host phagocytosis, and rapidly clearing blood parasites.",
+  "activeConstituents": [
+    "Diethylcarbamazine citrate"
+  ],
+  "preparation": "Oral liquid: 6mg/kg daily in divided doses after meals for 12 days. Shake syrup bottle vigorously before dosing.",
+  "safetyRating": "Moderate Safety",
+  "safetyAlert": "May trigger mild fever and nausea due to dying parasites. Strictly avoid in patients co-infected with heavy onchocerciasis to prevent eye stress.",
+  "interactions": "Concurrent administration of antihistamines decreases parasite-killing immunological storms."
+}
