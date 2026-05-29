@@ -463,3 +463,113 @@ body.high-contrast svg text {
   fill: #ffff00 !important;
 }
 
+/* ========================================================
+   PREMIUM THEME: DYNAMIC DARK MODE (SLEEK DARK GREEN)
+   ======================================================== */
+body.dark {
+  --bg-mint-soft: 164, 20%, 8%;
+  --slate-text: 215, 16%, 85%;
+  --primary-green: 162, 70%, 90%;
+  --glass-border: rgba(32, 184, 135, 0.15);
+  background-color: #0c1512 !important;
+  color: #e2e8f0 !important;
+  background-image: 
+    radial-gradient(at 0% 0%, hsla(162, 72%, 46%, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, hsla(36, 96%, 48%, 0.04) 0px, transparent 50%) !important;
+}
+
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark h4,
+body.dark h5,
+body.dark h6 {
+  color: #d1fae5 !important;
+}
+
+body.dark .glass-panel {
+  background: rgba(15, 23, 20, 0.82) !important;
+  border-color: rgba(32, 184, 135, 0.2) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+  color: #e2e8f0 !important;
+}
+
+body.dark .glass-panel:hover {
+  border-color: rgba(32, 184, 135, 0.35) !important;
+}
+
+body.dark header {
+  background-color: rgba(12, 21, 18, 0.92) !important;
+  border-bottom-color: rgba(32, 184, 135, 0.25) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+body.dark input,
+body.dark select,
+body.dark textarea {
+  background-color: rgba(20, 30, 26, 0.85) !important;
+  border-color: rgba(32, 184, 135, 0.25) !important;
+  color: #e2e8f0 !important;
+}
+
+body.dark input:focus,
+body.dark select:focus,
+body.dark textarea:focus {
+  border-color: #20b887 !important;
+  box-shadow: 0 0 0 2px rgba(32, 184, 135, 0.2) !important;
+}
+
+body.dark select option {
+  background-color: #0c1512 !important;
+  color: #e2e8f0 !important;
+}
+
+body.dark .text-slate-500,
+body.dark .text-slate-655,
+body.dark .text-slate-600 {
+  color: #94a3b8 !important;
+}
+
+body.dark .text-slate-700 {
+  color: #cbd5e1 !important;
+}
+
+body.dark .text-slate-800,
+body.dark .text-slate-850 {
+  color: #f1f5f9 !important;
+}
+
+body.dark .text-slate-400,
+body.dark .text-slate-450 {
+  color: #64748b !important;
+}
+
+body.dark .bg-slate-100 {
+  background-color: rgba(20, 30, 26, 0.6) !important;
+}
+
+body.dark .bg-slate-50,
+body.dark .bg-slate-50\/50 {
+  background-color: rgba(15, 23, 20, 0.6) !important;
+}
+
+body.dark .border-slate-200,
+body.dark .border-slate-100,
+body.dark .border-slate-150 {
+  border-color: rgba(32, 184, 135, 0.18) !important;
+}
+
+body.dark svg {
+  background-color: #080f0d !important;
+  border-color: rgba(32, 184, 135, 0.2) !important;
+}
+
+body.dark svg text {
+  fill: #d1fae5 !important;
+}
+
+body.dark svg line {
+  stroke: rgba(32, 184, 135, 0.25) !important;
+}
+
+

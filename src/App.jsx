@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ShieldCheck, Layers, ShieldAlert, Stethoscope, Activity, Sprout, Settings, Calculator, CloudRain, ChevronDown, MapPin, Sparkles, BookOpen, GitBranch } from 'lucide-react';
+import { ShieldCheck, Layers, ShieldAlert, Stethoscope, Activity, Sprout, Settings, Calculator, CloudRain, ChevronDown, MapPin, Sparkles, BookOpen, GitBranch, Sun, Moon } from 'lucide-react';
 import Navigator from './components/Navigator';
 import EvidenceMatrix from './components/EvidenceMatrix';
 import SafetyChecker from './components/SafetyChecker';
@@ -44,6 +44,21 @@ export default function App() {
       localStorage.setItem('this_high_contrast', 'inactive');
     }
   }, [highContrast]);
+
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem('this_dark_mode') === 'active';
+  });
+
+  // Toggle dark mode class on document body
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add('dark');
+      localStorage.setItem('this_dark_mode', 'active');
+    } else {
+      document.body.classList.remove('dark');
+      localStorage.setItem('this_dark_mode', 'inactive');
+    }
+  }, [darkMode]);
 
   const getProBadgeText = () => {
     if (localStorage.getItem('this_pro_waiver') === 'active') {
@@ -315,6 +330,22 @@ export default function App() {
                 >
                   <span>👁</span>
                   <span>{highContrast ? "AAA Active" : "Low Vision"}</span>
+                </button>
+              </div>
+
+              {/* Dark Mode Toggle */}
+              <div className="flex items-center gap-2 border-l border-slate-200 pl-3">
+                <button
+                  onClick={() => setDarkMode(!darkMode)}
+                  className={`px-2.5 py-1 rounded-lg text-[10px] font-black border transition-all flex items-center gap-1.5 ${
+                    darkMode 
+                      ? 'bg-slate-800 text-slate-100 border-slate-700 shadow-inner'
+                      : 'bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100'
+                  }`}
+                  title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                >
+                  {darkMode ? <Sun className="h-3 w-3 text-amber-500 shrink-0" /> : <Moon className="h-3 w-3 text-sky-600 shrink-0" />}
+                  <span>{darkMode ? "Light Mode" : "Dark Mode"}</span>
                 </button>
               </div>
 
