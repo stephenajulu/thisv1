@@ -1,0 +1,10 @@
+{
+  "id": "turmeric-black-pepper",
+  "compounds": ["turmeric", "black-pepper"],
+  "severity": "synergy",
+  "title": "Bioavailability Potentiation",
+  "description": "Piperine alkaloid in Black Pepper actively inhibits intestinal and hepatic glucuronidation (via UDP-glucuronosyltransferase inhibition) that otherwise rapidly degrades Curcumin. Combining them increases Curcumin's systemic bioavailability by up to 2,000%, achieving therapeutic tissue concentrations.",
+  "gradeQuality": "High",
+  "clinicalAdvice": "Highly recommended clinical synergy. Always combine Turmeric preparations with a pinch of freshly ground Black Pepper at the bedside to ensure therapeutic anti-inflammatory efficacy.",
+  "citation": "Planta Medica, 1998; Foods Journal, 2017"
+}

@@ -1,0 +1,21 @@
+{
+  "id": "grapefruit-juice",
+  "name": "Grapefruit Juice",
+  "scientificName": "Citrus x paradisi",
+  "category": "botanical",
+  "synonyms": [
+    "grapefruit",
+    "citrus paradisi"
+  ],
+  "description": "A bitter citrus fruit juice. Contains concentrated furanocoumarins (such as bergamottin and dihydroxybergamottin) which are potent, irreversible suicide-inhibitors of the intestinal CYP3A4 enzyme, delaying compound clearance and raising systemic toxicity risk of numerous drugs and herbs.",
+  "activeConstituents": [
+    "Bergamottin",
+    "Dihydroxybergamottin",
+    "Naringin",
+    "Naringenin"
+  ],
+  "preparation": "Standard fresh or commercial fruit juice.",
+  "safetyRating": "Caution Required",
+  "safetyAlert": "Safe alone, but strictly contraindicated with multiple medications and active botanicals due to severe metabolic enzyme suppression.",
+  "interactions": "Irreversibly inhibits intestinal CYP3A4 and modulates P-glycoprotein, dramatically raising serum levels and toxicity risk of Artemisinin, Artemether, Metronidazole, and multiple pharmaceuticals."
+}

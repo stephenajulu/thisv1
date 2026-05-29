@@ -1,0 +1,26 @@
+{
+  "id": "black-pepper",
+  "name": "Black Pepper",
+  "scientificName": "Piper nigrum L.",
+  "category": "botanical",
+  "synonyms": [
+    "peppercorns",
+    "piperine",
+    "kali mirch"
+  ],
+  "description": "A pungent climbing vine spice. The primary alkaloid Piperine serves as a potent enhancer of compound bioavailability by inhibiting metabolic enzymes (glucuronidation) in the gut and liver, boosting nutrient and herbal absorption.",
+  "activeConstituents": [
+    "Piperine",
+    "Chavicine",
+    "Piperidine",
+    "Caryophyllene"
+  ],
+  "preparation": "0.5g to 1.5g of freshly ground black pepper taken concurrently with target compounds or dietary supplements.",
+  "safetyRating": "High Safety",
+  "safetyAlert": "Extremely safe at typical dietary doses. High therapeutic piperine intake may increase absorption of co-administered pharmaceuticals, requiring clinical observation.",
+  "interactions": "Inhibits hepatic glucuronidation, CYP3A4, and P-glycoprotein, significantly boosting absorption and bioavailability of Curcumin and multiple clinical medications.",
+  "sideEffects": "Mild gastric warming, minor acid reflux, mucosal irritation in massive doses.",
+  "contraindications": "Active bleeding gastrointestinal ulcers, severe esophageal reflux, or hyperacidity.",
+  "countyStorageAdvisory": "Mombasa: Store in air-tight, vacuum-sealed glass jars to prevent high coastal humidity from causing mold or clumping. Lodwar: Store in a shaded, ventilated container to prevent essential oil evaporation from high arid temperatures.",
+  "dosingRules": "Children under 2: Not advised. Children 2-5: Micro-pinch (approx 0.05g) max. Adults: 0.5g - 1g (approx 1/4 teaspoon) ground powder per dose concurrently with main compound."
+}

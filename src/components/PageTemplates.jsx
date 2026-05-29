@@ -1029,6 +1029,57 @@ export function RemedyPage({ id, onBack, onNavigate, selectedRegion }) {
                 </div>
               </div>
             </div>
+
+            {/* Clinical Side-Effects & Risks Card */}
+            {(r.sideEffects || r.contraindications) && (
+              <div className="glass-panel p-5 space-y-3 border-l-4 border-l-rose-600 bg-white">
+                <h3 className="text-sm font-extrabold text-rose-900 uppercase tracking-wider flex items-center gap-1.5 border-b border-rose-105 pb-2 font-outfit">
+                  <AlertOctagon className="h-4 w-4 text-rose-600 animate-pulse" />
+                  Clinical Side-Effects & Risks
+                </h3>
+                <div className="space-y-3">
+                  {r.sideEffects && (
+                    <div className="bg-slate-50 p-3 rounded-lg border border-slate-100 text-xs">
+                      <span className="font-extrabold text-slate-700 block mb-0.5 uppercase tracking-wide text-[9px]">POTENTIAL SIDE EFFECTS</span>
+                      <p className="text-slate-600 leading-relaxed font-semibold">{r.sideEffects}</p>
+                    </div>
+                  )}
+                  {r.contraindications && (
+                    <div className="bg-rose-50/30 p-3 rounded-lg border border-rose-100 text-xs border-l-2 border-l-rose-500">
+                      <span className="font-extrabold text-rose-800 block mb-0.5 uppercase tracking-wide text-[9px] flex items-center gap-1">
+                        <AlertTriangle className="h-3 w-3 text-rose-600 shrink-0" />
+                        STRICT CONTRAINDICATIONS
+                      </span>
+                      <p className="text-slate-600 leading-relaxed font-semibold">{r.contraindications}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Storage & Bedside Dosing Card */}
+            {(r.countyStorageAdvisory || r.dosingRules) && (
+              <div className="glass-panel p-5 space-y-3 border-l-4 border-l-blue-600 bg-white">
+                <h3 className="text-sm font-extrabold text-blue-900 uppercase tracking-wider flex items-center gap-1.5 border-b border-blue-105 pb-2 font-outfit">
+                  <ClipboardList className="h-4 w-4 text-blue-600" />
+                  Storage & Bedside Dosing
+                </h3>
+                <div className="space-y-3">
+                  {r.countyStorageAdvisory && (
+                    <div className="bg-slate-50 p-3 rounded-lg border border-slate-100 text-xs">
+                      <span className="font-extrabold text-slate-700 block mb-0.5 uppercase tracking-wide text-[9px]">REGIONAL OUTPOST STORAGE</span>
+                      <p className="text-slate-600 leading-relaxed font-semibold">{r.countyStorageAdvisory}</p>
+                    </div>
+                  )}
+                  {r.dosingRules && (
+                    <div className="bg-blue-50/20 p-3 rounded-lg border border-blue-100 text-xs border-l-2 border-l-blue-500">
+                      <span className="font-extrabold text-blue-800 block mb-0.5 uppercase tracking-wide text-[9px]">VOLUMETRIC DILUTION & DOSING RULES</span>
+                      <p className="text-slate-600 leading-relaxed font-semibold">{r.dosingRules}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Dynamic Scientific Outcomes */}

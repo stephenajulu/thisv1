@@ -104,7 +104,13 @@ export default function VisualAtlas() {
                   { id: 'neem', name: 'Neem L. (Mwarubaini)', subtitle: 'Azadirachta indica' },
                   { id: 'artemisia', name: 'Sweet Wormwood (Artemisia)', subtitle: 'Artemisia annua L.' },
                   { id: 'moringa', name: 'Drumstick Tree (Moringa)', subtitle: 'Moringa oleifera L.' },
-                  { id: 'aloe', name: 'Soothing Aloe Succulent', subtitle: 'Aloe vera L.' }
+                  { id: 'aloe', name: 'Soothing Aloe Succulent', subtitle: 'Aloe vera L.' },
+                  { id: 'warburgia', name: 'Muthiga (Pepper-bark)', subtitle: 'Warburgia salutaris' },
+                  { id: 'kigelia', name: 'Muua (Sausage Tree)', subtitle: 'Kigelia africana' },
+                  { id: 'mondia', name: 'Mukombero (White Ginger)', subtitle: 'Mondia whitei' },
+                  { id: 'prunus', name: 'Muiri (Red Stinkwood)', subtitle: 'Prunus africana' },
+                  { id: 'astragalus', name: 'Huangqi (Astragalus)', subtitle: 'Astragalus membranaceus' },
+                  { id: 'turmeric', name: 'Turmeric (Curcumin)', subtitle: 'Curcuma longa L.' }
                 ].map(item => (
                   <button
                     key={item.id}
@@ -605,7 +611,7 @@ function BotanicalDetail({ id, showLookAlike, onToggleLookAlike }) {
           )
         };
 
-      default: // aloe
+      case 'aloe':
         return {
           title: "Soothing Succulent (Aloe)",
           scientific: "Aloe vera L. structural taxonomy",
@@ -641,6 +647,269 @@ function BotanicalDetail({ id, showLookAlike, onToggleLookAlike }) {
               <circle cx="110" cy="95" r="1.5" fill="#ef4444" stroke="#7f1d1d" strokeWidth="0.5" />
               <circle cx="120" cy="80" r="1.5" fill="#ef4444" stroke="#7f1d1d" strokeWidth="0.5" />
 
+              <text x="15" y="25" fill="#e11d48" className="text-[10px] font-black uppercase tracking-wider">CAPE ALOE (Aloe ferox)</text>
+              <text x="15" y="40" fill="#e11d48" className="text-[9px] font-bold">Sharp thorns running along leaf surface faces</text>
+            </svg>
+          )
+        };
+
+      case 'warburgia':
+        return {
+          title: "Muthiga (Pepper-bark Tree)",
+          scientific: "Warburgia salutaris L. taxonomy",
+          description: "A highly valued indigenous East African evergreen tree. The pepper-tasting leaves and red-brown bark yield powerful sesquiterpene dialdehydes (such as warburganal) which have robust antibacterial and bronchial anti-inflammatory activities. Must be carefully distinguished from the cardiotoxic Ordeal Tree.",
+          parts: [
+            { part: "Inner Bark Slabs", use: "Boiled in water or milk to treat respiratory distress, severe dry coughs, and fevers." },
+            { part: "Glossy Leaves", use: "Chewed directly or brewed in warm water as an active antipyretic throat-soothing wash." }
+          ],
+          processing: [
+            { step: "Harvest small, sustainable bark strips from the trunk. Never ring-bark or girdle the tree.", time: "Day 1" },
+            { step: "Scrape the rough grey outer bark to reveal the aromatic, pepper-tasting red-brown inner bark layer.", time: "Day 1" },
+            { step: "Dry bark slabs thoroughly in shade, grind into a coarse powder, and store in airtight glass jars.", time: "Day 2-6" }
+          ],
+          lookAlikeName: "Ordeal Tree (Erythrophleum suaveolens)",
+          lookAlikeWarning: "Ordeal Tree bark contains highly cardiotoxic alkaloids (erythrophleine) causing rapid heart failure. Muthiga bark is easily distinguished by its strong, peppery, burning taste, completely absent in the Ordeal Tree.",
+          svgTherapeutic: (
+            <svg viewBox="0 0 320 200" className="w-full h-full bg-slate-50 rounded-xl" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 60 170 C 120 120, 200 70, 280 40" fill="none" stroke="#65a30d" strokeWidth="3" />
+              <path d="M 120 120 C 140 100, 165 95, 185 105 C 160 120, 140 120, 120 120" fill="#15803d" stroke="#166534" strokeWidth="1" />
+              <path d="M 170 85 C 190 65, 215 60, 235 70 C 210 85, 190 85, 170 85" fill="#15803d" stroke="#166534" strokeWidth="1" />
+              <rect x="200" y="110" width="80" height="40" rx="4" fill="#78350f" stroke="#451a03" strokeWidth="2" />
+              <path d="M 205 120 L 275 120 M 205 130 L 275 130 M 205 140 L 275 140" stroke="#b45309" strokeWidth="1.5" />
+              <text x="15" y="25" fill="#15803d" className="text-[10px] font-black uppercase tracking-wider">Muthiga (Peppery Bark)</text>
+              <text x="15" y="40" fill="#475569" className="text-[9px] font-bold">Alternate leaves, aromatic red-brown inner bark</text>
+            </svg>
+          ),
+          svgToxic: (
+            <svg viewBox="0 0 320 200" className="w-full h-full bg-slate-50 rounded-xl" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 60 170 C 120 120, 200 70, 280 40" fill="none" stroke="#0284c7" strokeWidth="3" />
+              <ellipse cx="120" cy="110" rx="12" ry="7" fill="#0369a1" stroke="#0f172a" strokeWidth="1" transform="rotate(20, 120, 110)" />
+              <ellipse cx="135" cy="115" rx="12" ry="7" fill="#0369a1" stroke="#0f172a" strokeWidth="1" transform="rotate(20, 135, 115)" />
+              <rect x="200" y="110" width="80" height="40" rx="4" fill="#4b5563" stroke="#1f2937" strokeWidth="2" />
+              <text x="15" y="25" fill="#e11d48" className="text-[10px] font-black uppercase tracking-wider">ORDEAL TREE (Highly Toxic)</text>
+              <text x="15" y="40" fill="#e11d48" className="text-[9px] font-bold">Opposite leaflets, odorless grey bark</text>
+            </svg>
+          )
+        };
+
+      case 'kigelia':
+        return {
+          title: "Muua (Sausage Tree)",
+          scientific: "Kigelia africana L. structure",
+          description: "A famous sub-Saharan tropical tree producing enormous, heavy grey woody sausage-like fruits hanging from long rope-like stalks. Fleshy fruit pulp contains active iridoids, flavonoids, and quinones that act as potent antibacterial and cicatrizant wound healers. Raw green fruit is toxic and highly purgative.",
+          parts: [
+            { part: "Hanging Sausage Fruit", use: "Slices are dried and ground to formulate topical pastes for severe tropical skin ulcers, syphilitic lesions, and eczema." },
+            { part: "Red Trumpet Flowers", use: "Crushed and applied topically to relieve localized swelling and spider bites." }
+          ],
+          processing: [
+            { step: "Harvest fully mature grey hanging fruits. Never use green or rotting fallen specimens.", time: "Day 1" },
+            { step: "Slice the dense fibrous sausage fruit into thin rounds and dry completely under intense tropical sun.", time: "Day 2-6" },
+            { step: "Grind dried slices into a fine grey powder. Mix with clean water to formulate a thick wound paste.", time: "Day 7" }
+          ],
+          lookAlikeName: "Toxic Fruit Climber (Spathelia)",
+          lookAlikeWarning: "Spathelia produces hanging clusters of small red-orange toxic berries rather than enormous, single grey woody sausage-like fruits.",
+          svgTherapeutic: (
+            <svg viewBox="0 0 320 200" className="w-full h-full bg-slate-50 rounded-xl" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 160 10 L 160 100" fill="none" stroke="#71717a" strokeWidth="2.5" />
+              <ellipse cx="160" cy="135" rx="22" ry="42" fill="#71717a" stroke="#3f3f46" strokeWidth="2.5" />
+              <path d="M 152 110 C 150 130, 150 150, 155 165 M 168 105 C 170 125, 172 145, 170 160" fill="none" stroke="#52525b" strokeWidth="1.5" />
+              <text x="15" y="25" fill="#15803d" className="text-[10px] font-black uppercase tracking-wider">Muua (Hanging Sausage Fruit)</text>
+              <text x="15" y="40" fill="#475569" className="text-[9px] font-bold">Massive grey woody sausage shape on rope-like stem</text>
+            </svg>
+          ),
+          svgToxic: (
+            <svg viewBox="0 0 320 200" className="w-full h-full bg-slate-50 rounded-xl" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 160 10 L 160 100" fill="none" stroke="#0284c7" strokeWidth="2.5" />
+              <circle cx="145" cy="110" r="5" fill="#e11d48" stroke="#9f1239" strokeWidth="1" />
+              <circle cx="160" cy="115" r="5" fill="#e11d48" stroke="#9f1239" strokeWidth="1" />
+              <circle cx="175" cy="110" r="5" fill="#e11d48" stroke="#9f1239" strokeWidth="1" />
+              <circle cx="150" cy="130" r="5" fill="#e11d48" stroke="#9f1239" strokeWidth="1" />
+              <circle cx="165" cy="135" r="5" fill="#e11d48" stroke="#9f1239" strokeWidth="1" />
+              <text x="15" y="25" fill="#e11d48" className="text-[10px] font-black uppercase tracking-wider">TOXIC CLIMBER FRUIT</text>
+              <text x="15" y="40" fill="#e11d48" className="text-[9px] font-bold">Small red berry clusters, completely lacking woody sausage shape</text>
+            </svg>
+          )
+        };
+
+      case 'mondia':
+        return {
+          title: "Mukombero (White's Ginger)",
+          scientific: "Mondia whitei root taxonomy",
+          description: "A woody climbing vine popular throughout East and Southern Africa. Fleshy, sweet vanilla-scented roots are packed with aromatic aldehydes, zinc, and saponins. Serves as a powerful natural adaptogen, fatigue booster, and digestive aid. Must be carefully distinguished from cardiotoxic Wild Silk Vine.",
+          parts: [
+            { part: "Fleshy Roots", use: "Chewed fresh or dried and brewed as an organic adaptogen, appetite stimulant, and stress reliever." }
+          ],
+          processing: [
+            { step: "Surgically harvest lateral roots from mature vines, leaving the main taproot intact to preserve the plant.", time: "Day 1" },
+            { step: "Rinse roots thoroughly in clean water and peel away the thin, outer bark layer to expose the white inner root core.", time: "Day 1" },
+            { step: "Slice white cores into strips, dry completely in shade, and store in sealed containers.", time: "Day 2-5" }
+          ],
+          lookAlikeName: "Wild Silk Vine (Periploca linearifolia)",
+          lookAlikeWarning: "Wild Silk Vine roots contain cardiotoxic cardiac glycosides. Mondia leaves are broad and heart-shaped, whereas Wild Silk Vine has extremely thin, needle-like linear leaves.",
+          svgTherapeutic: (
+            <svg viewBox="0 0 320 200" className="w-full h-full bg-slate-50 rounded-xl" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 40 180 C 80 120, 160 80, 280 60" fill="none" stroke="#65a30d" strokeWidth="2.5" />
+              <path d="M 120 120 C 110 100, 120 90, 135 90 C 150 90, 160 100, 150 120 C 140 135, 130 135, 120 120" fill="#15803d" stroke="#166534" strokeWidth="1" />
+              <path d="M 220 120 Q 240 140, 220 170 M 230 120 Q 210 145, 240 175 M 240 125 Q 260 150, 235 180" fill="none" stroke="#d97706" strokeWidth="3" />
+              <text x="15" y="25" fill="#15803d" className="text-[10px] font-black uppercase tracking-wider">Mukombero (Broad Heart Leaf)</text>
+              <text x="15" y="40" fill="#475569" className="text-[9px] font-bold">Broad heart-shaped leaves, vanilla-scented fibrous roots</text>
+            </svg>
+          ),
+          svgToxic: (
+            <svg viewBox="0 0 320 200" className="w-full h-full bg-slate-50 rounded-xl" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 40 180 C 80 120, 160 80, 280 60" fill="none" stroke="#0284c7" strokeWidth="2.5" />
+              <line x1="120" y1="120" x2="160" y2="105" stroke="#0369a1" strokeWidth="2" />
+              <line x1="180" y1="90" x2="220" y2="80" stroke="#0369a1" strokeWidth="2" />
+              <path d="M 220 120 Q 240 140, 220 170" fill="none" stroke="#4b5563" strokeWidth="3" />
+              <text x="15" y="25" fill="#e11d48" className="text-[10px] font-black uppercase tracking-wider">WILD SILK VINE (Cardiotoxic)</text>
+              <text x="15" y="40" fill="#e11d48" className="text-[9px] font-bold">Needle-like linear leaves, odorless toxic roots</text>
+            </svg>
+          )
+        };
+
+      case 'prunus':
+        return {
+          title: "Muiri (Red Stinkwood)",
+          scientific: "Prunus africana tree taxonomy",
+          description: "An iconic montane forest tree native to high-elevation tropical Africa. The aromatic inner bark contains powerful phytosterols (such as beta-sitosterol) and pentacyclic triterpenes that inhibit growth factors to reduce prostatic swellings, fevers, and urinary distress.",
+          parts: [
+            { part: "Red Inner Bark", use: "Standardized aqueous boiling decoction to treat benign prostatic hyperplasia (BPH) fevers and urinary discomfort." }
+          ],
+          processing: [
+            { step: "Harvest bark using strict opposite-quarter panels to protect cambium and prevent tree death.", time: "Day 1" },
+            { step: "Rinse and peel outer grey mossy bark to isolate the aromatic, red-brown, almond-scented inner bark layers.", time: "Day 1" },
+            { step: "Chop into small slabs, dry fully in shaded well-ventilated outposts, and grind into a red-brown powder.", time: "Day 2-7" }
+          ],
+          lookAlikeName: "Wild Coca (Erythroxylum)",
+          lookAlikeWarning: "Wild Coca has dull odorless bark completely lacking the distinct almond-like scent of therapeutic Muiri, and produces small red berries.",
+          svgTherapeutic: (
+            <svg viewBox="0 0 320 200" className="w-full h-full bg-slate-50 rounded-xl" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 60 170 C 120 120, 200 70, 280 40" fill="none" stroke="#65a30d" strokeWidth="3.5" />
+              <path d="M 120 120 C 145 105, 160 105, 175 110 C 150 125, 135 125, 120 120" fill="#166534" stroke="#14532d" strokeWidth="1" />
+              <path d="M 180 85 C 205 70, 220 70, 235 75 C 210 90, 195 90, 180 85" fill="#166534" stroke="#14532d" strokeWidth="1" />
+              <rect x="220" y="115" width="70" height="40" rx="3" fill="#991b1b" stroke="#7f1d1d" strokeWidth="2" />
+              <path d="M 225 125 C 235 125, 255 125, 285 125 M 225 135 C 235 135, 255 135, 285 135" stroke="#fca5a5" strokeWidth="1" />
+              <text x="15" y="25" fill="#15803d" className="text-[10px] font-black uppercase tracking-wider">Muiri (Almond-Scented Bark)</text>
+              <text x="15" y="40" fill="#475569" className="text-[9px] font-bold">Glossy alternate leaves, deep red almond-scented inner bark</text>
+            </svg>
+          ),
+          svgToxic: (
+            <svg viewBox="0 0 320 200" className="w-full h-full bg-slate-50 rounded-xl" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 60 170 C 120 120, 200 70, 280 40" fill="none" stroke="#0284c7" strokeWidth="3.5" />
+              <path d="M 120 120 C 145 110, 160 110, 175 115" fill="none" stroke="#0369a1" strokeWidth="1.5" />
+              <circle cx="130" cy="130" r="4.5" fill="#ef4444" stroke="#7f1d1d" strokeWidth="1" />
+              <circle cx="140" cy="132" r="4.5" fill="#ef4444" stroke="#7f1d1d" strokeWidth="1" />
+              <rect x="220" y="115" width="70" height="40" rx="3" fill="#78350f" stroke="#451a03" strokeWidth="2" />
+              <text x="15" y="25" fill="#e11d48" className="text-[10px] font-black uppercase tracking-wider">WILD COCA (No Scent)</text>
+              <text x="15" y="40" fill="#e11d48" className="text-[9px] font-bold">Odorless dry brown bark, small red toxic berries</text>
+            </svg>
+          )
+        };
+
+      case 'astragalus':
+        return {
+          title: "Huangqi (Astragalus)",
+          scientific: "Astragalus membranaceus root taxonomy",
+          description: "A premier adaptogen in traditional medicine. The thick yellow taproot is dense in astragaloside saponins and polysaccharides. Indicated as a powerful immune stimulant in SAM recovery, increasing white blood cell count. Must be distinguished from toxic sweetvetches.",
+          parts: [
+            { part: "Fibrous Yellow Taproot", use: "Sliced and boiled in clinical soups or decoctions to treat chronic fatigue, anemia, and boost immune responses." }
+          ],
+          processing: [
+            { step: "Harvest mature roots from 4-5 year old plants during autumn to maximize active saponin content.", time: "Year 4" },
+            { step: "Wash thoroughly, slice transversely into thin rounds (4mm thick), and shade-dry completely.", time: "Day 1-4" }
+          ],
+          lookAlikeName: "Wild Sweetvetch (Hedysarum)",
+          lookAlikeWarning: "Wild Sweetvetch roots look visually identical but contain solid white cores that completely lack the distinctive radial spokewheel yellow rays of therapeutic Huangqi.",
+          svgTherapeutic: (
+            <svg viewBox="0 0 320 200" className="w-full h-full bg-slate-50 rounded-xl" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="160" cy="100" r="45" fill="#fef08a" stroke="#ca8a04" strokeWidth="3" />
+              <circle cx="160" cy="100" r="25" fill="#fef9c3" stroke="#eab308" strokeWidth="1.5" strokeDasharray="3,3" />
+              <line x1="160" y1="100" x2="160" y2="58" stroke="#d97706" strokeWidth="2.5" />
+              <line x1="160" y1="100" x2="160" y2="142" stroke="#d97706" strokeWidth="2.5" />
+              <line x1="160" y1="100" x2="118" y2="100" stroke="#d97706" strokeWidth="2.5" />
+              <line x1="160" y1="100" x2="202" y2="100" stroke="#d97706" strokeWidth="2.5" />
+              <line x1="160" y1="100" x2="130" y2="70" stroke="#d97706" strokeWidth="2" />
+              <line x1="160" y1="100" x2="190" y2="130" stroke="#d97706" strokeWidth="2" />
+              <line x1="160" y1="100" x2="130" y2="130" stroke="#d97706" strokeWidth="2" />
+              <line x1="160" y1="100" x2="190" y2="70" stroke="#d97706" strokeWidth="2" />
+              <text x="15" y="25" fill="#15803d" className="text-[10px] font-black uppercase tracking-wider">Huangqi (Radial Spokewheel Rays)</text>
+              <text x="15" y="40" fill="#475569" className="text-[9px] font-bold">Circular taproot slice showing distinct radial spoke-like grain</text>
+            </svg>
+          ),
+          svgToxic: (
+            <svg viewBox="0 0 320 200" className="w-full h-full bg-slate-50 rounded-xl" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="160" cy="100" r="45" fill="#f8fafc" stroke="#475569" strokeWidth="3" />
+              <circle cx="160" cy="100" r="30" fill="#e2e8f0" stroke="#94a3b8" strokeWidth="1" />
+              <text x="15" y="25" fill="#e11d48" className="text-[10px] font-black uppercase tracking-wider">SWEETVETCH (Solid Core)</text>
+              <text x="15" y="40" fill="#e11d48" className="text-[9px] font-bold">Solid white-grey root cross-section lacking radial spoke rays</text>
+            </svg>
+          )
+        };
+
+      case 'turmeric':
+        return {
+          title: "Turmeric Rhizome Root",
+          scientific: "Curcuma longa L. taxonomy",
+          description: "A highly potent rhizomatous perennial herb of the ginger family. The rich orange-yellow inner flesh is packed with active Curcuminoids, serving as a robust anti-inflammatory agent that works concurrently with black pepper to relieve severe joint pain. Must be distinguished from pale-fleshed Wild Cannas.",
+          parts: [
+            { part: "Knobby Rhizome Root", use: "Dried and ground to formulate a vibrant orange powder for inflammatory arthritis and joint fevers." }
+          ],
+          processing: [
+            { step: "Dig up mature orange rhizomes after the leaf stalks dry down completely.", time: "Month 9" },
+            { step: "Boil fresh rhizomes in water for 45 minutes to gelatinize starch and lock in curcuminoids, then slice.", time: "Day 1" },
+            { step: "Sun-dry sliced rounds completely for 5-7 days until extremely hard and brittle. Mill into a fine powder.", time: "Day 2-8" }
+          ],
+          lookAlikeName: "Wild Canna Rhizome (Curcuma aromatica)",
+          lookAlikeWarning: "Wild Canna rhizomes look identical externally, but have dull white-green or pale grey inner flesh completely lacking the deep, vibrant orange-yellow curcumin pigmentation.",
+          svgTherapeutic: (
+            <svg viewBox="0 0 320 200" className="w-full h-full bg-slate-50 rounded-xl" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 80 130 C 90 90, 130 90, 150 110 C 170 95, 210 95, 230 130 C 200 160, 110 160, 80 130 Z" fill="#f97316" stroke="#c2410c" strokeWidth="2.5" />
+              <path d="M 120 102 C 122 80, 140 80, 145 95" fill="#f97316" stroke="#c2410c" strokeWidth="2" />
+              <path d="M 175 102 C 178 80, 195 80, 200 95" fill="#f97316" stroke="#c2410c" strokeWidth="2" />
+              <path d="M 100 120 Q 105 140, 110 150 M 140 120 Q 142 145, 142 152 M 190 120 Q 185 145, 180 152" fill="none" stroke="#ea580c" strokeWidth="1.5" />
+              <text x="15" y="25" fill="#15803d" className="text-[10px] font-black uppercase tracking-wider">Therapeutic Turmeric Rhizome</text>
+              <text x="15" y="40" fill="#475569" className="text-[9px] font-bold">Vibrant orange-yellow inner core flesh, segmented knobs</text>
+            </svg>
+          ),
+          svgToxic: (
+            <svg viewBox="0 0 320 200" className="w-full h-full bg-slate-50 rounded-xl" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 80 130 C 90 90, 130 90, 150 110 C 170 95, 210 95, 230 130 C 200 160, 110 160, 80 130 Z" fill="#cbd5e1" stroke="#475569" strokeWidth="2.5" />
+              <text x="15" y="25" fill="#e11d48" className="text-[10px] font-black uppercase tracking-wider">WILD CANNA RHIZOME</text>
+              <text x="15" y="40" fill="#e11d48" className="text-[9px] font-bold">Dull green-grey or pale white inner core flesh, no curcumin pigment</text>
+            </svg>
+          )
+        };
+
+      default:
+        return {
+          title: "Soothing Succulent (Aloe)",
+          scientific: "Aloe vera L. structural taxonomy",
+          description: "A stemless succulent with fleshy, water-storing green leaves. The inner clear mucilaginous gel contains potent anti-inflammatory glycoproteins. The yellow sap (aloin latex) directly beneath the leaf rind is a powerful anthraquinone purgative that must be fully drained.",
+          parts: [
+            { part: "Inner Clear Gel", use: "Applied topically for solar actinic dermatitis (sunburns), wound soothing, and localized skin ulcers." }
+          ],
+          processing: [
+            { step: "Sever a mature leaf from the base and stand it vertically in a clean jar to drain the yellow, bitter aloin latex.", time: "15 Mins" },
+            { step: "Surgically slice off the spiny leaf margins using a clean, sharp scalpel or blade.", time: "Bedside" },
+            { step: "Fillet the top green rind off, scrape the pure clear inner gel, and apply directly to affected skin surfaces.", time: "Bedside" }
+          ],
+          lookAlikeName: "Cape Aloe (Aloe ferox)",
+          lookAlikeWarning: "Cape Aloe leaves have sharp spines running along the middle surfaces of the leaf, and contain significantly higher levels of purgative aloin latex.",
+          svgTherapeutic: (
+            <svg viewBox="0 0 320 200" className="w-full h-full bg-slate-50 rounded-xl" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 60 180 Q 90 80, 160 50 Q 110 110, 80 180" fill="#3f6212" stroke="#1e293b" strokeWidth="1.5" />
+              <path d="M 72 140 L 76 138 M 85 110 L 89 108 M 102 85 L 106 83 M 122 68 L 126 66" stroke="#a3e635" strokeWidth="2" />
+              <text x="15" y="25" fill="#15803d" className="text-[10px] font-black uppercase tracking-wider">Therapeutic Aloe vera Leaf</text>
+              <text x="15" y="40" fill="#475569" className="text-[9px] font-bold">Fleshy rosette, spikes restricted ONLY to edges</text>
+            </svg>
+          ),
+          svgToxic: (
+            <svg viewBox="0 0 320 200" className="w-full h-full bg-slate-50 rounded-xl" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 60 180 Q 90 80, 160 50 Q 110 110, 80 180" fill="#0369a1" stroke="#0f172a" strokeWidth="1.5" />
+              <circle cx="85" cy="140" r="1.5" fill="#ef4444" stroke="#7f1d1d" stroke="0.5" strokeWidth="0.5" />
+              <circle cx="95" cy="120" r="1.5" fill="#ef4444" stroke="#7f1d1d" stroke="0.5" strokeWidth="0.5" />
+              <circle cx="110" cy="95" r="1.5" fill="#ef4444" stroke="#7f1d1d" stroke="0.5" strokeWidth="0.5" />
+              <circle cx="120" cy="80" r="1.5" fill="#ef4444" stroke="#7f1d1d" stroke="0.5" strokeWidth="0.5" />
               <text x="15" y="25" fill="#e11d48" className="text-[10px] font-black uppercase tracking-wider">CAPE ALOE (Aloe ferox)</text>
               <text x="15" y="40" fill="#e11d48" className="text-[9px] font-bold">Sharp thorns running along leaf surface faces</text>
             </svg>

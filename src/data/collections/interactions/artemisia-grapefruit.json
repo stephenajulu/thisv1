@@ -1,0 +1,10 @@
+{
+  "id": "artemisia-grapefruit",
+  "compounds": ["artemisia-annua", "grapefruit-juice"],
+  "severity": "caution",
+  "title": "Delayed Clearance & Toxicity Risk",
+  "description": "Furanocoumarins in Grapefruit juice irreversibly inhibit intestinal cytochrome P450 CYP3A4 enzymes. Because Artemisinin is highly dependent on CYP3A4 for systemic clearance, concurrent administration impairs clearance, significantly raising peak serum levels and extending systemic half-life, which elevates potential hepatotoxic burdens.",
+  "gradeQuality": "High",
+  "clinicalAdvice": "Clinical caution advised. Instruct patients to strictly avoid Grapefruit juice or whole citrus grapefruits during active Artemisia annua tea courses or clinical artemisinin-based combination therapies (ACTs).",
+  "citation": "Clinical Pharmacokinetics, 2012; Phytotherapy Research, 2015"
+}
