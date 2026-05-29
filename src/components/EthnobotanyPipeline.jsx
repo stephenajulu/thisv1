@@ -129,6 +129,36 @@ export default function EthnobotanyPipeline() {
     setApprovedRemedies(updatedApproved);
     localStorage.setItem('this_ethnobotany_approved', JSON.stringify(updatedApproved));
     
+    // 2.b. Stage in offline pending sync queue for Serverless Sync Gateway
+    const syncItem = {
+      id: `crowd-${sub.id}`,
+      collection: "remedies",
+      action: "create",
+      timestamp: Date.now(),
+      data: {
+        id: `crowd-${sub.id}`,
+        name: sub.plantName,
+        scientificName: sub.scientificName,
+        category: "botanical",
+        description: `[CROWDSOURCED VETTED ENTRY] Contributed by: ${sub.healerName}. ${sub.citationTrail}`,
+        activeConstituents: ["Organic Traditional Extract"],
+        preparation: sub.prepInstructions,
+        safetyRating: sub.safetyRating,
+        safetyAlert: sub.safetyAlert,
+        interactions: "None recorded. Standard herb caution.",
+        synonyms: sub.indications.map(ind => ({ synonym: ind }))
+      }
+    };
+    
+    let currentSyncQueue = [];
+    const savedSyncQueue = localStorage.getItem('this_pending_sync_queue');
+    if (savedSyncQueue) {
+      try { currentSyncQueue = JSON.parse(savedSyncQueue); } catch(e) {}
+    }
+    const updatedSyncQueue = [syncItem, ...currentSyncQueue];
+    localStorage.setItem('this_pending_sync_queue', JSON.stringify(updatedSyncQueue));
+    window.dispatchEvent(new Event('this_sync_queue_changed'));
+
     // Dispatch custom event to notify App.jsx and database context
     window.dispatchEvent(new Event('this_database_enriched'));
 
@@ -166,6 +196,19 @@ export default function EthnobotanyPipeline() {
     const updated = approvedRemedies.filter(r => r.id !== id);
     setApprovedRemedies(updated);
     localStorage.setItem('this_ethnobotany_approved', JSON.stringify(updated));
+    
+    // Remove from offline pending sync queue if it exists there
+    let currentSyncQueue = [];
+    const savedSyncQueue = localStorage.getItem('this_pending_sync_queue');
+    if (savedSyncQueue) {
+      try {
+        currentSyncQueue = JSON.parse(savedSyncQueue);
+        const updatedSyncQueue = currentSyncQueue.filter(item => item.id !== id);
+        localStorage.setItem('this_pending_sync_queue', JSON.stringify(updatedSyncQueue));
+        window.dispatchEvent(new Event('this_sync_queue_changed'));
+      } catch(e) {}
+    }
+    
     window.dispatchEvent(new Event('this_database_enriched'));
 
     const newAudit = {

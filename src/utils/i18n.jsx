@@ -64,6 +64,10 @@ export const dictionaries = {
     vernacularTitle: "Dialect / Vernacular Plant Names",
     allPrevalentTitle: "County Context Prevalent Conditions First",
     otherConditionsTitle: "All Remaining Registered Conditions",
+    synced: "Synced",
+    syncing: "Syncing...",
+    syncError: "Sync Error",
+    pending: "Staged",
   },
   sw: {
     // Navigation & Common
@@ -126,6 +130,10 @@ export const dictionaries = {
     vernacularTitle: "Majina ya Kienyeji na Lahaja",
     allPrevalentTitle: "Magonjwa ya Kawaida Katika Kaunti Hii Kwanza",
     otherConditionsTitle: "Magonjwa Mengine Yote Yaliyosajiliwa",
+    synced: "Imesawazishwa",
+    syncing: "Inasawazisha...",
+    syncError: "Itilafu ya Kazi",
+    pending: "Iliyosubirishwa",
   },
   fr: {
     // Navigation & Common
@@ -188,6 +196,10 @@ export const dictionaries = {
     vernacularTitle: "Noms en Dialecte / Vernaculaires",
     allPrevalentTitle: "Maladies Prévalentes du Comté d'Abord",
     otherConditionsTitle: "Toutes les Autres Maladies Enregistrées",
+    synced: "Synchronisé",
+    syncing: "Synchronisation...",
+    syncError: "Erreur de Synchro",
+    pending: "Stoppé",
   }
 };
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ShieldCheck, Layers, ShieldAlert, Stethoscope, Activity, Sprout, Settings, Calculator, CloudRain, ChevronDown, MapPin, Sparkles, BookOpen, GitBranch, Sun, Moon } from 'lucide-react';
+import { ShieldCheck, Layers, ShieldAlert, Stethoscope, Activity, Sprout, Settings, Calculator, CloudRain, ChevronDown, MapPin, Sparkles, BookOpen, GitBranch, Sun, Moon, CloudUpload, RefreshCw, AlertCircle, X } from 'lucide-react';
 import Navigator from './components/Navigator';
 import EvidenceMatrix from './components/EvidenceMatrix';
 import SafetyChecker from './components/SafetyChecker';
@@ -33,6 +33,113 @@ export default function App() {
   const [highContrast, setHighContrast] = useState(() => {
     return localStorage.getItem('this_high_contrast') === 'active';
   });
+
+  // Sync Queue States
+  const [syncQueue, setSyncQueue] = useState([]);
+  const [syncStatus, setSyncStatus] = useState('synced'); // 'synced' | 'pending' | 'syncing' | 'error'
+  const [showSyncDrawer, setShowSyncDrawer] = useState(false);
+  const [syncError, setSyncError] = useState('');
+  const [syncSuccess, setSyncSuccess] = useState('');
+
+  const reloadSyncQueue = () => {
+    const queue = localStorage.getItem('this_pending_sync_queue');
+    if (queue) {
+      try {
+        const parsed = JSON.parse(queue);
+        setSyncQueue(parsed);
+        if (parsed.length > 0) {
+          setSyncStatus('pending');
+        } else {
+          setSyncStatus('synced');
+        }
+      } catch (e) {
+        setSyncQueue([]);
+        setSyncStatus('synced');
+      }
+    } else {
+      setSyncQueue([]);
+      setSyncStatus('synced');
+    }
+  };
+
+  useEffect(() => {
+    reloadSyncQueue();
+    window.addEventListener('this_sync_queue_changed', reloadSyncQueue);
+    return () => window.removeEventListener('this_sync_queue_changed', reloadSyncQueue);
+  }, []);
+
+  const triggerSync = async () => {
+    if (syncQueue.length === 0) return;
+    
+    if (typeof window.netlifyIdentity === 'undefined') {
+      setSyncError('Netlify Identity is not initialized. Please verify your internet connection.');
+      setSyncStatus('error');
+      return;
+    }
+
+    const currentUser = window.netlifyIdentity.currentUser();
+    if (!currentUser) {
+      setSyncError('You must be logged in as an administrator to sync. Opening login gateway...');
+      setSyncStatus('error');
+      window.netlifyIdentity.open('login');
+      return;
+    }
+
+    setSyncStatus('syncing');
+    setSyncError('');
+    setSyncSuccess('');
+
+    try {
+      const tokenObj = await currentUser.jwt();
+      const jwtToken = tokenObj;
+
+      const payload = {
+        outpostCounty: selectedRegion,
+        userName: currentUser.user_metadata?.full_name || currentUser.email || 'Outpost Administrator',
+        syncQueue: syncQueue
+      };
+
+      const response = await fetch('/.netlify/functions/sync-gateway', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${jwtToken}`
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `Sync gateway returned ${response.status}`);
+      }
+
+      const responseData = await response.json();
+      
+      localStorage.removeItem('this_pending_sync_queue');
+      reloadSyncQueue();
+      setSyncStatus('synced');
+      setSyncSuccess(`Synchronized successfully! Created PR #${responseData.prNumber || 'Audit Queue'}.`);
+      
+      const currentLogs = localStorage.getItem('this_admin_audit_logs');
+      let parsedLogs = [];
+      if (currentLogs) {
+        try { parsedLogs = JSON.parse(currentLogs); } catch(e) {}
+      }
+      const newAudit = {
+        id: Date.now(),
+        action: "Cloud Sync Completed",
+        user: currentUser.email || "Auditing Officer",
+        timestamp: new Date().toLocaleString(),
+        details: `Synchronized ${payload.syncQueue.length} records. Unique PR #${responseData.prNumber || 'N/A'}.`
+      };
+      localStorage.setItem('this_admin_audit_logs', JSON.stringify([newAudit, ...parsedLogs]));
+      window.dispatchEvent(new Event('this_admin_audit_logs_changed'));
+
+    } catch (e) {
+      setSyncError(e.message || 'An error occurred during synchronization.');
+      setSyncStatus('error');
+    }
+  };
 
   // Toggle high-contrast accessibility class on document body
   useEffect(() => {
@@ -375,6 +482,33 @@ export default function App() {
                   </span>
                 )}
               </div>
+
+              {/* Sync Status Badge */}
+              <div className="flex items-center gap-2 border-l border-slate-200 pl-3">
+                <button
+                  onClick={() => setShowSyncDrawer(true)}
+                  className={`px-2.5 py-1 rounded-lg text-[10px] font-black border transition-all flex items-center gap-1.5 ${
+                    syncStatus === 'synced' ? 'bg-emerald-50 text-emerald-800 border-emerald-250 shadow-sm' :
+                    syncStatus === 'syncing' ? 'bg-sky-50 text-sky-850 border-sky-200 animate-pulse' :
+                    syncStatus === 'error' ? 'bg-rose-50 text-rose-800 border-rose-250' :
+                    'bg-amber-50 text-amber-850 border-amber-200 shadow animate-pulse'
+                  }`}
+                  title="Open Clinical Sync Drawer"
+                >
+                  <span className={`h-2 w-2 rounded-full inline-block ${
+                    syncStatus === 'synced' ? 'bg-emerald-600' :
+                    syncStatus === 'syncing' ? 'bg-sky-600 animate-ping' :
+                    syncStatus === 'error' ? 'bg-rose-600' :
+                    'bg-amber-500 animate-ping'
+                  }`} />
+                  <span className="font-outfit uppercase">
+                    {syncStatus === 'synced' ? t('synced') || 'Synced' :
+                     syncStatus === 'syncing' ? t('syncing') || 'Syncing...' :
+                     syncStatus === 'error' ? t('syncError') || 'Sync Error' :
+                     `${syncQueue.length} ${t('pending') || 'Staged'}`}
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
         </header>
@@ -472,6 +606,109 @@ export default function App() {
           THIS (Tropical Health Information System) is an educational documentation database referencing peer-reviewed ethnobotanical and clinical studies. Always consult an expert medical practitioner before initiating severe tropical treatment plans.
         </p>
       </footer>
+
+      {/* Glassmorphic Sync Status Drawer overlay */}
+      {showSyncDrawer && (
+        <div className="fixed inset-0 z-[100] flex justify-end animate-fade-in no-print bg-slate-900/40 backdrop-blur-sm">
+          <div className="absolute inset-0" onClick={() => setShowSyncDrawer(false)} />
+          <div className="relative w-full max-w-md bg-white dark:bg-slate-900 shadow-2xl h-full flex flex-col justify-between animate-slide-in p-6 border-l border-slate-200 dark:border-slate-800">
+            <div>
+              <div className="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-4 mb-4">
+                <div className="flex items-center gap-2">
+                  <CloudUpload className="h-5 w-5 text-emerald-800 dark:text-emerald-400" />
+                  <h3 className="font-extrabold text-slate-800 dark:text-slate-100 font-outfit text-base uppercase tracking-wider">
+                    Outpost Cloud Sync
+                  </h3>
+                </div>
+                <button
+                  onClick={() => setShowSyncDrawer(false)}
+                  className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 transition-colors"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              {syncError && (
+                <div className="p-3.5 bg-rose-50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/50 rounded-xl text-rose-950 dark:text-rose-200 text-xs font-bold flex items-start gap-2 mb-4">
+                  <AlertCircle className="h-4.5 w-4.5 text-rose-600 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="block font-black uppercase text-[10px] tracking-wider mb-0.5 text-rose-800 dark:text-rose-400">Sync Warning Alert</span>
+                    {syncError}
+                  </div>
+                </div>
+              )}
+
+              {syncSuccess && (
+                <div className="p-3.5 bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-250 dark:border-emerald-900/50 rounded-xl text-emerald-950 dark:text-emerald-200 text-xs font-bold flex items-start gap-2 mb-4">
+                  <ShieldCheck className="h-4.5 w-4.5 text-emerald-600 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="block font-black uppercase text-[10px] tracking-wider mb-0.5 text-emerald-800 dark:text-emerald-400">Sync Completed Successfully</span>
+                    {syncSuccess}
+                  </div>
+                </div>
+              )}
+
+              <div className="space-y-4">
+                <div className="bg-slate-50 dark:bg-slate-800/40 p-4 rounded-xl border border-slate-200/50 dark:border-slate-800">
+                  <div className="flex justify-between text-xs font-bold text-slate-500 mb-2">
+                    <span>Outpost Region:</span>
+                    <span className="text-slate-700 dark:text-slate-200 uppercase">{selectedRegion}</span>
+                  </div>
+                  <div className="flex justify-between text-xs font-bold text-slate-500">
+                    <span>Pending Staged Updates:</span>
+                    <span className="text-emerald-800 dark:text-emerald-400 font-extrabold">{syncQueue.length} items</span>
+                  </div>
+                </div>
+
+                <div className="space-y-2 overflow-y-auto max-h-[350px]">
+                  <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Staged Records Queue</h4>
+                  {syncQueue.length > 0 ? (
+                    syncQueue.map((item, index) => (
+                      <div key={item.id} className="p-3 bg-slate-50 dark:bg-slate-800/20 border border-slate-200/60 dark:border-slate-800/50 rounded-xl flex justify-between items-center text-xs font-semibold text-slate-700 dark:text-slate-300">
+                        <div>
+                          <span className="text-[8px] font-black uppercase tracking-wider bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-400 px-1.5 py-0.5 rounded border border-emerald-100 dark:border-emerald-900/50 mr-2">
+                            {item.collection}
+                          </span>
+                          <span className="font-extrabold">{item.data.name}</span>
+                        </div>
+                        <span className="text-[9px] text-slate-400 font-mono italic">Staged</span>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="p-8 text-center text-xs text-slate-400 italic bg-slate-50 dark:bg-slate-800/20 rounded-xl border border-slate-100 dark:border-slate-800/50">
+                      No unstaged changes cached in this browser. Approved traditional submissions are synchronized immediately.
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="border-t border-slate-100 dark:border-slate-800 pt-4 mt-4 space-y-3">
+              <p className="text-[10px] leading-relaxed text-slate-400">
+                Outpost Cloud Sync pushes staged crowdsourced recipes into draft GitHub Pull Requests. Vetting boards evaluate medical claims according to WHO standard guidelines before committing to main registry files.
+              </p>
+              
+              <button
+                onClick={triggerSync}
+                disabled={syncQueue.length === 0 || syncStatus === 'syncing'}
+                className="w-full py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white rounded-xl text-xs font-bold shadow-md transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {syncStatus === 'syncing' ? (
+                  <>
+                    <RefreshCw className="h-4 w-4 animate-spin" />
+                    <span>Synchronizing Batch Staging...</span>
+                  </>
+                ) : (
+                  <>
+                    <CloudUpload className="h-4 w-4" />
+                    <span>Synchronize {syncQueue.length} Staged Changes</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
