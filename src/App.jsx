@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ShieldCheck, Layers, ShieldAlert, Stethoscope, Activity, Sprout, Settings, Calculator, CloudRain, ChevronDown, MapPin, Sparkles, BookOpen, GitBranch, Sun, Moon, CloudUpload, RefreshCw, AlertCircle, X } from 'lucide-react';
+import { ShieldCheck, Layers, ShieldAlert, Stethoscope, Activity, Sprout, Settings, Calculator, CloudRain, ChevronDown, MapPin, Sparkles, BookOpen, GitBranch, Sun, Moon, CloudUpload, RefreshCw, AlertCircle, X, Globe, Eye } from 'lucide-react';
 import Navigator from './components/Navigator';
 import EvidenceMatrix from './components/EvidenceMatrix';
 import SafetyChecker from './components/SafetyChecker';
@@ -33,6 +33,8 @@ export default function App() {
   const [highContrast, setHighContrast] = useState(() => {
     return localStorage.getItem('this_high_contrast') === 'active';
   });
+
+  const [showSettingsDrawer, setShowSettingsDrawer] = useState(false);
 
   // Sync Queue States
   const [syncQueue, setSyncQueue] = useState([]);
@@ -343,155 +345,16 @@ export default function App() {
             </nav>
 
             {/* Switcher & Membership Indicators */}
-            <div className="flex flex-wrap items-center gap-4 border-t lg:border-t-0 lg:border-l border-slate-200 pt-3 lg:pt-0 pl-0 lg:pl-4">
-              {/* Active Region County Context Selector */}
-              <div className="flex items-center gap-2">
-                <MapPin className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500 font-outfit">
-                  {t('countyContext')}:
-                </span>
-                <div className="relative">
-                  <select
-                    value={selectedRegion}
-                    onChange={(e) => {
-                      const reg = e.target.value;
-                      setSelectedRegion(reg);
-                      localStorage.setItem('this_selected_region', reg);
-                      window.dispatchEvent(new Event('this_region_changed'));
-                    }}
-                    className="appearance-none bg-slate-50 border border-slate-200 hover:border-emerald-500 rounded-lg pl-2 pr-7 py-1 text-xs font-bold outline-none cursor-pointer focus:ring-2 focus:ring-emerald-500 text-slate-700 transition-all font-outfit"
-                  >
-                    <option value="nairobi">Nairobi (Highlands)</option>
-                    <option value="mombasa">Mombasa (Coast)</option>
-                    <option value="lodwar">Lodwar (Turkana Arid)</option>
-                    <option value="kakamega">Kakamega (Western)</option>
-                  </select>
-                  <ChevronDown className="h-3 w-3 text-slate-400 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" />
-                </div>
-              </div>
-
-              {/* Language Selector (Lightweight Offline Context) */}
-              <div className="flex items-center gap-2 border-l border-slate-200 pl-3">
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500 font-outfit">
-                  {t('language')}:
-                </span>
-                <div className="flex items-center gap-1 bg-slate-100 p-0.5 rounded-lg border border-slate-200">
-                  {[
-                    { code: 'en', flag: '🇬🇧', label: 'EN' },
-                    { code: 'sw', flag: '🇰🇪', label: 'SW' },
-                    { code: 'fr', flag: '🇫🇷', label: 'FR' }
-                  ].map(item => (
-                    <button
-                      key={item.code}
-                      onClick={() => changeLanguage(item.code)}
-                      className={`px-2 py-0.5 rounded text-[10px] font-black transition-all flex items-center gap-1 ${
-                        lang === item.code 
-                          ? 'bg-white text-[hsl(var(--primary-green))] shadow-sm'
-                          : 'text-slate-400 hover:text-slate-750'
-                      }`}
-                      title={item.label}
-                    >
-                      <span>{item.flag}</span>
-                      <span>{item.label}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Clinician Mode Switcher */}
-              <div className="flex items-center gap-2 border-l border-slate-200 pl-3">
-                <span className={`text-[10px] font-extrabold uppercase tracking-wider ${clinicianMode ? 'text-emerald-800' : 'text-slate-400'}`}>
-                  {t('clinicianMode')}
-                </span>
-                <button 
-                  onClick={() => {
-                    setClinicianMode(!clinicianMode);
-                    if (!clinicianMode) {
-                      navigateTo('clinician');
-                    } else {
-                      navigateTo('dashboard');
-                    }
-                  }}
-                  className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out outline-none ${
-                    clinicianMode ? 'bg-emerald-600' : 'bg-slate-300'
-                  }`}
-                >
-                  <span 
-                    className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
-                      clinicianMode ? 'translate-x-5' : 'translate-x-0'
-                    }`}
-                  />
-                </button>
-              </div>
-
-              {/* Low Vision Accessibility Toggle */}
-              <div className="flex items-center gap-2 border-l border-slate-200 pl-3">
-                <button
-                  onClick={() => setHighContrast(!highContrast)}
-                  className={`px-2.5 py-1 rounded-lg text-[10px] font-black border transition-all flex items-center gap-1.5 ${
-                    highContrast 
-                      ? 'bg-yellow-400 text-slate-950 border-yellow-500 shadow'
-                      : 'bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100'
-                  }`}
-                  title={highContrast ? t('standardContrast') : t('highContrast')}
-                >
-                  <span>👁</span>
-                  <span>{highContrast ? "AAA Active" : "Low Vision"}</span>
-                </button>
-              </div>
-
-              {/* Dark Mode Toggle */}
-              <div className="flex items-center gap-2 border-l border-slate-200 pl-3">
-                <button
-                  onClick={() => setDarkMode(!darkMode)}
-                  className={`px-2.5 py-1 rounded-lg text-[10px] font-black border transition-all flex items-center gap-1.5 ${
-                    darkMode 
-                      ? 'bg-slate-800 text-slate-100 border-slate-700 shadow-inner'
-                      : 'bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100'
-                  }`}
-                  title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
-                >
-                  {darkMode ? <Sun className="h-3 w-3 text-amber-500 shrink-0" /> : <Moon className="h-3 w-3 text-sky-600 shrink-0" />}
-                  <span>{darkMode ? "Light Mode" : "Dark Mode"}</span>
-                </button>
-              </div>
-
-              {/* Membership Status Badge */}
-              <div className="flex items-center gap-2 border-l border-slate-200 pl-3">
-                {proUnlocked ? (
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-[9px] uppercase font-black tracking-wider px-2 py-0.5 rounded-full bg-amber-500 text-white flex items-center shadow-sm border border-amber-600">
-                      ★ {getProBadgeText()}
-                    </span>
-                    <button 
-                      onClick={() => {
-                        clearProMembership();
-                        setProUnlocked(false);
-                        navigateTo('dashboard');
-                      }}
-                      className="text-[9px] text-slate-400 hover:text-rose-600 hover:underline cursor-pointer transition-colors"
-                      title="Reset PRO status to test the Paywall/GPS waiver flow again"
-                    >
-                      Reset
-
-                    </button>
-                  </div>
-                ) : (
-                  <span className="text-[9px] uppercase font-extrabold tracking-wider px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 border border-slate-200 shadow-inner">
-                    Free Version
-                  </span>
-                )}
-              </div>
-
+            <div className="flex flex-wrap items-center gap-3 border-t lg:border-t-0 lg:border-l border-slate-200 dark:border-slate-800 pt-3 lg:pt-0 pl-0 lg:pl-4">
               {/* Sync Status Badge */}
-              <div className="flex items-center gap-2 border-l border-slate-200 pl-3">
+              <div className="flex items-center gap-2">
                 <button
                   onClick={() => setShowSyncDrawer(true)}
-                  className={`px-2.5 py-1 rounded-lg text-[10px] font-black border transition-all flex items-center gap-1.5 ${
-                    syncStatus === 'synced' ? 'bg-emerald-50 text-emerald-800 border-emerald-250 shadow-sm' :
-                    syncStatus === 'syncing' ? 'bg-sky-50 text-sky-850 border-sky-200 animate-pulse' :
-                    syncStatus === 'error' ? 'bg-rose-50 text-rose-800 border-rose-250' :
-                    'bg-amber-50 text-amber-850 border-amber-200 shadow animate-pulse'
+                  className={`px-2.5 py-1.5 rounded-lg text-[10px] font-black border transition-all flex items-center gap-1.5 ${
+                    syncStatus === 'synced' ? 'bg-emerald-50 dark:bg-emerald-950/20 text-emerald-800 dark:text-emerald-400 border-emerald-250 dark:border-emerald-900/50 shadow-sm' :
+                    syncStatus === 'syncing' ? 'bg-sky-50 dark:bg-sky-950/20 text-sky-850 dark:text-sky-400 border-sky-200 dark:border-sky-900/50 animate-pulse' :
+                    syncStatus === 'error' ? 'bg-rose-50 dark:bg-rose-950/20 text-rose-800 dark:text-rose-455 border-rose-250 dark:border-rose-900/50' :
+                    'bg-amber-50 dark:bg-amber-950/20 text-amber-850 dark:text-amber-400 border-amber-200 dark:border-amber-900/50 shadow animate-pulse'
                   }`}
                   title="Open Clinical Sync Drawer"
                 >
@@ -509,6 +372,19 @@ export default function App() {
                   </span>
                 </button>
               </div>
+
+              {/* Settings Gear trigger button */}
+              <button
+                onClick={() => setShowSettingsDrawer(true)}
+                className="p-1.5 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-500 hover:text-emerald-700 hover:bg-emerald-50 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700 relative group"
+                title="Open Outpost Settings Hub"
+              >
+                <Settings className="h-4 w-4 text-slate-600 dark:text-slate-300 group-hover:text-emerald-700" />
+                {/* Visual notification dot showing active overrides */}
+                {(selectedRegion !== 'nairobi' || lang !== 'en' || clinicianMode || highContrast || darkMode) && (
+                  <span className="absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full bg-emerald-600 border-2 border-white dark:border-slate-800 animate-pulse" />
+                )}
+              </button>
             </div>
           </div>
         </header>
@@ -705,6 +581,222 @@ export default function App() {
                   </>
                 )}
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Glassmorphic Outpost Settings Hub Drawer overlay */}
+      {showSettingsDrawer && (
+        <div className="fixed inset-0 z-[100] flex justify-end animate-fade-in no-print bg-slate-900/40 backdrop-blur-sm">
+          <div className="absolute inset-0" onClick={() => setShowSettingsDrawer(false)} />
+          <div className="relative w-full max-w-md bg-white dark:bg-slate-900 shadow-2xl h-full flex flex-col justify-between animate-slide-in p-6 border-l border-slate-200 dark:border-slate-800">
+            <div className="overflow-y-auto pr-1">
+              {/* Header */}
+              <div className="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-4 mb-6">
+                <div className="flex items-center gap-2">
+                  <Settings className="h-5 w-5 text-emerald-800 dark:text-emerald-400 animate-spin-slow" />
+                  <h3 className="font-extrabold text-slate-800 dark:text-slate-100 font-outfit text-base uppercase tracking-wider">
+                    {t('settings') || 'Outpost Settings Hub'}
+                  </h3>
+                </div>
+                <button
+                  onClick={() => setShowSettingsDrawer(false)}
+                  className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-655 transition-colors"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              {/* Settings Sections */}
+              <div className="space-y-6">
+                {/* 1. Clinical Outpost Location */}
+                <div className="bg-slate-50 dark:bg-slate-800/20 p-4 rounded-xl border border-slate-200/50 dark:border-slate-850/50">
+                  <div className="flex items-center gap-2 mb-2">
+                    <MapPin className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <h4 className="text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-200">
+                      {t('countyContext') || 'Clinical Outpost Location'}
+                    </h4>
+                  </div>
+                  <p className="text-[10px] text-slate-400 dark:text-slate-550 mb-3 leading-relaxed">
+                    Select the active county region to overlay localized botanical names, local abundance scales, and regional ecological warnings.
+                  </p>
+                  <div className="relative">
+                    <select
+                      value={selectedRegion}
+                      onChange={(e) => {
+                        const reg = e.target.value;
+                        setSelectedRegion(reg);
+                        localStorage.setItem('this_selected_region', reg);
+                        window.dispatchEvent(new Event('this_region_changed'));
+                      }}
+                      className="w-full appearance-none bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-750 hover:border-emerald-500 rounded-lg pl-3 pr-9 py-2 text-xs font-bold outline-none cursor-pointer focus:ring-2 focus:ring-emerald-500 text-slate-700 dark:text-slate-200 transition-all font-outfit"
+                    >
+                      <option value="nairobi">Nairobi (Highlands)</option>
+                      <option value="mombasa">Mombasa (Coast)</option>
+                      <option value="lodwar">Lodwar (Turkana Arid)</option>
+                      <option value="kakamega">Kakamega (Western)</option>
+                    </select>
+                    <ChevronDown className="h-4 w-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  </div>
+                </div>
+
+                {/* 2. Language Translation Portal */}
+                <div className="bg-slate-50 dark:bg-slate-800/20 p-4 rounded-xl border border-slate-200/50 dark:border-slate-850/50">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Globe className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <h4 className="text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-200">
+                      {t('language') || 'Bedside Translation Portal'}
+                    </h4>
+                  </div>
+                  <p className="text-[10px] text-slate-400 dark:text-slate-550 mb-3 leading-relaxed">
+                    Translate clinical guidelines, matrix indexes, and warnings instantly into regional dialects.
+                  </p>
+                  <div className="flex items-center gap-2 bg-slate-100/50 dark:bg-slate-900/40 p-1 rounded-xl border border-slate-200 dark:border-slate-800">
+                    {[
+                      { code: 'en', flag: '🇬🇧', label: 'English' },
+                      { code: 'sw', flag: '🇰🇪', label: 'Swahili' },
+                      { code: 'fr', flag: '🇫🇷', label: 'French' }
+                    ].map(item => (
+                      <button
+                        key={item.code}
+                        onClick={() => changeLanguage(item.code)}
+                        className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+                          lang === item.code 
+                            ? 'bg-white dark:bg-slate-800 text-[hsl(var(--primary-green))] dark:text-emerald-400 shadow-sm border border-slate-200/60 dark:border-slate-700'
+                            : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-100'
+                        }`}
+                        title={item.label}
+                      >
+                        <span>{item.flag}</span>
+                        <span>{item.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 3. Clinician Mode Switcher */}
+                <div className="bg-slate-50 dark:bg-slate-800/20 p-4 rounded-xl border border-slate-200/50 dark:border-slate-850/50">
+                  <div className="flex justify-between items-center mb-2">
+                    <div className="flex items-center gap-2">
+                      <Stethoscope className="h-4 w-4 text-emerald-600 shrink-0" />
+                      <h4 className="text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-200">
+                        {t('clinicianMode') || 'Authorized Clinician Mode'}
+                      </h4>
+                    </div>
+                    <button 
+                      onClick={() => {
+                        setClinicianMode(!clinicianMode);
+                        if (!clinicianMode) {
+                          navigateTo('clinician');
+                        } else {
+                          navigateTo('dashboard');
+                        }
+                      }}
+                      className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out outline-none ${
+                        clinicianMode ? 'bg-emerald-600' : 'bg-slate-350 dark:bg-slate-700'
+                      }`}
+                    >
+                      <span 
+                        className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+                          clinicianMode ? 'translate-x-5' : 'translate-x-0'
+                        }`}
+                      />
+                    </button>
+                  </div>
+                  <p className="text-[10px] text-slate-400 dark:text-slate-550 leading-relaxed">
+                    Unlocks guided WHO IMCI pediatric triage algorithms, RUCAM hepatotoxicity scoring metrics, and local patient record logs.
+                  </p>
+                </div>
+
+                {/* 4. Accessibility and Reading Prefs (Contrast + Theme) */}
+                <div className="bg-slate-50 dark:bg-slate-800/20 p-4 rounded-xl border border-slate-200/50 dark:border-slate-850/50">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Eye className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <h4 className="text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-200">
+                      Visual & Reading Preferences
+                    </h4>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-2.5">
+                    {/* Contrast Toggle */}
+                    <button
+                      onClick={() => setHighContrast(!highContrast)}
+                      className={`py-2 px-3 rounded-lg text-xs font-bold border transition-all flex items-center justify-center gap-2 ${
+                        highContrast 
+                          ? 'bg-yellow-400 text-slate-950 border-yellow-500 shadow'
+                          : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-750'
+                      }`}
+                      title={highContrast ? t('standardContrast') : t('highContrast')}
+                    >
+                      <span>👁</span>
+                      <span>{highContrast ? "AAA Contrast" : "Low Vision"}</span>
+                    </button>
+
+                    {/* Dark Mode Toggle */}
+                    <button
+                      onClick={() => setDarkMode(!darkMode)}
+                      className={`py-2 px-3 rounded-lg text-xs font-bold border transition-all flex items-center justify-center gap-2 ${
+                        darkMode 
+                          ? 'bg-slate-800 text-slate-100 border-slate-700 shadow-inner'
+                          : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-750'
+                      }`}
+                      title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                    >
+                      {darkMode ? <Sun className="h-3.5 w-3.5 text-amber-500 shrink-0" /> : <Moon className="h-3.5 w-3.5 text-sky-600 shrink-0" />}
+                      <span>{darkMode ? "Light Theme" : "Dark Theme"}</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* 5. Billing and License details */}
+                <div className="bg-slate-50 dark:bg-slate-800/20 p-4 rounded-xl border border-slate-200/50 dark:border-slate-850/50">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Sparkles className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <h4 className="text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-200">
+                      NGO Billing & Licensing
+                    </h4>
+                  </div>
+                  <p className="text-[10px] text-slate-400 dark:text-slate-550 mb-3 leading-relaxed">
+                    Bedside tools are unlocked for non-governmental organizations via geofenced GPS waivers or regional community sponsorships.
+                  </p>
+                  
+                  <div className="flex items-center justify-between bg-white dark:bg-slate-850 p-3 rounded-lg border border-slate-200 dark:border-slate-750">
+                    <div className="flex items-center gap-2">
+                      {proUnlocked ? (
+                        <span className="text-[10px] uppercase font-black tracking-wider px-2.5 py-1 rounded-full bg-amber-500 text-white shadow-sm border border-amber-600 animate-scale-up">
+                          ★ {getProBadgeText()}
+                        </span>
+                      ) : (
+                        <span className="text-[10px] uppercase font-extrabold tracking-wider px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 shadow-inner">
+                          Free Version
+                        </span>
+                      )}
+                    </div>
+                    
+                    {proUnlocked && (
+                      <button 
+                        onClick={() => {
+                          clearProMembership();
+                          setProUnlocked(false);
+                          navigateTo('dashboard');
+                        }}
+                        className="text-[10px] text-rose-500 hover:text-rose-700 font-extrabold uppercase hover:underline tracking-wider transition-colors"
+                        title="Reset PRO status to test the Paywall/GPS waiver flow again"
+                      >
+                        Reset Status
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Footer inside settings drawer */}
+            <div className="border-t border-slate-100 dark:border-slate-800 pt-4 mt-6">
+              <p className="text-[9px] leading-relaxed text-slate-400 dark:text-slate-500 text-center font-mono">
+                THIS v1.8.2 • Outpost Terminal ID: {selectedRegion.toUpperCase()}-OP
+              </p>
             </div>
           </div>
         </div>
