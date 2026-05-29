@@ -1,0 +1,11 @@
+{
+  "id": "m-60",
+  "remedyId": "astragalus-membranaceus",
+  "conditionId": "malnutrition-sam",
+  "targetSymptomId": "fatigue",
+  "gradeQuality": "High",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Clinical trials verify that astragalus polysaccharides actively stimulate macrophage and T-cell immune functions. Speeds up cellular recovery, restores muscle glycogen levels, and alleviates profound pediatric fatigue.",
+  "citation": "American Journal of Chinese Medicine / Clinical Immunology Reports, 2022"
+}

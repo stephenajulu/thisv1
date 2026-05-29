@@ -1,0 +1,18 @@
+{
+  "id": "schisandra-chinensis",
+  "name": "Schisandra Wuweizi Berries",
+  "scientificName": "Schisandra chinensis (Turcz.) Baill.",
+  "category": "botanical",
+  "description": "An adaptogenic berry containing five distinct flavors. High concentration of lignans (schisandrins) acts as an astringent preventing chronic fluid depletion from watery diarrhea, protecting liver cells, and restoring pediatric energy reserves.",
+  "activeConstituents": [
+    "Schisandrin A",
+    "Schisandrol B",
+    "Gomisin A",
+    "Vitamin C"
+  ],
+  "preparation": "Astringent tea: Steep 5g of clean crushed dried berries in 300ml of hot water for 15 minutes. Strain and drink warm twice daily.",
+  "safetyRating": "Very High Safety",
+  "safetyAlert": "Exceptionally well tolerated. Safe for long-term supportive therapy.",
+  "interactions": "None reported. Safe to administer with standard clinical hydration.",
+  "demographicCautions": []
+}

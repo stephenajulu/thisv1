@@ -1,0 +1,25 @@
+{
+  "id": "carissa-spinarum",
+  "name": "Carissa Forest Num-Num Root",
+  "scientificName": "Carissa spinarum (L.)",
+  "category": "botanical",
+  "description": "A thorny evergreen indigenous shrub. Root extracts have a rich traditional history of treating chronic chest pains, severe joint and neck stiffness, and intestinal hookworm infections.",
+  "activeConstituents": [
+    "Carissin",
+    "Germacrene",
+    "Carissa-saponins",
+    "Cardiac Glycosides"
+  ],
+  "preparation": "Root decoction: Boil 5g of clean dried sliced roots in 500ml of water for 25 minutes. Filter and administer 50ml warm once daily after food.",
+  "safetyRating": "Moderate Caution",
+  "safetyAlert": "Roots contain trace cardiac glycosides. Strictly adhere to standard dosage limits; avoid chronic administration exceeding 14 days.",
+  "interactions": "None reported in traditional literature. Do not combine with modern digitalis or heart rate slowing drugs.",
+  "demographicCautions": [
+    {
+      "populationId": "children-under-5",
+      "type": "danger",
+      "title": "ABSOLUTE CONTRAINDICATION in Infants",
+      "message": "Due to trace cardiac glycoside active constituents, do not administer Carissa spinarum root decoctions to infants or children under 5 years old."
+    }
+  ]
+}

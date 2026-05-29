@@ -1,0 +1,11 @@
+{
+  "id": "m-53",
+  "remedyId": "aloe-secundiflora",
+  "conditionId": "amoebic-dysentery",
+  "targetSymptomId": "bloody-stool",
+  "gradeQuality": "Moderate",
+  "recommendationStrength": "Conditional For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Decoctions of dried wild aloe sap contain highly concentrated aloin and polysaccharides which display potent in-vitro bactericidal and antiparasitic properties against Entamoeba histolytica trophozoites.",
+  "citation": "East African Agricultural and Forestry Journal / Kenya Medical Research Institute (KEMRI) archives, 2022"
+}

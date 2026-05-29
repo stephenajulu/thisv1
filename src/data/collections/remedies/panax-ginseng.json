@@ -1,0 +1,18 @@
+{
+  "id": "panax-ginseng",
+  "name": "Panax Ginseng Root",
+  "scientificName": "Panax ginseng (C.A.Mey.)",
+  "category": "botanical",
+  "description": "The premier adaptogen in Eastern medicine. Ginseng roots are rich in ginsenosides (saponins) that improve cardiorespiratory capacity, combat systemic cell fatigue, and modulate cortisol pathways under clinical stress.",
+  "activeConstituents": [
+    "Ginsenoside Rg1",
+    "Ginsenoside Rb1",
+    "Panaxans",
+    "Gintonin"
+  ],
+  "preparation": "Ginseng tea: Steep 3g of thinly sliced dry root in 200ml of boiling water for 15 minutes. Drink warm once daily.",
+  "safetyRating": "High Safety",
+  "safetyAlert": "Generally extremely safe. Avoid high dosages in patients with severe uncontrolled hypertension or acute cardiac dysrhythmias.",
+  "interactions": "Avoid concurrent use with MAOIs. May enhance hypoglycemic effects of antidiabetic drugs.",
+  "demographicCautions": []
+}

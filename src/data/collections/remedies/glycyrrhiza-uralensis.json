@@ -1,0 +1,25 @@
+{
+  "id": "glycyrrhiza-uralensis",
+  "name": "Glycyrrhiza Licorice Root Slices",
+  "scientificName": "Glycyrrhiza uralensis (Fisch.)",
+  "category": "botanical",
+  "description": "Known as the 'Great Harmonizer' in traditional pharmacology. The sweet root contains high glycyrrhizin saponins that exhibit powerful demulcent properties, soothing acute dry coughs, relieving gastric colic spasms, and buffering active herbal compounds.",
+  "activeConstituents": [
+    "Glycyrrhizin",
+    "Liquiritigenin",
+    "Glabridin",
+    "Glycyrrhetic Acid"
+  ],
+  "preparation": "Cough & Gastric Tea: Simmer 5g of dried root slices in 400ml of water for 15 minutes. Strain and sip warm twice daily.",
+  "safetyRating": "Moderate Safety",
+  "safetyAlert": "Long-term ingestion (exceeding 2 weeks) of high glycyrrhizin doses can cause sodium retention and potassium depletion. Limit clinical use to under 14 consecutive days.",
+  "interactions": "Contraindicated with loop diuretics and digoxin due to potassium depletion hazards.",
+  "demographicCautions": [
+    {
+      "populationId": "pregnant-women",
+      "type": "warning",
+      "title": "Pregnancy Advisory",
+      "message": "Avoid high therapeutic dosages during pregnancy due to minor correlations between heavy glycyrrhizin intake and premature labor risks."
+    }
+  ]
+}

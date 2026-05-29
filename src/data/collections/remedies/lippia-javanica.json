@@ -1,0 +1,18 @@
+{
+  "id": "lippia-javanica",
+  "name": "Lippia Fever Tea",
+  "scientificName": "Lippia javanica (Burm.f.) Spreng.",
+  "category": "botanical",
+  "description": "An exceptionally aromatic sub-shrub widely used across sub-Saharan Africa. The leaves are packed with potent essential oils (carvacrol, myrcene, and linalool) showing clinical acaricidal efficacy for scabies mites and antipyretic properties for viral rigors.",
+  "activeConstituents": [
+    "Carvacrol",
+    "Limonene",
+    "Myrcene",
+    "Linalool"
+  ],
+  "preparation": "Fever infusion: Steep 5g of dried leaves in 300ml of boiling water for 10 minutes. Drink warm. For Scabies: Crush fresh aromatic leaves directly and rub vigorously onto affected itchy skin patches twice daily.",
+  "safetyRating": "High Safety",
+  "safetyAlert": "Extremely safe for topical and internal tea preparations. Mild skin redness may occur in highly sensitive individuals if applied raw.",
+  "interactions": "None known. Safe to combine with clinical supportive hydration.",
+  "demographicCautions": []
+}

@@ -1,0 +1,18 @@
+{
+  "id": "prunus-africana",
+  "name": "Prunus Red Stinkwood Bark",
+  "scientificName": "Prunus africana (Hook.f.) Kalkman",
+  "category": "botanical",
+  "description": "An evergreen montane forest tree of sub-Saharan Africa. The bark contains high concentrations of phytosterols (beta-sitosterol) and pentacyclic triterpenes that inhibit inflammatory pathways in prostatic tissue, clinically validated for urinary distress and associated fevers.",
+  "activeConstituents": [
+    "Beta-sitosterol",
+    "Ursolic Acid",
+    "Oleanol Acid",
+    "Docosanol"
+  ],
+  "preparation": "Bark tea infusion: Steep 5g of dried shredded bark in 500ml of boiling water for 15 minutes. Strain and administer 150ml warm twice daily.",
+  "safetyRating": "High Safety",
+  "safetyAlert": "Extremely safe in standard clinical doses. Prolonged use is well tolerated.",
+  "interactions": "None known. Safe to use alongside standard clinical hydration.",
+  "demographicCautions": []
+}

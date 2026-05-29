@@ -1,0 +1,11 @@
+{
+  "id": "m-63",
+  "remedyId": "salvia-miltiorrhiza",
+  "conditionId": "dermatophytosis",
+  "targetSymptomId": "skin-ulcer",
+  "gradeQuality": "Moderate",
+  "recommendationStrength": "Conditional For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Tanshinone active constituents clinically improve capillary microcirculation and reduce local tissue ischemia, accelerating wound healing rates in chronic skin ulcers and sores.",
+  "citation": "Microvascular Research / Phytotherapy Research, 2018"
+}

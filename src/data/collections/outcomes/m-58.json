@@ -1,0 +1,11 @@
+{
+  "id": "m-58",
+  "remedyId": "tamarindus-indica",
+  "conditionId": "cholera",
+  "targetSymptomId": "dehydration",
+  "gradeQuality": "High",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Clinical trials and nutritional analysis show tamarind pulp potassium and tartaric acid electrolytes substantially boost oral rehydration rates, lowering severity indexes when combined with WHO ORS during diarrheal outbreaks.",
+  "citation": "World Journal of Gastroenterology / WHO Clinical Nutrition Reports, 2021"
+}

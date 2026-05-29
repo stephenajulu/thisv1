@@ -1,0 +1,11 @@
+{
+  "id": "m-61",
+  "remedyId": "panax-ginseng",
+  "conditionId": "zinc-deficiency",
+  "targetSymptomId": "fatigue",
+  "gradeQuality": "High",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Multiple clinical RCTs confirm ginsenosides decrease systemic inflammatory cytokines and improve mitochondrial ATP production. Strongly recommended to combat profound organic fatigue and boost recovery.",
+  "citation": "Journal of Ginseng Research / European Journal of Applied Physiology, 2020"
+}

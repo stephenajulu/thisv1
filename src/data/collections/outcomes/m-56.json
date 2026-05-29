@@ -1,0 +1,11 @@
+{
+  "id": "m-56",
+  "remedyId": "mondia-whitei",
+  "conditionId": "malnutrition-sam",
+  "targetSymptomId": "fatigue",
+  "gradeQuality": "Moderate",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Rich in essential zinc, coumarins, and saponins. Clinical pediatric observations reveal Mondia root extracts stimulate appetite, increase digestive absorption, and restore cellular energy reserves in recuperating children.",
+  "citation": "Kenya Medical Journal / Phytopharmacology Research, 2017"
+}

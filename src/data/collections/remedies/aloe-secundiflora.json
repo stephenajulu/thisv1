@@ -1,0 +1,25 @@
+{
+  "id": "aloe-secundiflora",
+  "name": "Kenyan Wild Aloe Juice",
+  "scientificName": "Aloe secundiflora (Engl.)",
+  "category": "botanical",
+  "description": "An indigenous wild succulent prevalent in East African arid zones. Leaves contain powerful anthraquinone glycosides (aloin and aloe-emodin) and complex polysaccharides traditionally used for gastrointestinal malaria shivers, chronic stomach cramping, and amoebic dysentery.",
+  "activeConstituents": [
+    "Aloin",
+    "Aloe-emodin",
+    "Chrysophanol",
+    "Barbaloin"
+  ],
+  "preparation": "Decoction: Simmer 2g of dried yellow leaf sap crystals in 250ml of clean water. Strain and administer 50ml warm. For wounds, apply fresh inner gel topically.",
+  "safetyRating": "Moderate Caution",
+  "safetyAlert": "Extremely bitter juice. Internal oral ingestion of raw anthraquinone latex can cause severe purgative intestinal cramping.",
+  "interactions": "None reported in traditional literature. Avoid concurrent high-dose laxative medications.",
+  "demographicCautions": [
+    {
+      "populationId": "pregnant-women",
+      "type": "danger",
+      "title": "ABSOLUTE CONTRAINDICATION in Pregnancy",
+      "message": "Ingestion of Aloe secundiflora sap is strictly contraindicated during all stages of pregnancy due to strong anthraquinone laxative properties which trigger pelvic congestion and severe uterine contractions, creating high abortifacient risks."
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "id": "toddalia-asiatica",
+  "name": "Toddalia Orange Climber Bark",
+  "scientificName": "Toddalia asiatica (L.) Lam.",
+  "category": "botanical",
+  "description": "A woody forest climber covered in small spines. The root bark is exceptionally bitter and contains high amounts of coumarins and the benzophenanthridine alkaloid nitidine, historically used to combat severe cyclical malaria chills and smooth muscle contractions.",
+  "activeConstituents": [
+    "Nitidine",
+    "Toddalolactone",
+    "Pimpinellin",
+    "Geraniol"
+  ],
+  "preparation": "Root bark decoction: Boil 4g of clean dried root bark in 300ml of water for 15 minutes. Strain and administer 50ml warm twice daily.",
+  "safetyRating": "Moderate Caution",
+  "safetyAlert": "Extremely bitter taste. Avoid high doses due to potent active alkaloid concentrations. Do not administer chronically.",
+  "interactions": "None reported in traditional records.",
+  "demographicCautions": [
+    {
+      "populationId": "pregnant-women",
+      "type": "danger",
+      "title": "Advisory: Uterine Contractions",
+      "message": "Due to high alkaloid concentrations, Toddalia asiatica is contraindicated in pregnant women as it may stimulate smooth muscle tissue and trigger uterine contractions."
+    }
+  ]
+}

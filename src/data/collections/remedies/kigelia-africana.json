@@ -1,0 +1,25 @@
+{
+  "id": "kigelia-africana",
+  "name": "Kigelia Sausage Tree Extract",
+  "scientificName": "Kigelia africana (Lam.) Benth.",
+  "category": "botanical",
+  "description": "A revered indigenous tree producing large sausage-shaped fruits. Rich in naphthoquinones (pinnatal) and iridoids providing verified anti-inflammatory, antibacterial, and tissue-reconstructive capabilities for tropical ulcers and chronic skin sores.",
+  "activeConstituents": [
+    "Pinnatal",
+    "Kigelin",
+    "Catalpol",
+    "Caffeic Acid"
+  ],
+  "preparation": "Topical paste: Crush dry mature fruit/bark into fine powder, blend with clean warm water or pure petroleum jelly, and apply directly onto tropical ulcers or fungal lesions twice daily.",
+  "safetyRating": "Moderate Caution",
+  "safetyAlert": "Unripe raw fruit is highly purgative and emetic. Only harvest mature dry pods or bark for preparations.",
+  "interactions": "None reported topically.",
+  "demographicCautions": [
+    {
+      "populationId": "children-under-5",
+      "type": "warning",
+      "title": "Pediatric Precaution",
+      "message": "Only apply topically in low concentrations. Avoid any oral ingestion of kigelia extracts in children under 5."
+    }
+  ]
+}

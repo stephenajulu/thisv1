@@ -1,0 +1,18 @@
+{
+  "id": "tamarindus-indica",
+  "name": "Tamarind Pulp Infusion",
+  "scientificName": "Tamarindus indica (L.)",
+  "category": "botanical",
+  "description": "A magnificent indigenous dryland tree. The acidic brown fruit pulp is rich in tartaric acid, citric acid, and essential potassium minerals, acting as a highly effective cooling febrifuge for heat exhaustion and a natural oral rehydration electrolyte enhancer.",
+  "activeConstituents": [
+    "Tartaric Acid",
+    "Citric Acid",
+    "Pectin",
+    "Potassium Salts"
+  ],
+  "preparation": "Rehydration infusion: Steep 10g of clean fruit pulp in 500ml of warm water for 15 minutes. Mash, strain, and administer warm concurrently with standard ORS solutions during diarrheal volume depletion.",
+  "safetyRating": "Very High Safety",
+  "safetyAlert": "Exceptionally safe. Widely consumed as a nutritious fruit beverage across East Africa.",
+  "interactions": "None known. Highly beneficial when combined with standard hydration protocols.",
+  "demographicCautions": []
+}

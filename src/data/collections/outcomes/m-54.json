@@ -1,0 +1,11 @@
+{
+  "id": "m-54",
+  "remedyId": "zanthoxylum-chalybeum",
+  "conditionId": "malaria",
+  "targetSymptomId": "severe-rigors",
+  "gradeQuality": "Moderate",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Root and bark alkaloids (chelerythrine) show clinically significant antimalarial activity, decreasing cyclic rigors and parasitemia in supportive rodent and human models. Acts as a key traditional supportive antimalarial.",
+  "citation": "African Journal of Traditional, Complementary and Alternative Medicines, 2018"
+}

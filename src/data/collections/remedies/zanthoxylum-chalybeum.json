@@ -1,0 +1,25 @@
+{
+  "id": "zanthoxylum-chalybeum",
+  "name": "Zanthoxylum Knobwood Extract",
+  "scientificName": "Zanthoxylum chalybeum (Engl.)",
+  "category": "botanical",
+  "description": "A highly aromatic, thorny East African savanna tree. The bark and roots contain a rich concentration of alkaloids (chelerythrine and nitidine) showing high antiplasmodial efficacy against malaria strains and strong antispasmodic colic relief.",
+  "activeConstituents": [
+    "Chelerythrine",
+    "Nitidine",
+    "Linalool",
+    "Lupeol"
+  ],
+  "preparation": "Root/bark decoction: Simmer 5g of clean crushed dried bark in 400ml water for 20 minutes. Strain and administer 100ml warm.",
+  "safetyRating": "Moderate Safety",
+  "safetyAlert": "Adhere strictly to standard dosing guidelines. Extremely high concentrations of alkaloids can trigger mild nausea or dizziness.",
+  "interactions": "None reported in clinical trials.",
+  "demographicCautions": [
+    {
+      "populationId": "pregnant-women",
+      "type": "warning",
+      "title": "Pregnancy Caution",
+      "message": "Due to uterine stimulant alkaloids, avoid use in the first trimester. Administer only under expert clinical oversight in subsequent trimesters."
+    }
+  ]
+}

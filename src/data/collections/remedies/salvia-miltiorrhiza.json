@@ -1,0 +1,18 @@
+{
+  "id": "salvia-miltiorrhiza",
+  "name": "Salvia Danshen Root",
+  "scientificName": "Salvia miltiorrhiza (Bunge)",
+  "category": "botanical",
+  "description": "A valuable medicinal root in Eastern medicine. Rich in tanshinones and salvianolic acids that stimulate microvascular tissue circulation, promote blood flow, and speed up the healing of chronic skin ulcerations.",
+  "activeConstituents": [
+    "Tanshinone IIA",
+    "Salvianolic Acid B",
+    "Cryptotanshinone",
+    "Rosmarinic Acid"
+  ],
+  "preparation": "Microvascular Tea: Steep 5g of clean dried root in 300ml of hot water for 15 minutes. Strain and drink warm once daily.",
+  "safetyRating": "High Safety",
+  "safetyAlert": "Well tolerated. Do not combine with modern anticoagulant or blood thinning pharmaceuticals.",
+  "interactions": "Contraindicated with Warfarin, Aspirin, or heparin due to additive antiplatelet bleeding hazards.",
+  "demographicCautions": []
+}

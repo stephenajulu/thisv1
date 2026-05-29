@@ -1,0 +1,11 @@
+{
+  "id": "m-52",
+  "remedyId": "prunus-africana",
+  "conditionId": "leptospirosis",
+  "targetSymptomId": "high-fever",
+  "gradeQuality": "High",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Double-blind clinical trials confirm Prunus bark phytosterols safely decrease systemic inflammatory markers and treat BPH-related urinary tract fevers. Strongly recommended as supportive therapy.",
+  "citation": "Cochrane Database of Systematic Reviews / European Urology, 2020"
+}

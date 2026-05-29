@@ -1,0 +1,25 @@
+{
+  "id": "warburgia-salutaris",
+  "name": "Warburgia Pepper-bark",
+  "scientificName": "Warburgia salutaris (Bertol.f.) Chiov.",
+  "category": "botanical",
+  "description": "An iconic East African montane tree with hot, peppery bark. Contains highly active sesquiterpene dialdehydes (warburganal and polygodial) providing powerful natural antibiotic, antifungal, and bronchodilatory action for acute respiratory and cutaneous infections.",
+  "activeConstituents": [
+    "Warburganal",
+    "Polygodial",
+    "Muzigadial",
+    "Mannitol"
+  ],
+  "preparation": "Bark aqueous decoction: Boil 5g of dried clean inner bark strips in 500ml of fresh water for 15 minutes. Strain and administer 100ml warm twice daily.",
+  "safetyRating": "Moderate Safety",
+  "safetyAlert": "Peppery compounds cause mild gastric stinging on an empty stomach. Strictly adhere to standard dosages.",
+  "interactions": "None reported in traditional literature. Avoid high doses when concurrently taking gastric irritant drugs.",
+  "demographicCautions": [
+    {
+      "populationId": "pregnant-women",
+      "type": "warning",
+      "title": "Advisory: Avoid During Pregnancy",
+      "message": "Due to mild uterine stimulant properties and lack of clinical safety trials in pregnant populations, avoid inner bark decoctions during pregnancy."
+    }
+  ]
+}

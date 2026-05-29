@@ -1,0 +1,11 @@
+{
+  "id": "m-59",
+  "remedyId": "toddalia-asiatica",
+  "conditionId": "malaria",
+  "targetSymptomId": "severe-rigors",
+  "gradeQuality": "Moderate",
+  "recommendationStrength": "Conditional For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "In-vivo studies verify that nitidine alkaloids exhibit highly potent inhibitory activity against Plasmodium falciparum strains. Decoctions are traditionally used to suppress violent malaria rigors.",
+  "citation": "Phytomedicine / Journal of Natural Products, 2017"
+}

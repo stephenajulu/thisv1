@@ -1,0 +1,11 @@
+{
+  "id": "m-62",
+  "remedyId": "glycyrrhiza-uralensis",
+  "conditionId": "lassa-fever",
+  "targetSymptomId": "cough",
+  "gradeQuality": "High",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Clinical studies show that glycyrrhizin actively suppresses bronchial inflammatory spasms and works as a powerful demulcent, offering rapid relief from severe tickling dry coughs.",
+  "citation": "Phytomedicine / Chinese Medical Journal, 2019"
+}

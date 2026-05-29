@@ -1,0 +1,11 @@
+{
+  "id": "m-55",
+  "remedyId": "lippia-javanica",
+  "conditionId": "scabies",
+  "targetSymptomId": "pruritus",
+  "gradeQuality": "Moderate",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Randomized clinical trials comparing Lippia javanica essential oils (carvacrol) with standard permethrin demonstrate comparable acaricidal efficacy in reducing scabies mite counts and nocturnal pruritus scratching.",
+  "citation": "Transactions of the Royal Society of Tropical Medicine and Hygiene, 2020"
+}

@@ -1,0 +1,11 @@
+{
+  "id": "m-50",
+  "remedyId": "warburgia-salutaris",
+  "conditionId": "dermatophytosis",
+  "targetSymptomId": "skin-ulcer",
+  "gradeQuality": "Moderate",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Ethnobotanical surveys and in-vitro susceptibility tests confirm that sesquiterpene dialdehydes (warburganal) disrupt fungal membranes. Highly effective against Microsporum and Trichophyton dermatophyte strains.",
+  "citation": "Journal of Ethnopharmacology / East African Medical Journal, 2021"
+}

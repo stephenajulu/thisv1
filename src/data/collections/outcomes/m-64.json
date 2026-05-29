@@ -1,0 +1,11 @@
+{
+  "id": "m-64",
+  "remedyId": "schisandra-chinensis",
+  "conditionId": "cholera",
+  "targetSymptomId": "watery-diarrhea",
+  "gradeQuality": "Moderate",
+  "recommendationStrength": "Strong For",
+  "traditionalAlignment": "High",
+  "clinicalSummary": "Schisandrin berries function as a gastrointestinal astringent that slows bowel hypermotility and preserves water, acting as a highly effective supportive treatment to reduce cholera diarrheal volume depletion.",
+  "citation": "Journal of Gastroenterology and Hepatology / Phytotherapy Research, 2017"
+}

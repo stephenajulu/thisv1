@@ -1,0 +1,18 @@
+{
+  "id": "astragalus-membranaceus",
+  "name": "Astragalus Huangqi Root Slices",
+  "scientificName": "Astragalus membranaceus (Fisch.) Bunge",
+  "category": "botanical",
+  "description": "One of the most essential qi-tonic adaptogens in Traditional Chinese Medicine (TCM). The root contains a dense profile of astragalosides and complex immunostimulant polysaccharides that stimulate T-cell activity and speed recovery from profound malnutrition fatigue.",
+  "activeConstituents": [
+    "Astragaloside IV",
+    "Astragalus Polysaccharides",
+    "Formononetin",
+    "Calycosin"
+  ],
+  "preparation": "Huangqi Decoction: Simmer 10g of dried root slices in 600ml of clean water for 30 minutes. Strain and administer 200ml warm daily.",
+  "safetyRating": "Very High Safety",
+  "safetyAlert": "Exceptionally well tolerated with zero noted acute toxicities in traditional or clinical trials.",
+  "interactions": "May reduce effectiveness of immunosuppressant drugs due to powerful immune-stimulating active constituents.",
+  "demographicCautions": []
+}
