@@ -13,28 +13,28 @@ collections:
     format: "json"
     slug: "{{id}}"
     fields:
-      - { label: "Unique ID", name: "id", widget: "string" }
-      - { label: "Disease Name", name: "name", widget: "string" }
-      - { label: "Scientific Name", name: "scientificName", widget: "string" }
-      - { label: "ICD-11 Code Badge", name: "icd11", widget: "string" }
-      - { label: "Category", name: "category", widget: "select", options: ["Vector-borne Disease", "Climate-linked Health Issue", "Nutrition-related Condition"] }
-      - { label: "Detailed Description", name: "description", widget: "text" }
-      - { label: "Symptoms (IDs)", name: "symptoms", widget: "list", field: { name: "symptomId", widget: "string" } }
-      - { label: "Local Synonyms & Aliases", name: "synonyms", widget: "list", required: false, field: { name: "synonym", widget: "string" } }
-      - { label: "Pending Clinical Vetting Audit?", name: "pending", widget: "boolean", default: false }
-      - { label: "Climate Vulnerability Links", name: "climateLinks", widget: "list", fields: [
-          { label: "Weather Trigger", name: "trigger", widget: "string" },
-          { label: "Vector/Health Impact", name: "impact", widget: "text" }
+      - { label: "Unique ID", name: "id", widget: "string", description: "Kitambulisho cha kipekee cha ugonjwa (Unique ID). K.m. 'malaria'. Tumia herufi ndogo tu na alama ya kiunganishi (-), usitumie nafasi." }
+      - { label: "Disease Name", name: "name", widget: "string", description: "Jina la kawaida la ugonjwa kwa Kiingereza. K.m. 'Malaria' au 'Cholera'." }
+      - { label: "Scientific Name", name: "scientificName", widget: "string", description: "Jina la kisayansi la ugonjwa. K.m. 'Plasmodium falciparum'." }
+      - { label: "ICD-11 Code Badge", name: "icd11", widget: "string", description: "Msimbo rasmi wa kimataifa wa magonjwa wa ICD-11. K.m. '1A20'." }
+      - { label: "Category", name: "category", widget: "select", options: ["Vector-borne Disease", "Climate-linked Health Issue", "Nutrition-related Condition"], description: "Chagua jamii kuu ya ugonjwa huu (Primary Category)." }
+      - { label: "Detailed Description", name: "description", widget: "text", description: "Maelezo ya kina ya kliniki ya ugonjwa huu (Dalili, ugonjwa unavyoenea, n.k.) kwa lugha rahisi." }
+      - { label: "Symptoms (IDs)", name: "symptoms", widget: "list", field: { name: "symptomId", widget: "string" }, description: "Orodha ya vitambulisho vya dalili zinazoendana (k.m. 'high-fever', 'dehydration'). Hakikisha unatumia vitambulisho vilivyopo." }
+      - { label: "Local Synonyms & Aliases", name: "synonyms", widget: "list", required: false, field: { name: "synonym", widget: "string" }, description: "Majina mbadala ya kienyeji ya ugonjwa huu (Kiswahili, Luhya, Turkana, n.k.) ili kurahisisha utafutaji. K.m. 'Homa ya Mbu', 'Kipindupindu'." }
+      - { label: "Pending Clinical Vetting Audit?", name: "pending", widget: "boolean", default: false, description: "Weka TRUE ikiwa ingizo hili bado linasubiri uhakiki na idhini ya jopo la matibabu (Clinical peer-review)." }
+      - { label: "Climate Vulnerability Links", name: "climateLinks", widget: "list", description: "Uhusiano kati ya mabadiliko ya hali ya hewa na ugonjwa huu.", fields: [
+          { label: "Weather Trigger", name: "trigger", widget: "string", description: "Kichocheo cha hali ya hewa (k.m. 'Heavy Rainfall', 'El Nino Flash Floods', 'Extreme Heatwave')." },
+          { label: "Vector/Health Impact", name: "impact", widget: "text", description: "Athari za kiafya au ueneaji wa wadudu k.m. 'Floodwaters trigger massive mosquito breeding vectors leading to high malaria outbreaks.'" }
         ]}
-      - { label: "Prevention Steps", name: "prevention", widget: "list", field: { name: "step", widget: "string" } }
-      - { label: "Triage Bedside Advisory", name: "triageAdvisory", widget: "text" }
-      - { label: "Climate Threat Thresholds & Schema", name: "climateThreatSchema", widget: "object", required: false, fields: [
+      - { label: "Prevention Steps", name: "prevention", widget: "list", field: { name: "step", widget: "string" }, description: "Hatua maalum za kuzuia ugonjwa huu (Prevention steps). K.m. 'Lala ndani ya chandarua kilichotiwa dawa'." }
+      - { label: "Triage Bedside Advisory", name: "triageAdvisory", widget: "text", description: "Maelekezo ya haraka ya huduma ya kwanza/triage kwa wauguzi kulingana na miongozo ya WHO IMCI." }
+      - { label: "Climate Threat Thresholds & Schema", name: "climateThreatSchema", widget: "object", required: false, description: "Vipimo vya hali ya hewa vinavyochochea hatari ya ugonjwa huu.", fields: [
           { label: "Minimum Temp Threshold (°C)", name: "minTemp", widget: "number", value_type: "int" },
           { label: "Maximum Temp Threshold (°C)", name: "maxTemp", widget: "number", value_type: "int" },
           { label: "Minimum Humidity Threshold (%)", name: "minHumidity", widget: "number", value_type: "int" },
           { label: "Minimum Rainfall Threshold (mm)", name: "minRainfall", widget: "number", value_type: "int" },
           { label: "Maximum Rainfall Threshold (mm)", name: "maxRainfall", widget: "number", value_type: "int" },
-          { label: "Outpost Immediate Action Advisory", name: "advisory", widget: "text" }
+          { label: "Outpost Immediate Action Advisory", name: "advisory", widget: "text", description: "Ushauri wa dharura wa hatua za kuchukua mara moja kwenye kituo hali ya hewa ikivuka vipimo hivi." }
         ]}
 
   - name: "remedies"
@@ -44,19 +44,19 @@ collections:
     format: "json"
     slug: "{{id}}"
     fields:
-      - { label: "Unique ID", name: "id", widget: "string" }
-      - { label: "Name", name: "name", widget: "string" }
-      - { label: "Scientific / Chemical Name", name: "scientificName", widget: "string" }
-      - { label: "Category Type", name: "category", widget: "select", options: ["botanical", "pharmaceutical"] }
-      - { label: "Detailed Description", name: "description", widget: "text" }
-      - { label: "Active Constituents", name: "activeConstituents", widget: "list", field: { name: "constituent", widget: "string" } }
-      - { label: "Administration / Prep Instructions", name: "preparation", widget: "text" }
-      - { label: "Safety Rating", name: "safetyRating", widget: "select", options: ["Very High Safety", "High Safety", "Moderate Safety", "Moderate Caution", "High Caution"] }
-      - { label: "Safety Alert / Contraindications", name: "safetyAlert", widget: "text" }
-      - { label: "Drug-Herb Interactions", name: "interactions", widget: "text" }
-      - { label: "Local Synonyms & Botanical Aliases", name: "synonyms", widget: "list", required: false, field: { name: "synonym", widget: "string" } }
-      - { label: "Pending Peer-Review Audit?", name: "pending", widget: "boolean", default: false }
-      - { label: "Vulnerable Population Cautions", name: "demographicCautions", widget: "list", required: false, fields: [
+      - { label: "Unique ID", name: "id", widget: "string", description: "Kitambulisho cha kipekee cha dawa (Unique ID). K.m. 'neem-seed-oil'. Tumia herufi ndogo tu na alama ya kiunganishi (-), usitumie nafasi." }
+      - { label: "Name", name: "name", widget: "string", description: "Jina la kawaida la dawa kwa Kiingereza. K.m. 'Neem Seed Oil' au 'Artemether-Lumefantrine'." }
+      - { label: "Scientific / Chemical Name", name: "scientificName", widget: "string", description: "Jina la kisayansi au la kemikali. K.m. 'Azadirachta indica'." }
+      - { label: "Category Type", name: "category", widget: "select", options: ["botanical", "pharmaceutical"], description: "Chagua 'botanical' kwa mitishamba ya kienyeji au 'pharmaceutical' kwa dawa za kisasa." }
+      - { label: "Detailed Description", name: "description", widget: "text", description: "Maelezo ya kina kuhusu dawa hii, asili yake, na inavyofanya kazi mwilini." }
+      - { label: "Active Constituents", name: "activeConstituents", widget: "list", field: { name: "constituent", widget: "string" }, description: "Kemikali au vijidudu hai vilivyomo ndani ya dawa hii vinavyosaidia kutibu. K.m. 'Azadirachtin', 'Nimbin'." }
+      - { label: "Administration / Prep Instructions", name: "preparation", widget: "text", description: "Maelekezo ya hatua kwa hatua ya jinsi ya kuandaa na kupeana dawa (k.m. kuchemsha majani, kusaga mbegu, au kipimo cha vidonge kulingana na uzito)." }
+      - { label: "Safety Rating", name: "safetyRating", widget: "select", options: ["Very High Safety", "High Safety", "Moderate Safety", "Moderate Caution", "High Caution"], description: "Daraja la usalama wa dawa hii (GRADE Safety classification)." }
+      - { label: "Safety Alert / Contraindications", name: "safetyAlert", widget: "text", description: "Tahadhari muhimu za usalama! Orodhesha ikiwa dawa hii inaleta hatari (k.m. usipe wajawazito kwa sababu inasababisha kuharibika kwa mimba)." }
+      - { label: "Drug-Herb Interactions", name: "interactions", widget: "text", description: "Mwingiliano wa dawa hii na dawa zingine (k.m. usitumie dawa hii pamoja na dawa za kisasa za shinikizo la damu)." }
+      - { label: "Local Synonyms & Botanical Aliases", name: "synonyms", widget: "list", required: false, field: { name: "synonym", widget: "string" }, description: "Majina ya kienyeji ya mmea au dawa hii (k.m. 'Muarobaini', 'Mwarubaini', 'Kumutikili', 'Kumusubiri') ili kurahisisha utafutaji." }
+      - { label: "Pending Peer-Review Audit?", name: "pending", widget: "boolean", default: false, description: "Weka TRUE ikiwa dawa hii inasubiri uhakiki wa kisayansi na kitiba kabla ya kuidhinishwa rasmi." }
+      - { label: "Vulnerable Population Cautions", name: "demographicCautions", widget: "list", required: false, description: "Tahadhari kwa makundi yaliyo hatarini (wajawazito, watoto chini ya miaka 5, n.k.).", fields: [
           { label: "Population ID", name: "populationId", widget: "select", options: ["pregnant-women", "children-under-5", "subsistence-farmers"] },
           { label: "Alert Severity Type", name: "type", widget: "select", options: ["info", "warning", "danger"] },
           { label: "Warning Title", name: "title", widget: "string" },
@@ -70,15 +70,15 @@ collections:
     format: "json"
     slug: "{{id}}"
     fields:
-      - { label: "Unique Matrix Link ID", name: "id", widget: "string" }
-      - { label: "Remedy ID Link", name: "remedyId", widget: "string" }
-      - { label: "Condition ID Link", name: "conditionId", widget: "string" }
-      - { label: "Target Symptom ID Link", name: "targetSymptomId", widget: "string" }
-      - { label: "GRADE Evidence Quality", name: "gradeQuality", widget: "select", options: ["High", "Moderate", "Low", "Very Low"] }
-      - { label: "GRADE Recommendation Strength", name: "recommendationStrength", widget: "select", options: ["Strong For", "Conditional For", "Conditional Against", "Strong Against"] }
-      - { label: "Traditional-Modern Alignment", name: "traditionalAlignment", widget: "select", options: ["High", "Emerging", "Unaligned"] }
-      - { label: "Human Clinical Efficacy Summary", name: "clinicalSummary", widget: "text" }
-      - { label: "Reference Citation / PubMed URL", name: "citation", widget: "string" }
+      - { label: "Unique Matrix Link ID", name: "id", widget: "string", description: "Msimbo maalum wa kuunganisha dawa na ugonjwa (k.m. 'm-37')." }
+      - { label: "Remedy ID Link", name: "remedyId", widget: "string", description: "ID ya dawa iliyopo. K.m. 'neem-seed-oil'." }
+      - { label: "Condition ID Link", name: "conditionId", widget: "string", description: "ID ya ugonjwa uliopo. K.m. 'scabies'." }
+      - { label: "Target Symptom ID Link", name: "targetSymptomId", widget: "string", description: "ID ya dalili inayolengwa. K.m. 'pruritus'." }
+      - { label: "GRADE Evidence Quality", name: "gradeQuality", widget: "select", options: ["High", "Moderate", "Low", "Very Low"], description: "Kiwango cha ubora wa ushahidi wa kisayansi kulingana na mfumo wa GRADE." }
+      - { label: "GRADE Recommendation Strength", name: "recommendationStrength", widget: "select", options: ["Strong For", "Conditional For", "Conditional Against", "Strong Against"], description: "Nguvu ya pendekezo la matibabu kwa watendaji wa afya." }
+      - { label: "Traditional-Modern Alignment", name: "traditionalAlignment", widget: "select", options: ["High", "Emerging", "Unaligned"], description: "Kiwango cha kuoana kwa maarifa ya jadi na ushahidi wa kisasa wa maabara." }
+      - { label: "Human Clinical Efficacy Summary", name: "clinicalSummary", widget: "text", description: "Muhtasari mfupi wa matokeo ya majaribio ya kliniki ya binadamu na ufanisi wa matibabu haya." }
+      - { label: "Reference Citation / PubMed URL", name: "citation", widget: "string", description: "Chanzo rasmi cha citation ya utafiti au kiungo cha PubMed." }
 
   - name: "blog"
     label: "Clinical Blog"
@@ -87,15 +87,15 @@ collections:
     format: "json"
     slug: "{{id}}"
     fields:
-      - { label: "Unique ID", name: "id", widget: "string" }
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Author", name: "author", widget: "string" }
-      - { label: "Published Date (YYYY-MM-DD)", name: "date", widget: "string" }
-      - { label: "Read Time", name: "readTime", widget: "string" }
-      - { label: "Excerpt / Short Summary", name: "excerpt", widget: "text" }
-      - { label: "Full Article Body", name: "body", widget: "text" }
-      - { label: "Linked Conditions (IDs)", name: "linkedConditions", widget: "list", field: { name: "conditionId", widget: "string" } }
-      - { label: "Linked Remedies (IDs)", name: "linkedRemedies", widget: "list", field: { name: "remedyId", widget: "string" } }
+      - { label: "Unique ID", name: "id", widget: "string", description: "Kitambulisho cha makala hii. K.m. 'malaria-prevention-2026'." }
+      - { label: "Title", name: "title", widget: "string", description: "Kichwa cha habari cha makala ya kliniki (Blog Title)." }
+      - { label: "Author", name: "author", widget: "string", description: "Jina la mwandishi (Daktari au Mtafiti)." }
+      - { label: "Published Date (YYYY-MM-DD)", name: "date", widget: "string", description: "Tarehe ya kuchapishwa kwa muundo wa Mwaka-Mwezi-Siku." }
+      - { label: "Read Time", name: "readTime", widget: "string", description: "Muda unaokadiriwa kusoma makala hii (k.m. '5 min read')." }
+      - { label: "Excerpt / Short Summary", name: "excerpt", widget: "text", description: "Muhtasari mfupi sana wa makala ili kuvutia wasomaji kwenye ukurasa wa mbele." }
+      - { label: "Full Article Body", name: "body", widget: "text", description: "Maelezo kamili na yaliyomo ndani ya makala ya afya." }
+      - { label: "Linked Conditions (IDs)", name: "linkedConditions", widget: "list", field: { name: "conditionId", widget: "string" }, description: "Magonjwa yanayohusiana na makala hii (k.m. 'malaria') ili kutengeneza viungo otomatiki vya marejeleo ya haraka." }
+      - { label: "Linked Remedies (IDs)", name: "linkedRemedies", widget: "list", field: { name: "remedyId", widget: "string" }, description: "Dawa za asili au za kisasa zinazotajwa kwenye makala ili wasomaji wazipate kwa mbofyo mmoja." }
 
   - name: "notes"
     label: "Community Vault Notes"
@@ -104,10 +104,22 @@ collections:
     format: "json"
     slug: "{{id}}"
     fields:
-      - { label: "Note ID", name: "id", widget: "string" }
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Author / Researcher", name: "author", widget: "string" }
-      - { label: "Date Created (YYYY-MM-DD)", name: "date", widget: "string" }
-      - { label: "Category", name: "category", widget: "select", options: ["ethnobotany", "toxicology", "epidemiology", "pharmacology"] }
-      - { label: "Full Journal Text (with [[wiki-links]])", name: "body", widget: "text" }
+      - { label: "Note ID", name: "id", widget: "string", description: "ID ya kipekee ya andiko la utafiti (k.m. 'neem-toxicity-report')." }
+      - { label: "Title", name: "title", widget: "string", description: "Kichwa cha andiko la utafiti wa kijamii au maelezo ya kibinafsi ya mtafiti." }
+      - { label: "Author / Researcher", name: "author", widget: "string", description: "Mtafiti au mfanyakazi wa nyanjani aliyeandika ripoti hii." }
+      - { label: "Date Created (YYYY-MM-DD)", name: "date", widget: "string", description: "Tarehe andiko hili lilipowekwa kwenye mfumo." }
+      - { label: "Category", name: "category", widget: "select", options: ["ethnobotany", "toxicology", "epidemiology", "pharmacology"], description: "Chagua idara kuu ya utafiti huu." }
+      - { label: "Full Journal Text (with [[wiki-links]])", name: "body", widget: "text", description: "Andika maelezo kamili ya utafiti. Unaweza kutumia mabano ya wiki-link kama [[malaria]] au [[neem-seed-oil]] ili kuunganisha ripoti hii na magonjwa au dawa zingine kwenye mfumo otomatiki." }
 
+  - name: "guidebook"
+    label: "Outpost Guidebook & Training"
+    folder: "src/data/collections/guidebook"
+    create: true
+    format: "json"
+    slug: "{{id}}"
+    fields:
+      - { label: "Guidebook ID", name: "id", widget: "string", description: "Kitambulisho cha kipekee cha mwongozo (k.m. 'onboarding-guide'). Tumia herufi ndogo tu na alama ya kiunganishi (-)." }
+      - { label: "Guidebook Title", name: "title", widget: "string", description: "Kichwa cha mwongozo wa mafunzo (k.m. 'Decap CMS Onboarding Guide for Outposts')." }
+      - { label: "Target Audience", name: "audience", widget: "select", options: ["outpost-nurses", "traditional-healers", "clinical-officers"], description: "Mwongozo huu unamlenga nani hasa?" }
+      - { label: "Primary Language", name: "language", widget: "select", options: ["English", "Swahili", "French"], description: "Lugha inayotumika kuandika mwongozo huu." }
+      - { label: "Training Instructions (Markdown)", name: "instructions", widget: "markdown", description: "Andika maelekezo ya mafunzo kwa kutumia Markdown. Unaweza kutumia vichwa vya habari (###), nambari, au maandishi meusi kukazia mafunzo." }

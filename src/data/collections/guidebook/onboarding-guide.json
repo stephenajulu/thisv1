@@ -1,0 +1,7 @@
+{
+  "id": "onboarding-guide",
+  "title": "Decap CMS Onboarding Guide for Outposts",
+  "audience": "outpost-nurses",
+  "language": "Swahili",
+  "instructions": "### Karibu kwenye Kituo cha Utawala cha THIS\n\nMwongozo huu utakusaidia kusajili magonjwa na dawa za asili kwa urahisi:\n\n1. **Tafuta Jedwali (Left Menu)**: Chagua 'Diseases & Conditions' kuongeza ugonjwa mpya, au 'Remedies & Interventions' kuongeza dawa ya asili.\n2. **Jaza Majina ya Kienyeji (Synonyms)**: Hakikisha unaweka majina ya Kiswahili, Luhya, au Turkana (k.m. *Muarobaini* badala ya *Neem*) ili waganga wa kienyeji waweze kutafuta kwa urahisi.\n3. **Kikagua Usalama (Safety Selectors)**: Chagua kikundi kilicho hatarini (k.m. wamama wajawazito) na uweke tahadhari maalum kama dawa inaleta hatari.\n4. **Bofya Publish (Publish Button)**: Baada ya kujaza, bofya 'Publish' hapo juu. Dawa itasajiliwa na kuonekana kwenye programu ya simu mara moja hata mtandao ukiwa umezimwa!"
+}

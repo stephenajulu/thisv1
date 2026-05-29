@@ -5,12 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>THIS Content Manager</title>
     <link rel="icon" type="image/png" href="../pwa-192x192.png" />
+    <!-- Google Fonts for Premium Look & Feel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    
     <!-- Netlify Identity Widget (Mandatory for Git Gateway authentication) -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <style>
       /* Customize Decap CMS Admin Console with THIS Premium Dark Green Theme */
       body {
-        font-family: 'Inter', sans-serif !important;
+        font-family: 'Outfit', 'Inter', sans-serif !important;
+        background-color: #f4fbf7 !important;
       }
       
       /* Target the Header of Decap CMS */
@@ -22,7 +28,7 @@
       
       /* Sidebar Container */
       aside, [class*="SidebarContainer"], .css-1s82n4g-sidebar-container {
-        background-color: #f4fbf7 !important; /* Soft mint sidebar background */
+        background-color: #ffffff !important; /* Premium clean background */
         border-right: 1px solid rgba(3, 60, 42, 0.08) !important;
       }
       
@@ -35,8 +41,36 @@
         border-left: 4px solid #20b887 !important;
       }
 
+      /* Form controls styles inside Decap */
+      input, select, textarea {
+        font-family: 'Inter', sans-serif !important;
+        border-radius: 0.75rem !important;
+        border: 1px solid rgba(3, 60, 42, 0.15) !important;
+        padding: 10px 14px !important;
+        transition: all 0.2s ease-in-out !important;
+      }
+      
+      input:focus, select:focus, textarea:focus {
+        border-color: #20b887 !important;
+        box-shadow: 0 0 0 3px rgba(32, 184, 135, 0.15) !important;
+        outline: none !important;
+      }
+
+      /* Helper texts below form inputs */
+      p[class*="FieldHint"] {
+        font-family: 'Inter', sans-serif !important;
+        color: #033c2a !important;
+        font-size: 11px !important;
+        font-weight: 500 !important;
+        line-height: 1.4 !important;
+        margin-top: 6px !important;
+        opacity: 0.8 !important;
+      }
+
       /* Buttons inside Decap CMS */
       button, [class*="Button"] {
+        font-family: 'Outfit', sans-serif !important;
+        font-weight: bold !important;
         background-color: #033c2a !important;
         color: #ffffff !important;
         border-radius: 0.5rem !important;
@@ -49,6 +83,7 @@
 
       /* Custom Banner logo */
       [class*="Logo"], .css-1nc6jli-LogoContainer {
+        font-family: 'Outfit', sans-serif !important;
         font-weight: 900 !important;
         color: #20b887 !important;
         letter-spacing: -0.02em !important;
@@ -58,5 +93,118 @@
   <body>
     <!-- Include Decap CMS -->
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <script>
+      // Wait for CMS to load React
+      const React = window.React || window.parent.React;
+      const h = window.h || React.createElement;
+
+      class ConditionPreview extends React.Component {
+        render() {
+          const { entry } = this.props;
+          const name = entry.getIn(['data', 'name']) || 'Untitled Condition';
+          const description = entry.getIn(['data', 'description']) || 'No description entered.';
+          const category = entry.getIn(['data', 'category']) || 'Vector-borne Disease';
+          const icd11 = entry.getIn(['data', 'icd11']) || 'N/A';
+          const symptoms = entry.getIn(['data', 'symptoms']) || [];
+          const synonyms = entry.getIn(['data', 'synonyms']) || [];
+
+          return h('div', { style: { padding: '24px', fontFamily: '"Inter", sans-serif', backgroundColor: '#f4fbf7', minHeight: '100vh' } },
+            h('div', { style: { backgroundColor: '#ffffff', borderLeft: '6px solid #033c2a', borderRadius: '12px', padding: '20px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.05)', maxWidth: '480px', margin: '0 auto' } },
+              h('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' } },
+                h('span', { style: { fontSize: '10px', textTransform: 'uppercase', fontWeight: 'bold', letterSpacing: '0.05em', backgroundColor: '#e6f4ea', color: '#033c2a', padding: '4px 8px', borderRadius: '4px' } }, category),
+                h('span', { style: { fontSize: '11px', fontWeight: 'bold', color: '#666' } }, 'ICD-11: ' + icd11)
+              ),
+              h('h2', { style: { fontSize: '20px', fontWeight: 'bold', color: '#033c2a', marginTop: '0', marginBottom: '8px' } }, name),
+              synonyms.size > 0 && h('div', { style: { display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '12px' } },
+                synonyms.toArray().map((syn, idx) => {
+                  const val = typeof syn === 'string' ? syn : (syn.get ? syn.get('synonym') : JSON.stringify(syn));
+                  return h('span', { key: idx, style: { fontSize: '11px', color: '#555', backgroundColor: '#f0f0f0', padding: '2px 6px', borderRadius: '4px', fontStyle: 'italic' } }, val);
+                })
+              ),
+              h('p', { style: { fontSize: '14px', lineHeight: '1.6', color: '#333333', marginBottom: '16px' } }, description),
+              h('div', { style: { borderTop: '1px solid #eee', paddingTop: '12px', fontSize: '12px', color: '#666', display: 'flex', justifyContent: 'space-between' } },
+                h('span', null, '🔬 Symptoms Linked: ' + (symptoms.size || 0)),
+                h('span', { style: { color: '#20b887', fontWeight: 'bold' } }, 'THIS PWA Live Preview')
+              )
+            )
+          );
+        }
+      }
+
+      class RemedyPreview extends React.Component {
+        render() {
+          const { entry } = this.props;
+          const name = entry.getIn(['data', 'name']) || 'Untitled Remedy';
+          const scientificName = entry.getIn(['data', 'scientificName']) || 'Scientific name unknown';
+          const category = entry.getIn(['data', 'category']) || 'botanical';
+          const safetyRating = entry.getIn(['data', 'safetyRating']) || 'Moderate Safety';
+          const description = entry.getIn(['data', 'description']) || 'No description entered.';
+          const preparation = entry.getIn(['data', 'preparation']) || 'No preparation instructions.';
+          const synonyms = entry.getIn(['data', 'synonyms']) || [];
+
+          let safetyBg = '#e6f4ea';
+          let safetyColor = '#137333';
+          if (safetyRating.includes('Caution') || safetyRating.includes('High Caution')) {
+            safetyBg = '#fce8e6';
+            safetyColor = '#c5221f';
+          } else if (safetyRating.includes('Moderate')) {
+            safetyBg = '#fef7e0';
+            safetyColor = '#b06000';
+          }
+
+          return h('div', { style: { padding: '24px', fontFamily: '"Inter", sans-serif', backgroundColor: '#f4fbf7', minHeight: '100vh' } },
+            h('div', { style: { backgroundColor: '#ffffff', borderTop: '6px solid ' + (category === 'botanical' ? '#20b887' : '#033c2a'), borderRadius: '12px', padding: '20px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.05)', maxWidth: '480px', margin: '0 auto' } },
+              h('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' } },
+                h('span', { style: { fontSize: '10px', textTransform: 'uppercase', fontWeight: 'bold', letterSpacing: '0.05em', backgroundColor: safetyBg, color: safetyColor, padding: '4px 8px', borderRadius: '4px' } }, safetyRating),
+                h('span', { style: { fontSize: '14px' } }, category === 'botanical' ? '🌿 Botanical' : '💊 Pharmaceutical')
+              ),
+              h('h2', { style: { fontSize: '20px', fontWeight: 'bold', color: '#033c2a', marginTop: '0', marginBottom: '2px' } }, name),
+              h('div', { style: { fontSize: '12px', fontStyle: 'italic', color: '#666', marginBottom: '12px' } }, scientificName),
+              
+              synonyms.size > 0 && h('div', { style: { display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '12px' } },
+                synonyms.toArray().map((syn, idx) => {
+                  const val = typeof syn === 'string' ? syn : (syn.get ? syn.get('synonym') : JSON.stringify(syn));
+                  return h('span', { key: idx, style: { fontSize: '11px', color: '#555', backgroundColor: '#f0f0f0', padding: '2px 6px', borderRadius: '4px' } }, val);
+                })
+              ),
+              
+              h('h4', { style: { fontSize: '12px', textTransform: 'uppercase', color: '#888', marginBottom: '4px', marginTop: '16px' } }, 'Description'),
+              h('p', { style: { fontSize: '13px', lineHeight: '1.5', color: '#444', marginTop: '0', marginBottom: '12px' } }, description),
+              
+              h('h4', { style: { fontSize: '12px', textTransform: 'uppercase', color: '#888', marginBottom: '4px', marginTop: '12px' } }, 'Preparation & Dosage'),
+              h('p', { style: { fontSize: '13px', lineHeight: '1.5', color: '#444', marginTop: '0', marginBottom: '0', backgroundColor: '#f9f9f9', padding: '8px', borderRadius: '6px', borderLeft: '3px solid #20b887' } }, preparation)
+            )
+          );
+        }
+      }
+
+      class GuidebookPreview extends React.Component {
+        render() {
+          const { entry } = this.props;
+          const title = entry.getIn(['data', 'title']) || 'Untitled Guide';
+          const audience = entry.getIn(['data', 'audience']) || 'outpost-nurses';
+          const language = entry.getIn(['data', 'language']) || 'English';
+          const instructions = entry.getIn(['data', 'instructions']) || '';
+
+          return h('div', { style: { padding: '24px', fontFamily: '"Inter", sans-serif', backgroundColor: '#033c2a', color: '#ffffff', minHeight: '100vh' } },
+            h('div', { style: { border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', padding: '24px', maxWidth: '600px', margin: '0 auto', background: 'rgba(255, 255, 255, 0.05)', boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.3)' } },
+              h('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' } },
+                h('span', { style: { fontSize: '10px', textTransform: 'uppercase', fontWeight: 'bold', letterSpacing: '0.05em', backgroundColor: '#20b887', color: '#ffffff', padding: '4px 8px', borderRadius: '4px' } }, audience),
+                h('span', { style: { fontSize: '12px', color: '#a3e2cd' } }, '🌐 Language: ' + language)
+              ),
+              h('h1', { style: { fontSize: '24px', fontWeight: 'bold', color: '#ffffff', marginTop: '0', marginBottom: '16px', borderBottom: '2px solid rgba(255,255,255,0.1)', paddingBottom: '12px' } }, title),
+              h('div', { style: { fontSize: '14px', lineHeight: '1.6', color: '#e0f2f1' } }, 
+                h('pre', { style: { whiteSpace: 'pre-wrap', fontFamily: 'inherit', margin: '0' } }, instructions)
+              )
+            )
+          );
+        }
+      }
+
+      // Register templates
+      CMS.registerPreviewTemplate("conditions", ConditionPreview);
+      CMS.registerPreviewTemplate("remedies", RemedyPreview);
+      CMS.registerPreviewTemplate("guidebook", GuidebookPreview);
+    </script>
   </body>
 </html>
