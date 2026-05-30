@@ -12,6 +12,7 @@ import ProPaywall from './components/ProPaywall';
 import VisualAtlas from './components/VisualAtlas';
 import EpidemicHeatmap from './components/EpidemicHeatmap';
 import SynergyMatrix from './components/SynergyMatrix';
+import ClinicalFlowcharts from './components/ClinicalFlowcharts';
 
 // New master features
 import Blog from './components/Blog';
@@ -207,7 +208,7 @@ export default function App() {
       } else if (params[0] === 'remedy' && params[1]) {
         setActivePage('remedy');
         setActiveEntityId(params[1]);
-      } else if (['matrix', 'safety', 'dosage', 'weather', 'atlas', 'clinician', 'heatmap', 'synergy', 'blog', 'vault', 'submissions'].includes(params[0])) {
+      } else if (['matrix', 'safety', 'dosage', 'weather', 'atlas', 'clinician', 'heatmap', 'synergy', 'blog', 'vault', 'submissions', 'flowcharts'].includes(params[0])) {
         setActivePage(params[0]);
         setActiveEntityId(null);
       } else {
@@ -299,7 +300,7 @@ export default function App() {
                 <button
                   onClick={() => setShowToolkit(!showToolkit)}
                   className={`px-3 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
-                    ['dosage', 'weather', 'clinician', 'synergy', 'atlas', 'heatmap', 'blog', 'vault', 'submissions'].includes(activePage)
+                    ['dosage', 'weather', 'clinician', 'synergy', 'atlas', 'heatmap', 'blog', 'vault', 'submissions', 'flowcharts'].includes(activePage)
                       ? 'bg-white text-[hsl(var(--primary-green))] shadow-sm border border-slate-200/50'
                       : 'text-slate-500 hover:text-slate-800'
                   }`}
@@ -319,9 +320,10 @@ export default function App() {
                         { id: 'atlas', label: t('atlas') || 'Visual Medical Atlas', icon: Layers },
                         { id: 'heatmap', label: t('outbreakMap') || 'Epidemic Outbreak Map', icon: Activity },
                         { id: 'synergy', label: t('synergyMatrix') || 'Synergy Explorer', icon: Sparkles },
+                        { id: 'flowcharts', label: t('flowcharts') || 'Bedside Decision Trees', icon: GitBranch },
                         { id: 'clinician', label: t('clinicianRef') || 'Clinician Quick-Ref', icon: Stethoscope },
                         { id: 'blog', label: t('blog') || 'Clinical Blog', icon: BookOpen },
-                        { id: 'vault', label: t('vault') || 'Community Vault', icon: GitBranch },
+                        { id: 'vault', label: t('vault') || 'Community Vault', icon: Layers },
                         { id: 'submissions', label: t('submissions') || 'Ethnobotany Pipeline', icon: Sprout }
                       ].map(sub => (
                         <button
@@ -425,6 +427,10 @@ export default function App() {
 
           {activePage === 'synergy' && (
             proUnlocked ? <SynergyMatrix /> : <ProPaywall onUnlockSuccess={handleUnlockSuccess} />
+          )}
+
+          {activePage === 'flowcharts' && (
+            proUnlocked ? <ClinicalFlowcharts selectedRegion={selectedRegion} /> : <ProPaywall onUnlockSuccess={handleUnlockSuccess} />
           )}
 
           {activePage === 'blog' && (
