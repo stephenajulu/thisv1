@@ -222,7 +222,7 @@ export default function LandingPage({ onNavigate }) {
 
           {/* Visual Showcase (Simulated App Snapshot) */}
           <div className="lg:col-span-5 relative">
-            <div className="glass-panel p-6 bg-slate-950/70 border-emerald-900/50 backdrop-blur-md shadow-2xl rounded-2xl space-y-4">
+            <div className="p-6 bg-slate-950/85 border border-emerald-900/50 backdrop-blur-md shadow-2xl rounded-2xl space-y-4">
               <div className="flex items-center justify-between border-b border-white/5 pb-3">
                 <div className="flex items-center gap-2">
                   <div className="h-3 w-3 rounded-full bg-emerald-500 animate-pulse" />
@@ -237,7 +237,7 @@ export default function LandingPage({ onNavigate }) {
               <div className="space-y-3">
                 <div className="flex justify-between items-start">
                   <div>
-                    <h3 className="text-xs font-black text-white uppercase tracking-wider">Plasmodium falciparum Malaria</h3>
+                    <h3 className="text-xs font-black !text-white uppercase tracking-wider">Plasmodium falciparum Malaria</h3>
                     <span className="text-[9px] text-emerald-400">Systemic Parasitemia • ICD11 1B10</span>
                   </div>
                   <span className="text-[9px] px-2 py-0.5 bg-rose-500/10 border border-rose-500/25 text-rose-400 font-extrabold rounded">

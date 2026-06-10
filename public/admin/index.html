@@ -141,6 +141,10 @@
           const description = entry.getIn(['data', 'description']) || 'No description entered.';
           const preparation = entry.getIn(['data', 'preparation']) || 'No preparation instructions.';
           const synonyms = entry.getIn(['data', 'synonyms']) || [];
+          
+          const imageUrlObj = entry.getIn(['data', 'imageUrl']);
+          const imageUrl = imageUrlObj ? this.props.getAsset(imageUrlObj).toString() : '';
+          const availability = entry.getIn(['data', 'availability']) || '';
 
           let safetyBg = '#e6f4ea';
           let safetyColor = '#137333';
@@ -152,15 +156,38 @@
             safetyColor = '#b06000';
           }
 
+          let availBg = '#f1f5f9';
+          let availColor = '#475569';
+          let availLabel = '';
+          
+          if (availability === 'abundant') {
+            availBg = '#d1fae5';
+            availColor = '#065f46';
+            availLabel = '🌿 Abundant Regional Presence';
+          } else if (availability === 'moderate') {
+            availBg = '#fef3c7';
+            availColor = '#92400e';
+            availLabel = '⚠️ Moderate Regional Presence';
+          } else if (availability === 'scarce') {
+            availBg = '#fee2e2';
+            availColor = '#991b1b';
+            availLabel = '🚨 Scarce Regional Presence';
+          }
+
           return h('div', { style: { padding: '24px', fontFamily: '"Inter", sans-serif', backgroundColor: '#f4fbf7', minHeight: '100vh' } },
             h('div', { style: { backgroundColor: '#ffffff', borderTop: '6px solid ' + (category === 'botanical' ? '#20b887' : '#033c2a'), borderRadius: '12px', padding: '20px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.05)', maxWidth: '480px', margin: '0 auto' } },
               h('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' } },
                 h('span', { style: { fontSize: '10px', textTransform: 'uppercase', fontWeight: 'bold', letterSpacing: '0.05em', backgroundColor: safetyBg, color: safetyColor, padding: '4px 8px', borderRadius: '4px' } }, safetyRating),
                 h('span', { style: { fontSize: '14px' } }, category === 'botanical' ? '🌿 Botanical' : '💊 Pharmaceutical')
               ),
+              
+              imageUrl && h('img', { src: imageUrl, style: { width: '100%', maxHeight: '220px', objectFit: 'cover', borderRadius: '8px', marginBottom: '16px', border: '1px solid rgba(3, 60, 42, 0.1)' } }),
+              
               h('h2', { style: { fontSize: '20px', fontWeight: 'bold', color: '#033c2a', marginTop: '0', marginBottom: '2px' } }, name),
               h('div', { style: { fontSize: '12px', fontStyle: 'italic', color: '#666', marginBottom: '12px' } }, scientificName),
               
+              availability && h('div', { style: { display: 'inline-block', fontSize: '11px', fontWeight: 'bold', backgroundColor: availBg, color: availColor, padding: '4px 8px', borderRadius: '4px', marginBottom: '12px' } }, availLabel),
+
               synonyms.size > 0 && h('div', { style: { display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '12px' } },
                 synonyms.toArray().map((syn, idx) => {
                   const val = typeof syn === 'string' ? syn : (syn.get ? syn.get('synonym') : JSON.stringify(syn));
@@ -173,6 +200,100 @@
               
               h('h4', { style: { fontSize: '12px', textTransform: 'uppercase', color: '#888', marginBottom: '4px', marginTop: '12px' } }, 'Preparation & Dosage'),
               h('p', { style: { fontSize: '13px', lineHeight: '1.5', color: '#444', marginTop: '0', marginBottom: '0', backgroundColor: '#f9f9f9', padding: '8px', borderRadius: '6px', borderLeft: '3px solid #20b887' } }, preparation)
+            )
+          );
+        }
+      }
+
+      class BlogPreview extends React.Component {
+        render() {
+          const { entry } = this.props;
+          const title = entry.getIn(['data', 'title']) || 'Untitled Post';
+          const author = entry.getIn(['data', 'author']) || 'Anonymous Clinician';
+          const date = entry.getIn(['data', 'date']) || 'Date Undefined';
+          const readTime = entry.getIn(['data', 'readTime']) || 'Quick Read';
+          const excerpt = entry.getIn(['data', 'excerpt']) || '';
+          const body = entry.getIn(['data', 'body']) || '';
+          const linkedConditions = entry.getIn(['data', 'linkedConditions']) || [];
+          const linkedRemedies = entry.getIn(['data', 'linkedRemedies']) || [];
+
+          return h('div', { style: { padding: '24px', fontFamily: '"Inter", sans-serif', backgroundColor: '#f4fbf7', minHeight: '100vh' } },
+            h('div', { style: { backgroundColor: '#ffffff', borderLeft: '4px solid #3b82f6', borderRadius: '16px', padding: '28px', boxShadow: '0 10px 25px rgba(3, 60, 42, 0.05)', maxWidth: '640px', margin: '0 auto' } },
+              h('div', { style: { display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '12px', fontSize: '11px', color: '#666' } },
+                h('span', { style: { backgroundColor: '#eff6ff', color: '#1e40af', padding: '3px 8px', borderRadius: '12px', fontWeight: 'bold' } }, 'Clinical Blog'),
+                h('span', null, '•'),
+                h('span', null, readTime),
+                h('span', null, '•'),
+                h('span', null, date)
+              ),
+              h('h1', { style: { fontSize: '24px', fontWeight: '800', fontFamily: '"Outfit", sans-serif', color: '#0f172a', marginTop: '0', marginBottom: '8px', lineHeight: '1.2' } }, title),
+              h('div', { style: { fontSize: '13px', color: '#033c2a', fontWeight: '600', marginBottom: '20px' } }, 'By ' + author),
+              
+              excerpt && h('div', { style: { backgroundColor: '#f8fafc', borderLeft: '3px solid #cbd5e1', padding: '12px 16px', borderRadius: '4px', fontStyle: 'italic', fontSize: '13px', color: '#475569', marginBottom: '20px', lineHeight: '1.6' } }, excerpt),
+              
+              h('div', { style: { fontSize: '14px', lineHeight: '1.7', color: '#334155', whiteSpace: 'pre-wrap', marginBottom: '24px' } }, body),
+              
+              (linkedConditions.size > 0 || linkedRemedies.size > 0) && h('div', { style: { borderTop: '1px solid #f1f5f9', paddingTop: '16px', marginTop: '16px' } },
+                h('h4', { style: { fontSize: '11px', textTransform: 'uppercase', tracking: '0.05em', color: '#94a3b8', margin: '0 0 8px 0' } }, 'Audit Reference Links'),
+                h('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '6px' } },
+                  linkedConditions.toArray().map((cond, idx) => {
+                    const val = typeof cond === 'string' ? cond : (cond.get ? cond.get('conditionId') : JSON.stringify(cond));
+                    return h('span', { key: 'c-' + idx, style: { fontSize: '11px', color: '#033c2a', backgroundColor: '#e6f4ea', padding: '2px 8px', borderRadius: '4px', fontWeight: '500' } }, 'Condition: ' + val);
+                  }),
+                  linkedRemedies.toArray().map((rem, idx) => {
+                    const val = typeof rem === 'string' ? rem : (rem.get ? rem.get('remedyId') : JSON.stringify(rem));
+                    return h('span', { key: 'r-' + idx, style: { fontSize: '11px', color: '#1e3a8a', backgroundColor: '#eff6ff', padding: '2px 8px', borderRadius: '4px', fontWeight: '500' } }, 'Remedy: ' + val);
+                  })
+                )
+              )
+            )
+          );
+        }
+      }
+
+      class VaultNotePreview extends React.Component {
+        render() {
+          const { entry } = this.props;
+          const title = entry.getIn(['data', 'title']) || 'Untitled Note';
+          const author = entry.getIn(['data', 'author']) || 'Unknown Researcher';
+          const date = entry.getIn(['data', 'date']) || 'No Date';
+          const category = entry.getIn(['data', 'category']) || 'ethnobotany';
+          const body = entry.getIn(['data', 'body']) || '';
+
+          let catColor = '#4f46e5';
+          let catBg = '#e0e7ff';
+          if (category === 'toxicology') {
+            catColor = '#e11d48';
+            catBg = '#ffe4e6';
+          } else if (category === 'epidemiology') {
+            catColor = '#ea580c';
+            catBg = '#ffedd5';
+          } else if (category === 'pharmacology') {
+            catColor = '#0d9488';
+            catBg = '#ccfbf1';
+          }
+
+          return h('div', { style: { padding: '24px', fontFamily: '"Inter", sans-serif', backgroundColor: '#f4fbf7', minHeight: '100vh' } },
+            h('div', { style: { backgroundColor: '#ffffff', borderTop: '4px solid ' + catColor, borderRadius: '12px', padding: '24px', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)', maxWidth: '540px', margin: '0 auto', backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 0)', backgroundSize: '24px 24px' } },
+              h('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' } },
+                h('span', { style: { fontSize: '10px', textTransform: 'uppercase', fontWeight: 'bold', letterSpacing: '0.05em', backgroundColor: catBg, color: catColor, padding: '4px 10px', borderRadius: '20px' } }, 'Vault: ' + category),
+                h('span', { style: { fontSize: '11px', color: '#64748b' } }, date)
+              ),
+              h('h2', { style: { fontSize: '20px', fontWeight: '900', fontFamily: '"Outfit", sans-serif', color: '#1e293b', marginTop: '0', marginBottom: '6px' } }, title),
+              h('div', { style: { fontSize: '12px', color: '#475569', fontWeight: '500', marginBottom: '20px', borderBottom: '1px dashed #e2e8f0', paddingBottom: '10px' } }, 'Research by: ' + author),
+              h('div', { 
+                style: { 
+                  fontSize: '13px', 
+                  lineHeight: '1.6', 
+                  color: '#334155', 
+                  whiteSpace: 'pre-wrap', 
+                  fontFamily: '"Courier New", Courier, monospace', 
+                  backgroundColor: '#f8fafc', 
+                  padding: '16px', 
+                  borderRadius: '8px', 
+                  border: '1px solid #e2e8f0' 
+                } 
+              }, body)
             )
           );
         }
@@ -204,6 +325,8 @@
       // Register templates
       CMS.registerPreviewTemplate("conditions", ConditionPreview);
       CMS.registerPreviewTemplate("remedies", RemedyPreview);
+      CMS.registerPreviewTemplate("blog", BlogPreview);
+      CMS.registerPreviewTemplate("notes", VaultNotePreview);
       CMS.registerPreviewTemplate("guidebook", GuidebookPreview);
     </script>
   </body>

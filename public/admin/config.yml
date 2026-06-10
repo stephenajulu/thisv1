@@ -56,6 +56,8 @@ collections:
       - { label: "Drug-Herb Interactions", name: "interactions", widget: "text", description: "Mwingiliano wa dawa hii na dawa zingine (k.m. usitumie dawa hii pamoja na dawa za kisasa za shinikizo la damu)." }
       - { label: "Local Synonyms & Botanical Aliases", name: "synonyms", widget: "list", required: false, field: { name: "synonym", widget: "string" }, description: "Majina ya kienyeji ya mmea au dawa hii (k.m. 'Muarobaini', 'Mwarubaini', 'Kumutikili', 'Kumusubiri') ili kurahisisha utafutaji." }
       - { label: "Pending Peer-Review Audit?", name: "pending", widget: "boolean", default: false, description: "Weka TRUE ikiwa dawa hii inasubiri uhakiki wa kisayansi na kitiba kabla ya kuidhinishwa rasmi." }
+      - { label: "Botanical Specimen Image", name: "imageUrl", widget: "image", required: false, description: "Pakia picha ya mmea hapa (Botanical specimen identification image)." }
+      - { label: "Regional Availability (Botanical only)", name: "availability", widget: "select", options: ["abundant", "moderate", "scarce"], required: false, description: "Kiwango cha upatikanaji wa mmea huu kwa urahisi (abundant, moderate, au scarce)." }
       - { label: "Vulnerable Population Cautions", name: "demographicCautions", widget: "list", required: false, description: "Tahadhari kwa makundi yaliyo hatarini (wajawazito, watoto chini ya miaka 5, n.k.).", fields: [
           { label: "Population ID", name: "populationId", widget: "select", options: ["pregnant-women", "children-under-5", "subsistence-farmers"] },
           { label: "Alert Severity Type", name: "type", widget: "select", options: ["info", "warning", "danger"] },
