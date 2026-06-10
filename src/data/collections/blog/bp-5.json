@@ -1,0 +1,18 @@
+{
+  "id": "bp-5",
+  "title": "Lymphatic Filariasis (Elephantiasis) Elimination & MDA Strategies",
+  "author": "Prof. F. Mbogo, Parasitology Research Lead",
+  "date": "2026-05-28",
+  "readTime": "6 min read",
+  "excerpt": "Analyzing the global eradication protocols utilizing Mass Drug Administration (MDA) and clinical safety audits of Diethylcarbamazine (DEC) co-therapies.",
+  "body": "Wuchereria bancrofti, a filarial worm transmitted by Culex and Anopheles mosquitoes, lodges itself in the host's lymphatic channels, causing progressive tissue enlargement (elephantiasis) and agonizing episodes of acute lymphadenitis. Elephantiasis represents a severe physical disfigurement and a major cause of occupational disability in coastal and lakeside regions.\n\nThe global elimination strategy centers on annual Mass Drug Administration (MDA). Co-administration of Diethylcarbamazine (DEC) and Albendazole targets blood-borne microfilariae, interrupting transmission vectors for a full year. However, before administering DEC, outposts must audit the patient's exposure history: in regions co-endemic for Onchocerciasis (river blindness), DEC is strictly contraindicated due to the risk of severe immunological Mazzotti reactions (which can induce permanent blindness from dying microfilariae).\n\nStandard hygiene education remains critical for established elephantiasis patients. Daily washing of affected limbs with soap, cold water, and drying fully prevents secondary bacterial infections, reducing painful acute attacks by over 70%.",
+  "linkedConditions": [
+    "lymphatic-filariasis",
+    "ascariasis"
+  ],
+  "linkedRemedies": [
+    "diethylcarbamazine",
+    "albendazole",
+    "ivermectin"
+  ]
+}

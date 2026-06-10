@@ -1,0 +1,16 @@
+{
+  "id": "bp-3",
+  "title": "Tetanus Wound Management & Outpost Prophylaxis",
+  "author": "Dr. Jean-Pierre Dupuy, Tropical Surgeon",
+  "date": "2026-05-25",
+  "readTime": "7 min read",
+  "excerpt": "Evaluating deep puncture injury wound hygiene, Tetanus Immunoglobulin (TIG) passive immunization, and the avoidance of sensory spasm triggers.",
+  "body": "Clostridium tetani spores are highly prevalent in animal manure and agricultural farm soils. When a barefoot subsistence farmer sustains a puncture wound from a rusty nail or farming tool, the anaerobic pocket created inside the tissue is highly susceptible to spore germination. The bacteria release tetanospasmin, which travels retrograde along motor axons to block inhibitory interneurons, leading to locked jaw (trismus) and agonizing muscular spasms.\n\nBedside wound care requires immediate aggressive cleaning. Outposts must wash the puncture site with hydrogen peroxide or sterile saline under high pressure, debriding any necrotic tissue. Passive immunization using Tetanus Immunoglobulin (TIG) should be administered in a different muscle group than the active Tetanus Toxoid booster.\n\nIn established clinical lockjaw cases, supportive care is vital. Because spasms are highly stimulated by sudden visual or auditory signals, clinicians must keep the patient in a completely quiet, dark isolation room, avoiding any unnecessary handling.",
+  "linkedConditions": [
+    "tetanus"
+  ],
+  "linkedRemedies": [
+    "tetanus-immunoglobulin",
+    "doxycycline"
+  ]
+}

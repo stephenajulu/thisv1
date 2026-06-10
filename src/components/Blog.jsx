@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BookOpen, Search, ArrowRight, User, Calendar, Clock, Layers, ShieldCheck, Heart } from 'lucide-react';
-import { blogPosts } from '../data/collections/blog/blog-posts';
 import { database } from '../data/database';
 
 export default function Blog({ onNavigate }) {
+  const blogPosts = database.blogPosts;
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedPostId, setSelectedPostId] = useState(blogPosts[0]?.id || null);
+  const [selectedPostId, setSelectedPostId] = useState(null);
 
-  const activePost = blogPosts.find(p => p.id === selectedPostId);
+  // Synchronize selected post ID when blogPosts loads or changes
+  useEffect(() => {
+    if (blogPosts.length > 0 && !selectedPostId) {
+      setSelectedPostId(blogPosts[0].id);
+    }
+  }, [blogPosts, selectedPostId]);
+
+  const activePost = blogPosts.find(p => p.id === selectedPostId) || blogPosts[0];
 
   const filteredPosts = blogPosts.filter(p => 
     p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||

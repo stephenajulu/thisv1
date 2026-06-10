@@ -1,0 +1,17 @@
+{
+  "id": "bp-1",
+  "title": "Malaria Vector Prevention & ACT Efficacy in Wet Seasons",
+  "author": "Dr. A. Oduor, Outpost Medical Officer",
+  "date": "2026-05-12",
+  "readTime": "6 min read",
+  "excerpt": "An analysis of vector breeding dynamics during peak monsoon rainfalls and clinical protocols for Artemisinin-based Combination Therapy (ACT).",
+  "body": "During the high-humidity monsoon seasons, stagnant surface pools expand exponentially, creating optimal breeding grounds for female Anopheles mosquitoes. Malaria transmission reaches epidemic thresholds within 14 days of initial rainfall peaks. Standard prevention mandates the deployment of Insecticide-Treated Nets (ITNs) and early diagnostic scanning at the bedside.\n\nWhen a rapid diagnostic test (RDT) confirms Plasmodium falciparum, immediate administration of Artemether-Lumefantrine (ACT) is the gold standard standard of care. Because Lumefantrine requires lipid ingestion for optimal micro-absorption, clinic officers must advise caregivers to administer tablets concurrently with fatty foods, whole milk, breastmilk, or traditional oil-enriched porridges. If vomiting occurs within 30 minutes of dosing, the dose must be repeated immediately.\n\nTraditional ethnobotanical smudges, particularly burning dried Neem Leaves (dogonyaro), are commonly deployed in rural homesteads to clear vectors. While neem leaf smudges act as effective repellents, internal ingestion of neem seed oil must be strictly prohibited, especially in children, due to documented severe hepatotoxic risks simulating Reye's syndrome.",
+  "linkedConditions": [
+    "malaria"
+  ],
+  "linkedRemedies": [
+    "artemether-lumefantrine",
+    "neem-leaves",
+    "neem-seed-oil"
+  ]
+}

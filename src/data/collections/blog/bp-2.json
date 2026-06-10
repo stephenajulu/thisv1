@@ -1,0 +1,19 @@
+{
+  "id": "bp-2",
+  "title": "Bedside Management of Pediatric Dehydration under Arid Conditions",
+  "author": "Clara Mwangi, R.N. Ped-Care Specialist",
+  "date": "2026-05-20",
+  "readTime": "5 min read",
+  "excerpt": "Practical rehydration guidelines for severe pediatric gastroenteritis in water-scarce outposts, exploring ORS formulation, Zinc adjuvants, and seed water flocculents.",
+  "body": "Sunken eyes, lethargy, and a slow skin turgor pinch indicate severe hypovolemic dehydration in pediatric cholera or diarrheal outbreaks. In hyper-arid regions like Lodwar/Turkana, high ambient temperatures accelerate core fluid loss, making pediatric rehydration an absolute clinical emergency.\n\nWHO low-osmolarity Oral Rehydration Salts (ORS) are standard for mild-to-moderate dehydration. Precision in mixing 1 packet of ORS in exactly 1 Liter of clean boiled water is vital to prevent osmotic cellular damage. Daily adjuvant administration of Zinc Sulfate (10-20mg) for 10-14 days is clinically proven to reduce diarrheal duration by 20% and prevent secondary recurrences for up to 3 months.\n\nWhere sterile drinking water is unavailable, traditional crushed Moringa Seeds are highly useful as an offline flocculent. The seed proteins act as natural cationic coagulants, binding turbid suspended bacteria and clay particles, settling them to enable decanting. This traditional water clarification method is a vital survival fallback, though it should be followed by boiling or chlorination whenever possible.",
+  "linkedConditions": [
+    "cholera",
+    "dehydration"
+  ],
+  "linkedRemedies": [
+    "oral-rehydration-salts",
+    "zinc-sulfate",
+    "moringa-seeds",
+    "coconut-water"
+  ]
+}

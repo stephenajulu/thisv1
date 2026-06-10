@@ -1,47 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BookOpen, Search, ArrowRight, User, Calendar, Layers, ShieldCheck, Heart, GitBranch, FileText, ArrowUpRight } from 'lucide-react';
 import { database } from '../data/database';
 
-export const vaultNotes = [
-  {
-    id: "cv-1",
-    title: "Moringa Seeds Coagulant Flocculation for Cholera Control",
-    author: "Researcher Maria Chen",
-    date: "2026-05-15",
-    body: "In rural areas facing severe water contamination, traditional [[moringa-seeds]] are crushed and applied as a natural flocculent. The cationic proteins within moringa seeds neutralize the negatively charged surface membranes of turbid clay particles and water-borne pathogens, clumping them together for easy settling. This traditional coagulation helps control [[cholera]] outbreaks in places where chemical water clarification tablets are unavailable. It is essential to educate outpost workers that after settling, the decanted water must still undergo boiling or solar disinfection.",
-    category: "ethnobotany"
-  },
-  {
-    id: "cv-2",
-    title: "Pediatric Encephalopathy Risk and Oral Neem Seed Oil Ingestion",
-    author: "Dr. Hassan Omar",
-    date: "2026-05-20",
-    body: "Oral administration of raw [[neem-seed-oil]] in children under 5 years is strictly contraindicated. Clinical records indicate that oral neem seed oil triggers severe mitochondrial dysfunction, metabolic acidosis, and a toxic encephalopathy that closely simulates Reye's syndrome. In contrast, topical smudges made from [[neem-leaves]] serve as highly safe, effective mosquito repellents to control vector transmission in endemic malaria zones.",
-    category: "toxicology"
-  },
-  {
-    id: "cv-3",
-    title: "Vector Control Strategies for Lymphatic Filariasis Elimination",
-    author: "Epidemiologist John Kamau",
-    date: "2026-05-26",
-    body: "Interrupting mosquito transmission remains an essential pillar of [[lymphatic-filariasis]] eradication campaigns. While mass drug administration programs distribute single-dose treatments of [[diethylcarbamazine]] co-administered with [[albendazole]], combining medical chemotherapy with local vector breeding clearances ensures lasting transmission blockages. Outposts must maintain active vector registries to track localized hotspots and verify that mass deworming campaigns achieve 100% community coverage.",
-    category: "epidemiology"
-  },
-  {
-    id: "cv-4",
-    title: "Avoiding Mazzotti Systemic Reactions during Mass Chemotherapy",
-    author: "Clinical Director Pierre Dubois",
-    date: "2026-05-28",
-    body: "The systemic Mazzotti reaction represents a severe clinical hazard characterized by acute hypotension, joint pain, pruritus, and ocular stress. This reaction is triggered during microfilarial chemotherapy when administering [[diethylcarbamazine]] to patients harboring concurrent infections of [[onchocerciasis]] (river blindness). The rapid microfilarial cell death induces a massive immune-mediated inflammatory storm. Prior screening using skin snips or eye evaluations is mandatory before executing regional MDA campaigns.",
-    category: "pharmacology"
-  }
-];
-
 export default function CommunityVault({ onNavigate }) {
-  const [selectedNoteId, setSelectedNoteId] = useState(vaultNotes[0]?.id || null);
+  const vaultNotes = database.notes;
+  const [selectedNoteId, setSelectedNoteId] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const activeNote = vaultNotes.find(n => n.id === selectedNoteId);
+  // Synchronize selected note ID when vaultNotes loads or changes
+  useEffect(() => {
+    if (vaultNotes.length > 0 && !selectedNoteId) {
+      setSelectedNoteId(vaultNotes[0].id);
+    }
+  }, [vaultNotes, selectedNoteId]);
+
+  const activeNote = vaultNotes.find(n => n.id === selectedNoteId) || vaultNotes[0];
 
   const filteredNotes = vaultNotes.filter(n => 
     n.title.toLowerCase().includes(searchQuery.toLowerCase()) ||

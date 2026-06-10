@@ -1,0 +1,17 @@
+{
+  "id": "bp-4",
+  "title": "Amoebic Dysentery: Modern vs. Ethnopharmacological Cleansing",
+  "author": "Alice Leshan, Community Health Officer",
+  "date": "2026-05-27",
+  "readTime": "5 min read",
+  "excerpt": "Exploring the clinical integration of Metronidazole antibiotic regimens with traditional Guava Leaf decoctions for amoebic diarrhea control.",
+  "body": "Invasive intestinal entamoeba histolytica causes bloody stools, painful cramps (tenesmus), and systemic fever. Dysentery outbreaks frequently occur where wastewater contaminates community irrigation fields.\n\nFirst-line therapy utilizes oral Metronidazole (400-800mg) three times daily. Due to metronidazole's inhibition of acetaldehyde dehydrogenase, clinicians must strictly instruct patients to avoid alcohol during therapy and for 48 hours after, preventing a severe disulfiram-like toxic reaction (vomiting, tachycardia, facial flushing).\n\nTraditionally, rural healers deploy Guava Leaves (Psidium guajava) decoctions to control watery stool volume. Pharmacological assays confirm that guava leaf extracts are rich in anti-spasmodic tannins that relax intestinal muscles, slowing hypermotility and reducing fluid loss. Integrating guava decoctions as an adjuvant supportive therapy under clinical supervision provides substantial bedside relief where modern antispasmodics are stocked out.",
+  "linkedConditions": [
+    "amoebic-dysentery"
+  ],
+  "linkedRemedies": [
+    "metronidazole",
+    "guava-leaves",
+    "ginger"
+  ]
+}

@@ -382,11 +382,27 @@
       CMS.registerPreviewTemplate("notes", VaultNotePreview);
       CMS.registerPreviewTemplate("guidebook", GuidebookPreview);
 
-      // Register custom medical-grade validators using preSave event hook
+      // Asynchronous translation helper utilizing free Google translate endpoint
+      async function translateText(text, targetLang) {
+        if (!text || typeof text !== 'string' || text.trim() === "") return "";
+        try {
+          const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
+          const res = await fetch(url);
+          const data = await res.json();
+          if (data && data[0]) {
+            return data[0].map(x => x[0]).join('');
+          }
+        } catch (err) {
+          console.error("Translation error for " + targetLang, err);
+        }
+        return text;
+      }
+
+      // Register custom medical-grade validators and translators using preSave hook
       CMS.registerEventListener({
         name: 'preSave',
-        handler: ({ entry }) => {
-          const data = entry.get('data');
+        handler: async ({ entry }) => {
+          let data = entry.get('data');
           const id = data.get('id');
           const collection = entry.get('collection');
           
@@ -422,6 +438,52 @@
               throw new Error("Invalid date format");
             }
           }
+
+          // 5. Automated Translation Flow
+          const translationMap = {
+            conditions: ['name', 'description', 'triageAdvisory'],
+            remedies: ['name', 'description', 'preparation', 'safetyAlert', 'interactions'],
+            blog: ['title', 'excerpt', 'body'],
+            notes: ['title', 'body'],
+            guidebook: ['title', 'instructions']
+          };
+
+          const fieldsToTranslate = translationMap[collection] || [];
+          for (const field of fieldsToTranslate) {
+            const originalVal = data.get(field);
+            if (originalVal && typeof originalVal === 'string') {
+              const translatedSw = await translateText(originalVal, 'sw');
+              const translatedFr = await translateText(originalVal, 'fr');
+              data = data.set(`${field}_sw`, translatedSw);
+              data = data.set(`${field}_fr`, translatedFr);
+            }
+          }
+
+          // Translate prevention list specifically (conditions)
+          if (collection === 'conditions' && data.get('prevention')) {
+            const preventionList = data.get('prevention');
+            if (preventionList && preventionList.size > 0) {
+              const swList = [];
+              const frList = [];
+              for (let i = 0; i < preventionList.size; i++) {
+                const item = preventionList.get(i);
+                if (item && typeof item === 'string') {
+                  swList.push(await translateText(item, 'sw'));
+                  frList.push(await translateText(item, 'fr'));
+                } else {
+                  swList.push(item);
+                  frList.push(item);
+                }
+              }
+              const Immutable = window.Immutable || (window.parent && window.parent.Immutable);
+              if (Immutable) {
+                data = data.set('prevention_sw', Immutable.fromJS(swList));
+                data = data.set('prevention_fr', Immutable.fromJS(frList));
+              }
+            }
+          }
+
+          return data;
         }
       });
     </script>

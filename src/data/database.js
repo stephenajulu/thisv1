@@ -3,24 +3,91 @@ const conditionFiles = import.meta.glob('./collections/conditions/*.json', { eag
 const remedyFiles = import.meta.glob('./collections/remedies/*.json', { eager: true });
 const outcomeFiles = import.meta.glob('./collections/outcomes/*.json', { eager: true });
 const interactionFiles = import.meta.glob('./collections/interactions/*.json', { eager: true });
+const blogFiles = import.meta.glob('./collections/blog/*.json', { eager: true });
+const noteFiles = import.meta.glob('./collections/notes/*.json', { eager: true });
+const guidebookFiles = import.meta.glob('./collections/guidebook/*.json', { eager: true });
 
 const conditions = Object.values(conditionFiles).map(module => module.default);
 const staticRemedies = Object.values(remedyFiles).map(module => module.default);
 const outcomesMatrix = Object.values(outcomeFiles).map(module => module.default);
 const interactions = Object.values(interactionFiles).map(module => module.default);
+const staticBlogPosts = Object.values(blogFiles).map(module => module.default);
+const staticNotes = Object.values(noteFiles).map(module => module.default);
+const staticGuidebook = Object.values(guidebookFiles).map(module => module.default);
+
+const getActiveLanguage = () => {
+  if (typeof window === 'undefined') return 'en';
+  return localStorage.getItem('this_language') || 'en';
+};
+
+const getLocalizedValue = (item, field, lang) => {
+  if (lang === 'en') return item[field];
+  const localizedVal = item[`${field}_${lang}`];
+  if (localizedVal !== undefined) return localizedVal;
+  return item[field]; // fallback to English
+};
+
+const localizeItem = (item, lang) => {
+  if (!item || lang === 'en') return item;
+  
+  // Clone item to avoid modifying original
+  const localized = { ...item };
+  
+  // Localize standard text fields
+  const textFields = [
+    'name', 'description', 'preparation', 'safetyAlert', 'interactions', 
+    'triageAdvisory', 'advisory', 'title', 'excerpt', 'body', 'instructions', 
+    'clinicalSummary'
+  ];
+  textFields.forEach(field => {
+    if (item[field] !== undefined) {
+      localized[field] = getLocalizedValue(item, field, lang);
+    }
+  });
+
+  // Localize list fields (like prevention in conditions)
+  if (item.prevention && item[`prevention_${lang}`]) {
+    localized.prevention = item[`prevention_${lang}`];
+  }
+  
+  return localized;
+};
+
+const localizeList = (list, lang) => {
+  if (!list) return [];
+  return list.map(item => localizeItem(item, lang));
+};
 
 export const database = {
-  conditions,
+  get conditions() {
+    const lang = getActiveLanguage();
+    return localizeList(conditions, lang);
+  },
   get remedies() {
-    if (typeof window === 'undefined') return staticRemedies;
-    const approved = localStorage.getItem('this_ethnobotany_approved');
-    if (!approved) return staticRemedies;
-    try {
-      const list = JSON.parse(approved);
-      return [...staticRemedies, ...list];
-    } catch (e) {
-      return staticRemedies;
+    const lang = getActiveLanguage();
+    let list = staticRemedies;
+    if (typeof window !== 'undefined') {
+      const approved = localStorage.getItem('this_ethnobotany_approved');
+      if (approved) {
+        try {
+          const parsed = JSON.parse(approved);
+          list = [...staticRemedies, ...parsed];
+        } catch (e) {}
+      }
     }
+    return localizeList(list, lang);
+  },
+  get blogPosts() {
+    const lang = getActiveLanguage();
+    return localizeList(staticBlogPosts, lang);
+  },
+  get notes() {
+    const lang = getActiveLanguage();
+    return localizeList(staticNotes, lang);
+  },
+  get guidebook() {
+    const lang = getActiveLanguage();
+    return localizeList(staticGuidebook, lang);
   },
   interactions,
   symptoms: [

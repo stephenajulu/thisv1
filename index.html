@@ -27,6 +27,16 @@
     <script src="https://js.paystack.co/v1/inline.js"></script>
   </head>
   <body>
+    <!-- Hidden form for Netlify Form Detection (CMS Access Request) -->
+    <form name="request-invite" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="bot-field" />
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="outpost" />
+      <input type="text" name="role" />
+      <textarea name="reason"></textarea>
+    </form>
+
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
     <!-- Redirect on Login script -->

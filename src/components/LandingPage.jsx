@@ -22,13 +22,57 @@ import {
   FileText, 
   CheckCircle, 
   ChevronRight, 
-  Check 
+  Check,
+  X
 } from 'lucide-react';
 import { database } from '../data/database';
 import { getLocalizedRemedy } from '../utils/regionalHelper';
 import { verifyRemoteOutpost } from '../utils/membership';
 
 export default function LandingPage({ onNavigate }) {
+  // --- Invite Access Modal State ---
+  const [showInviteModal, setShowInviteModal] = useState(false);
+  const [inviteName, setInviteName] = useState('');
+  const [inviteEmail, setInviteEmail] = useState('');
+  const [inviteOutpost, setInviteOutpost] = useState('');
+  const [inviteRole, setInviteRole] = useState('clinical-officer');
+  const [inviteReason, setInviteReason] = useState('');
+  const [inviteSubmitting, setInviteSubmitting] = useState(false);
+  const [inviteSubmitted, setInviteSubmitted] = useState(false);
+
+  const handleInviteSubmit = async (e) => {
+    e.preventDefault();
+    setInviteSubmitting(true);
+    
+    // Netlify form data submission via AJAX
+    const formData = new URLSearchParams();
+    formData.append("form-name", "request-invite");
+    formData.append("name", inviteName);
+    formData.append("email", inviteEmail);
+    formData.append("outpost", inviteOutpost);
+    formData.append("role", inviteRole);
+    formData.append("reason", inviteReason);
+    
+    try {
+      await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: formData.toString()
+      });
+      setInviteSubmitted(true);
+      // Reset inputs
+      setInviteName('');
+      setInviteEmail('');
+      setInviteOutpost('');
+      setInviteReason('');
+    } catch (err) {
+      console.error("Failed to submit invite request", err);
+      alert("Submission error. Please check your connection and try again.");
+    } finally {
+      setInviteSubmitting(false);
+    }
+  };
+
   // --- Vector Simulator State ---
   const [simTemp, setSimTemp] = useState(29);
   const [simHumidity, setSimHumidity] = useState(78);
@@ -814,6 +858,147 @@ export default function LandingPage({ onNavigate }) {
           </div>
         </div>
       </section>
+
+      {/* Footer / CMS Access Link */}
+      <footer className="pt-8 border-t border-slate-200/50 dark:border-slate-800/50 text-center text-xs text-slate-500 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <span>© 2026 Tropical Health Information System (THIS). All rights reserved.</span>
+        <div className="flex gap-4">
+          <a href="/admin/" className="hover:text-emerald-600 dark:hover:text-emerald-400 font-bold transition-colors">Admin Portal (CMS)</a>
+          <span>•</span>
+          <button 
+            onClick={() => setShowInviteModal(true)} 
+            className="hover:text-emerald-600 dark:hover:text-emerald-400 font-bold bg-transparent border-0 cursor-pointer transition-colors"
+          >
+            Request CMS Invite
+          </button>
+        </div>
+      </footer>
+
+      {/* Invite Request Modal */}
+      {showInviteModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative space-y-6">
+            <button 
+              onClick={() => {
+                setShowInviteModal(false);
+                setInviteSubmitted(false);
+              }}
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 bg-transparent border-0 cursor-pointer"
+            >
+              <X className="h-5 w-5" />
+            </button>
+
+            {inviteSubmitted ? (
+              <div className="text-center space-y-4 py-4">
+                <div className="mx-auto h-12 w-12 rounded-full bg-emerald-100 dark:bg-emerald-950/30 flex items-center justify-center">
+                  <Check className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
+                </div>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">Request Submitted ✓</h3>
+                <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                  Thank you! Your access request for the THIS admin portal has been queued. The local system administrators will review your credentials and issue a Netlify Identity invite email shortly.
+                </p>
+                <button 
+                  onClick={() => {
+                    setShowInviteModal(false);
+                    setInviteSubmitted(false);
+                  }}
+                  className="px-6 py-2 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl transition-all cursor-pointer"
+                >
+                  Close Window
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleInviteSubmit} className="space-y-4">
+                <div className="space-y-1">
+                  <h3 className="text-lg font-black text-slate-900 dark:text-white font-outfit">Request Admin Access</h3>
+                  <p className="text-[11px] text-slate-500">
+                    Outpost clinical officers and researchers can request credentials to manage clinical entries, guidebook protocols, and botanical specs.
+                  </p>
+                </div>
+
+                <div className="space-y-3">
+                  <div className="space-y-1">
+                    <label htmlFor="inv-name" className="text-[9px] uppercase font-bold text-slate-500 block">Full Name</label>
+                    <input 
+                      type="text" 
+                      id="inv-name"
+                      required
+                      placeholder="e.g. Dr. Amani Joseph" 
+                      value={inviteName}
+                      onChange={(e) => setInviteName(e.target.value)}
+                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs outline-none focus:ring-1 focus:ring-emerald-800 text-slate-700 dark:text-slate-300"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label htmlFor="inv-email" className="text-[9px] uppercase font-bold text-slate-500 block">Email Address</label>
+                    <input 
+                      type="email" 
+                      id="inv-email"
+                      required
+                      placeholder="e.g. amani@outpost.org" 
+                      value={inviteEmail}
+                      onChange={(e) => setInviteEmail(e.target.value)}
+                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs outline-none focus:ring-1 focus:ring-emerald-800 text-slate-700 dark:text-slate-300"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="space-y-1">
+                      <label htmlFor="inv-outpost" className="text-[9px] uppercase font-bold text-slate-500 block">Outpost Location</label>
+                      <input 
+                        type="text" 
+                        id="inv-outpost"
+                        required
+                        placeholder="e.g. Turkana County" 
+                        value={inviteOutpost}
+                        onChange={(e) => setInviteOutpost(e.target.value)}
+                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs outline-none focus:ring-1 focus:ring-emerald-800 text-slate-700 dark:text-slate-300"
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <label htmlFor="inv-role" className="text-[9px] uppercase font-bold text-slate-500 block">Clinical Role</label>
+                      <select 
+                        id="inv-role"
+                        value={inviteRole}
+                        onChange={(e) => setInviteRole(e.target.value)}
+                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs outline-none focus:ring-1 focus:ring-emerald-800 text-slate-700 dark:text-slate-300"
+                      >
+                        <option value="clinical-officer">Clinical Officer</option>
+                        <option value="medical-officer">Medical Officer / Doctor</option>
+                        <option value="nurse">Outpost Nurse</option>
+                        <option value="botanist">Ethnobotanist / Researcher</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="space-y-1">
+                    <label htmlFor="inv-reason" className="text-[9px] uppercase font-bold text-slate-500 block">Reason for Admin Access</label>
+                    <textarea 
+                      id="inv-reason"
+                      required
+                      rows={3}
+                      placeholder="Specify your medical assignment or database additions..." 
+                      value={inviteReason}
+                      onChange={(e) => setInviteReason(e.target.value)}
+                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs outline-none focus:ring-1 focus:ring-emerald-800 text-slate-700 dark:text-slate-300 resize-none"
+                    />
+                  </div>
+                </div>
+
+                <button 
+                  type="submit" 
+                  disabled={inviteSubmitting}
+                  className="w-full py-2 bg-emerald-800 hover:bg-emerald-900 disabled:bg-emerald-800/50 text-white font-extrabold text-xs rounded-xl shadow transition-all cursor-pointer flex items-center justify-center"
+                >
+                  {inviteSubmitting ? "Submitting Request..." : "Submit Invite Request"}
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
