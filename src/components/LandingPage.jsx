@@ -174,11 +174,11 @@ export default function LandingPage({ onNavigate }) {
               100% Offline Clinical Support
             </div>
             
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black font-outfit tracking-tight text-white leading-[1.1]">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black font-outfit tracking-tight !text-white leading-[1.1]">
               Sovereign Outpost Triage for <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-sky-400">Tropical Medicine</span>
             </h1>
             
-            <p className="text-slate-200 text-sm sm:text-base leading-relaxed max-w-xl">
+            <p className="!text-slate-200 text-sm sm:text-base leading-relaxed max-w-xl">
               THIS (Tropical Health Information System) is a peer-reviewed decision engine designed for off-grid humanitarian outposts. It integrates traditional ethnobotanical treatments and modern pharmaceuticals under the global WHO GRADE evidence framework.
             </p>
 
@@ -206,16 +206,16 @@ export default function LandingPage({ onNavigate }) {
             {/* Quick trust metrics */}
             <div className="grid grid-cols-3 gap-6 pt-8 border-t border-white/10">
               <div>
-                <span className="block text-2xl font-black text-white font-outfit">62+</span>
-                <span className="text-xs text-slate-300">Remedies Graded</span>
+                <span className="block text-2xl font-black !text-white font-outfit">62+</span>
+                <span className="text-xs !text-slate-205">Remedies Graded</span>
               </div>
               <div>
-                <span className="block text-2xl font-black text-white font-outfit">100%</span>
-                <span className="text-xs text-slate-300">Offline Local-Sovereign</span>
+                <span className="block text-2xl font-black !text-white font-outfit">100%</span>
+                <span className="text-xs !text-slate-205">Offline Local-Sovereign</span>
               </div>
               <div>
-                <span className="block text-2xl font-black text-white font-outfit">&lt;50km</span>
-                <span className="text-xs text-slate-300">Geofence Free Waiver</span>
+                <span className="block text-2xl font-black !text-white font-outfit">&lt;50km</span>
+                <span className="text-xs !text-slate-205">Geofence Free Waiver</span>
               </div>
             </div>
           </div>
@@ -729,10 +729,10 @@ export default function LandingPage({ onNavigate }) {
           <span className="text-[10px] tracking-widest font-black uppercase text-emerald-400 bg-emerald-950 border border-emerald-850 px-3 py-1 rounded-full inline-block">
             Launch Outpost Portal Today
           </span>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-white leading-tight font-outfit">
+          <h2 className="text-3xl md:text-4xl font-extrabold !text-white leading-tight font-outfit">
             Ready to Deploy Clinical Sovereignty?
           </h2>
-          <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
+          <p className="!text-slate-300 text-xs sm:text-sm leading-relaxed">
             Enter the portal now. The free tier is always open and fully caches itself for off-grid operations. Urban practitioners can unlock the complete clinical toolkit instantly.
           </p>
         </div>
@@ -743,11 +743,11 @@ export default function LandingPage({ onNavigate }) {
           <div className="p-6 bg-slate-950/60 border border-slate-800 hover:border-slate-700 rounded-2xl flex flex-col justify-between space-y-6">
             <div className="space-y-4">
               <div>
-                <h4 className="text-xs font-black text-white uppercase tracking-wider">Outpost Basic / Free</h4>
-                <span className="text-2xl font-black text-white font-outfit">Free</span>
-                <span className="text-[10px] text-slate-500 block">Exempt for remote clinics & reference</span>
+                <h4 className="text-xs font-black !text-white uppercase tracking-wider">Outpost Basic / Free</h4>
+                <span className="text-2xl font-black !text-white font-outfit">Free</span>
+                <span className="text-[10px] !text-slate-300 block">Exempt for remote clinics & reference</span>
               </div>
-              <ul className="space-y-2 text-[10px] text-slate-400">
+              <ul className="space-y-2 text-[10px] !text-slate-200">
                 <li className="flex items-center gap-1.5">
                   <Check className="h-3.5 w-3.5 text-emerald-400 shrink-0" /> Full Condition Index & Synonyms
                 </li>
@@ -780,11 +780,11 @@ export default function LandingPage({ onNavigate }) {
             </span>
             <div className="space-y-4">
               <div>
-                <h4 className="text-xs font-black text-white uppercase tracking-wider">Urban Pro (BOGO)</h4>
-                <span className="text-2xl font-black text-emerald-400 font-outfit">1,500 KES</span>
-                <span className="text-[10px] text-emerald-300/60 block">Sponsor one off-grid clinic forever</span>
+                <h4 className="text-xs font-black !text-white uppercase tracking-wider">Urban Pro (BOGO)</h4>
+                <span className="text-2xl font-black !text-emerald-400 font-outfit">1,500 KES</span>
+                <span className="text-[10px] !text-emerald-200 block">Sponsor one off-grid clinic forever</span>
               </div>
-              <ul className="space-y-2 text-[10px] text-emerald-200/80">
+              <ul className="space-y-2 text-[10px] !text-emerald-100">
                 <li className="flex items-center gap-1.5">
                   <Check className="h-3.5 w-3.5 text-emerald-400 shrink-0" /> All Free features + Advanced Toolkit
                 </li>

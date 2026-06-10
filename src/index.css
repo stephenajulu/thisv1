@@ -685,6 +685,12 @@ body.dark svg {
   border-color: rgba(32, 184, 135, 0.2) !important;
 }
 
+body.dark svg.lucide {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
 body.dark svg text {
   fill: #d1fae5 !important;
 }
