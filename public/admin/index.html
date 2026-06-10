@@ -185,14 +185,22 @@
       }
 
       class RemedyPreview extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = { activeTab: 'overview' };
+        }
+
         render() {
           const { entry } = this.props;
+          const { activeTab } = this.state;
           const name = entry.getIn(['data', 'name']) || 'Untitled Remedy';
           const scientificName = entry.getIn(['data', 'scientificName']) || 'Scientific name unknown';
           const category = entry.getIn(['data', 'category']) || 'botanical';
           const safetyRating = entry.getIn(['data', 'safetyRating']) || 'Moderate Safety';
           const description = entry.getIn(['data', 'description']) || 'No description entered.';
           const preparation = entry.getIn(['data', 'preparation']) || 'No preparation instructions.';
+          const safetyAlert = entry.getIn(['data', 'safetyAlert']) || 'No safety alerts or contraindications recorded.';
+          const interactions = entry.getIn(['data', 'interactions']) || 'No known interactions.';
           const synonyms = entry.getIn(['data', 'synonyms']) || [];
           
           const imageUrlObj = entry.getIn(['data', 'imageUrl']);
@@ -201,7 +209,7 @@
 
           let safetyBg = '#e6f4ea';
           let safetyColor = '#137333';
-          if (safetyRating.includes('Caution') || safetyRating.includes('High Caution')) {
+          if (safetyRating.includes('Caution') || safetyRating.includes('High Caution') || safetyRating.includes('Warning')) {
             safetyBg = '#fce8e6';
             safetyColor = '#c5221f';
           } else if (safetyRating.includes('Moderate')) {
@@ -228,31 +236,76 @@
           }
 
           return h('div', { style: { padding: '24px', fontFamily: '"Inter", sans-serif', backgroundColor: '#f4fbf7', minHeight: '100vh' } },
-            h('div', { style: { backgroundColor: '#ffffff', borderTop: '6px solid ' + (category === 'botanical' ? '#20b887' : '#033c2a'), borderRadius: '12px', padding: '20px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.05)', maxWidth: '480px', margin: '0 auto' } },
-              h('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' } },
-                h('span', { style: { fontSize: '10px', textTransform: 'uppercase', fontWeight: 'bold', letterSpacing: '0.05em', backgroundColor: safetyBg, color: safetyColor, padding: '4px 8px', borderRadius: '4px' } }, safetyRating),
-                h('span', { style: { fontSize: '14px' } }, category === 'botanical' ? '🌿 Botanical' : '💊 Pharmaceutical')
+            h('div', { style: { backgroundColor: '#ffffff', borderTop: '6px solid ' + (category === 'botanical' ? '#20b887' : '#033c2a'), borderRadius: '16px', padding: '0', boxShadow: '0 10px 25px rgba(3, 60, 42, 0.05)', maxWidth: '480px', margin: '0 auto', overflow: 'hidden', border: '1px solid rgba(3, 60, 42, 0.08)' } },
+              // Banner / Header Section
+              h('div', { style: { padding: '20px 20px 12px 20px', borderBottom: '1px solid #f1f5f9' } },
+                h('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' } },
+                  h('span', { style: { fontSize: '10px', textTransform: 'uppercase', fontWeight: 'bold', letterSpacing: '0.05em', backgroundColor: safetyBg, color: safetyColor, padding: '4px 8px', borderRadius: '4px' } }, safetyRating),
+                  h('span', { style: { fontSize: '11px', fontWeight: 'bold', color: category === 'botanical' ? '#20b887' : '#033c2a', backgroundColor: category === 'botanical' ? '#e6f4ea' : '#e2e8f0', padding: '4px 8px', borderRadius: '4px' } }, category === 'botanical' ? '🌿 Botanical' : '💊 Pharmaceutical')
+                ),
+                imageUrl && h('img', { src: imageUrl, style: { width: '100%', maxHeight: '180px', objectFit: 'cover', borderRadius: '12px', marginBottom: '12px', border: '1px solid rgba(3, 60, 42, 0.05)' } }),
+                h('h2', { style: { fontSize: '22px', fontWeight: '800', color: '#033c2a', marginTop: '0', marginBottom: '2px', fontFamily: '"Outfit", sans-serif' } }, name),
+                h('div', { style: { fontSize: '12px', fontStyle: 'italic', color: '#64748b', marginBottom: '10px' } }, scientificName),
+                availability && h('div', { style: { display: 'inline-block', fontSize: '11px', fontWeight: 'bold', backgroundColor: availBg, color: availColor, padding: '4px 8px', borderRadius: '4px', marginBottom: '8px' } }, availLabel),
+                synonyms.size > 0 && h('div', { style: { display: 'flex', gap: '6px', flexWrap: 'wrap', marginTop: '4px' } },
+                  synonyms.toArray().map((syn, idx) => {
+                    const val = typeof syn === 'string' ? syn : (syn.get ? syn.get('synonym') : JSON.stringify(syn));
+                    return h('span', { key: idx, style: { fontSize: '11px', color: '#64748b', backgroundColor: '#f1f5f9', padding: '2px 6px', borderRadius: '4px' } }, val);
+                  })
+                )
               ),
-              
-              imageUrl && h('img', { src: imageUrl, style: { width: '100%', maxHeight: '220px', objectFit: 'cover', borderRadius: '8px', marginBottom: '16px', border: '1px solid rgba(3, 60, 42, 0.1)' } }),
-              
-              h('h2', { style: { fontSize: '20px', fontWeight: 'bold', color: '#033c2a', marginTop: '0', marginBottom: '2px' } }, name),
-              h('div', { style: { fontSize: '12px', fontStyle: 'italic', color: '#666', marginBottom: '12px' } }, scientificName),
-              
-              availability && h('div', { style: { display: 'inline-block', fontSize: '11px', fontWeight: 'bold', backgroundColor: availBg, color: availColor, padding: '4px 8px', borderRadius: '4px', marginBottom: '12px' } }, availLabel),
 
-              synonyms.size > 0 && h('div', { style: { display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '12px' } },
-                synonyms.toArray().map((syn, idx) => {
-                  const val = typeof syn === 'string' ? syn : (syn.get ? syn.get('synonym') : JSON.stringify(syn));
-                  return h('span', { key: idx, style: { fontSize: '11px', color: '#555', backgroundColor: '#f0f0f0', padding: '2px 6px', borderRadius: '4px' } }, val);
-                })
+              // Interactive PWA viewport navigation tabs mimicking bedside app
+              h('div', { style: { display: 'flex', backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0', padding: '0 4px' } },
+                ['overview', 'preparation', 'safety', 'interactions'].map(tab =>
+                  h('button', {
+                    key: tab,
+                    onClick: () => this.setState({ activeTab: tab }),
+                    style: {
+                      flex: 1,
+                      padding: '12px 2px',
+                      border: 'none',
+                      backgroundColor: 'transparent',
+                      color: activeTab === tab ? '#033c2a' : '#64748b',
+                      fontWeight: activeTab === tab ? 'bold' : 'normal',
+                      fontSize: '11px',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.03em',
+                      cursor: 'pointer',
+                      borderBottom: activeTab === tab ? '3px solid #20b887' : '3px solid transparent',
+                      transition: 'all 0.2s ease',
+                      outline: 'none'
+                    }
+                  }, tab.toUpperCase())
+                )
+              ),
+
+              // Tabbed Content Box
+              h('div', { style: { padding: '20px', minHeight: '150px' } },
+                activeTab === 'overview' && h('div', null,
+                  h('h4', { style: { fontSize: '11px', textTransform: 'uppercase', color: '#94a3b8', margin: '0 0 6px 0', letterSpacing: '0.05em' } }, 'Description'),
+                  h('p', { style: { fontSize: '13px', lineHeight: '1.6', color: '#334155', margin: '0' } }, description)
+                ),
+                activeTab === 'preparation' && h('div', null,
+                  h('h4', { style: { fontSize: '11px', textTransform: 'uppercase', color: '#94a3b8', margin: '0 0 6px 0', letterSpacing: '0.05em' } }, 'Preparation & Dosage'),
+                  h('p', { style: { fontSize: '13px', lineHeight: '1.6', color: '#334155', margin: '0', backgroundColor: '#f8fafc', padding: '10px 12px', borderRadius: '8px', borderLeft: '3px solid #20b887' } }, preparation)
+                ),
+                activeTab === 'safety' && h('div', null,
+                  h('h4', { style: { fontSize: '11px', textTransform: 'uppercase', color: '#94a3b8', margin: '0 0 6px 0', letterSpacing: '0.05em' } }, 'Safety Alert & Contraindications'),
+                  h('p', { style: { fontSize: '13px', lineHeight: '1.6', color: '#c5221f', backgroundColor: '#fce8e6', padding: '10px 12px', borderRadius: '8px', borderLeft: '3px solid #c5221f', margin: '0 0 12px 0', fontWeight: '500' } }, safetyAlert),
+                  h('span', { style: { fontSize: '11px', color: safetyColor, backgroundColor: safetyBg, padding: '4px 8px', borderRadius: '4px', fontWeight: 'bold' } }, 'Clinical safety level: ' + safetyRating)
+                ),
+                activeTab === 'interactions' && h('div', null,
+                  h('h4', { style: { fontSize: '11px', textTransform: 'uppercase', color: '#94a3b8', margin: '0 0 6px 0', letterSpacing: '0.05em' } }, 'Interactions & Synergies'),
+                  h('p', { style: { fontSize: '13px', lineHeight: '1.6', color: '#334155', margin: '0', backgroundColor: '#f8fafc', padding: '10px 12px', borderRadius: '8px', borderLeft: '3px solid #033c2a' } }, interactions)
+                )
               ),
               
-              h('h4', { style: { fontSize: '12px', textTransform: 'uppercase', color: '#888', marginBottom: '4px', marginTop: '16px' } }, 'Description'),
-              h('p', { style: { fontSize: '13px', lineHeight: '1.5', color: '#444', marginTop: '0', marginBottom: '12px' } }, description),
-              
-              h('h4', { style: { fontSize: '12px', textTransform: 'uppercase', color: '#888', marginBottom: '4px', marginTop: '12px' } }, 'Preparation & Dosage'),
-              h('p', { style: { fontSize: '13px', lineHeight: '1.5', color: '#444', marginTop: '0', marginBottom: '0', backgroundColor: '#f9f9f9', padding: '8px', borderRadius: '6px', borderLeft: '3px solid #20b887' } }, preparation)
+              // Footer of Preview
+              h('div', { style: { padding: '10px 20px', borderTop: '1px solid #f1f5f9', backgroundColor: '#f8fafc', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '11px', color: '#94a3b8' } },
+                h('span', null, '🔬 Bedside PWA Viewport'),
+                h('span', { style: { color: '#20b887', fontWeight: 'bold' } }, 'Active Sync')
+              )
             )
           );
         }
@@ -403,16 +456,27 @@
         name: 'preSave',
         handler: async ({ entry }) => {
           let data = entry.get('data');
-          const id = data.get('id');
+          let id = data.get('id');
           const collection = entry.get('collection');
+
+          // 1. Auto-slugification of ID from name or title
+          const name = data.get('name') || data.get('title');
+          if ((!id || id.trim() === "") && name) {
+            const generatedId = name
+              .toLowerCase()
+              .replace(/[^a-z0-9]+/g, '-')
+              .replace(/(^-|-$)/g, '');
+            data = data.set('id', generatedId);
+            id = generatedId;
+          }
           
-          // 1. Enforce lowercase, dash-only IDs
+          // 2. Enforce lowercase, dash-only IDs
           if (id && !/^[a-z0-9-]+$/.test(id)) {
             alert("VALIDATION ERROR: Unique ID must contain strictly lowercase letters, numbers, and hyphens (e.g. 'artemisia-annua'). Spaces, capitals, and special characters are forbidden.");
             throw new Error("Invalid ID format");
           }
 
-          // 2. Validate ICD-11 syntax format for conditions
+          // 3. Validate ICD-11 syntax format for conditions
           if (collection === 'conditions') {
             const icd11 = data.get('icd11');
             if (icd11 && icd11 !== 'N/A' && !/^[1-9A-Z][0-9A-Z]{3}$/.test(icd11)) {
@@ -420,7 +484,7 @@
             }
           }
 
-          // 3. Ensure safety alerts are populated when caution ratings are chosen
+          // 4. Ensure safety alerts are populated when caution ratings are chosen
           if (collection === 'remedies') {
             const safetyRating = data.get('safetyRating');
             const safetyAlert = data.get('safetyAlert');
@@ -430,7 +494,7 @@
             }
           }
 
-          // 4. Validate publishing dates for blogs and notes
+          // 5. Validate publishing dates for blogs and notes
           if (collection === 'blog' || collection === 'notes') {
             const date = data.get('date');
             if (date && !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
@@ -439,7 +503,7 @@
             }
           }
 
-          // 5. Automated Translation Flow
+          // 6. Automated Translation Flow
           const translationMap = {
             conditions: ['name', 'description', 'triageAdvisory'],
             remedies: ['name', 'description', 'preparation', 'safetyAlert', 'interactions'],
@@ -486,6 +550,174 @@
           return data;
         }
       });
+
+      // Conditional Fields display driver based on Remedy Category selection
+      function handleConditionalFields() {
+        const labels = Array.from(document.querySelectorAll('label[class*="ControlLabel"]'));
+        const categoryLabel = labels.find(l => l.textContent.trim().toLowerCase().startsWith('category type'));
+        if (!categoryLabel) return; 
+
+        const categoryContainer = categoryLabel.closest('div[class*="ControlContainer"]');
+        if (!categoryContainer) return;
+
+        const selectEl = categoryContainer.querySelector('select');
+        if (!selectEl) return;
+
+        const selectedVal = selectEl.value; 
+
+        const imageLabel = labels.find(l => l.textContent.trim().toLowerCase().includes('botanical specimen image'));
+        const availabilityLabel = labels.find(l => l.textContent.trim().toLowerCase().includes('regional availability'));
+
+        if (imageLabel) {
+          const imageContainer = imageLabel.closest('div[class*="ControlContainer"]');
+          if (imageContainer) {
+            imageContainer.style.display = (selectedVal === 'botanical') ? 'block' : 'none';
+          }
+        }
+
+        if (availabilityLabel) {
+          const availabilityContainer = availabilityLabel.closest('div[class*="ControlContainer"]');
+          if (availabilityContainer) {
+            availabilityContainer.style.display = (selectedVal === 'botanical') ? 'block' : 'none';
+          }
+        }
+      }
+
+      document.addEventListener('change', (e) => {
+        if (e.target && e.target.tagName === 'SELECT') {
+          const label = e.target.closest('div[class*="ControlContainer"]')?.querySelector('label');
+          if (label && label.textContent.trim().toLowerCase().startsWith('category type')) {
+            handleConditionalFields();
+          }
+        }
+      });
+      setInterval(handleConditionalFields, 500);
+
+      // Netlify Deploy Tracker injection into Decap CMS Top Header Panel
+      function injectNetlifyBadge() {
+        const header = document.querySelector('header');
+        if (!header) return;
+        
+        if (document.getElementById('netlify-deploy-tracker')) return;
+
+        const wrapper = document.createElement('div');
+        wrapper.id = 'netlify-deploy-tracker';
+        wrapper.style.display = 'flex';
+        wrapper.style.alignItems = 'center';
+        wrapper.style.gap = '8px';
+        wrapper.style.marginLeft = 'auto';
+        wrapper.style.marginRight = '20px';
+        wrapper.style.backgroundColor = 'rgba(32, 184, 135, 0.1)';
+        wrapper.style.border = '1px solid rgba(32, 184, 135, 0.3)';
+        wrapper.style.padding = '6px 12px';
+        wrapper.style.borderRadius = '8px';
+        wrapper.style.fontSize = '12px';
+        wrapper.style.color = '#a3e2cd';
+        wrapper.style.fontFamily = '"Outfit", sans-serif';
+        wrapper.style.cursor = 'pointer';
+        wrapper.style.transition = 'all 0.2s ease';
+        wrapper.title = 'Click to link Netlify Site ID';
+
+        wrapper.onmouseover = () => {
+          wrapper.style.backgroundColor = 'rgba(32, 184, 135, 0.2)';
+        };
+        wrapper.onmouseout = () => {
+          wrapper.style.backgroundColor = 'rgba(32, 184, 135, 0.1)';
+        };
+
+        let siteId = localStorage.getItem('netlify_site_id');
+        if (!siteId) {
+          const params = new URLSearchParams(window.location.search);
+          siteId = params.get('netlify_site_id');
+          if (siteId) {
+            localStorage.setItem('netlify_site_id', siteId);
+          }
+        }
+
+        const badgeImg = document.createElement('img');
+        badgeImg.style.height = '20px';
+        badgeImg.style.verticalAlign = 'middle';
+
+        if (siteId) {
+          badgeImg.src = `https://api.netlify.com/api/v1/badges/${siteId}/deploy-status`;
+          badgeImg.alt = 'Netlify Deploy Status';
+          wrapper.appendChild(badgeImg);
+        } else {
+          wrapper.innerHTML = '<span style="color: #20b887; font-weight: bold;">⚙️ Link Netlify Deploy Badge</span>';
+        }
+
+        wrapper.onclick = () => {
+          const currentId = localStorage.getItem('netlify_site_id') || '';
+          const newId = prompt('Enter your Netlify Site ID (UUID) to display the live build status badge. You can find this in your Netlify dashboard under Site Settings -> Site Details -> Site ID.', currentId);
+          if (newId !== null) {
+            if (newId.trim() === '') {
+              localStorage.removeItem('netlify_site_id');
+            } else {
+              localStorage.setItem('netlify_site_id', newId.trim());
+            }
+            wrapper.remove();
+            injectNetlifyBadge();
+          }
+        };
+
+        header.appendChild(wrapper);
+      }
+      setInterval(injectNetlifyBadge, 1000);
+
+      // Netlify Deploy Tracker injection into Decap CMS Login Page
+      function injectNetlifyBadgeOnLogin() {
+        const loginContainer = document.querySelector('[class*="LoginContainer"]');
+        if (!loginContainer) return;
+
+        if (document.getElementById('netlify-login-badge')) return;
+
+        const badgeWrapper = document.createElement('div');
+        badgeWrapper.id = 'netlify-login-badge';
+        badgeWrapper.style.marginTop = '24px';
+        badgeWrapper.style.textAlign = 'center';
+        badgeWrapper.style.padding = '12px';
+        badgeWrapper.style.border = '1px solid rgba(32, 184, 135, 0.2)';
+        badgeWrapper.style.borderRadius = '8px';
+        badgeWrapper.style.backgroundColor = 'rgba(3, 60, 42, 0.02)';
+
+        let siteId = localStorage.getItem('netlify_site_id');
+        const badgeImg = document.createElement('img');
+        badgeImg.style.height = '20px';
+        badgeImg.style.display = 'block';
+        badgeImg.style.margin = '0 auto 8px auto';
+
+        if (siteId) {
+          badgeImg.src = `https://api.netlify.com/api/v1/badges/${siteId}/deploy-status`;
+          badgeImg.alt = 'Netlify Deploy Status';
+          badgeWrapper.appendChild(badgeImg);
+        }
+
+        const label = document.createElement('div');
+        label.style.fontSize = '11px';
+        label.style.color = '#033c2a';
+        label.style.fontFamily = '"Outfit", sans-serif';
+        label.style.fontWeight = 'bold';
+        label.style.cursor = 'pointer';
+        label.innerHTML = siteId ? '🟢 Linked to Netlify Site ID (Click to change)' : '🔗 Link Netlify Deploy status badge';
+        
+        label.onclick = () => {
+          const currentId = localStorage.getItem('netlify_site_id') || '';
+          const newId = prompt('Enter your Netlify Site ID (UUID) to display the live build status badge:', currentId);
+          if (newId !== null) {
+            if (newId.trim() === '') {
+              localStorage.removeItem('netlify_site_id');
+            } else {
+              localStorage.setItem('netlify_site_id', newId.trim());
+            }
+            badgeWrapper.remove();
+            injectNetlifyBadgeOnLogin();
+          }
+        };
+
+        badgeWrapper.appendChild(label);
+        loginContainer.appendChild(badgeWrapper);
+      }
+      setInterval(injectNetlifyBadgeOnLogin, 1000);
     </script>
   </body>
 </html>
