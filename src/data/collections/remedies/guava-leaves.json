@@ -3,6 +3,7 @@
   "name": "Guava Leaves",
   "scientificName": "Psidium guajava L.",
   "category": "botanical",
+  "imageUrl": "/images/botanicals/guava_leaves.png",
   "description": "Traditional remedy for gastrointestinal spasms and diarrhea. Rich in quercetin and tannins that exhibit robust antispasmodic and anti-microbial activities.",
   "activeConstituents": [
     "Quercetin",

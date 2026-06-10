@@ -3,6 +3,7 @@
   "name": "Artemisia Annua",
   "scientificName": "Artemisia annua L. (Sweet Wormwood)",
   "category": "botanical",
+  "imageUrl": "/images/botanicals/artemisia_annua.png",
   "description": "A highly aromatic traditional herb that synthesizes artemisinin, a sesquiterpene lactone. The baseline chemistry for modern malaria combination cures (ACTs).",
   "activeConstituents": [
     "Artemisinin",

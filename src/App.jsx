@@ -18,11 +18,20 @@ import ClinicalFlowcharts from './components/ClinicalFlowcharts';
 import Blog from './components/Blog';
 import CommunityVault from './components/CommunityVault';
 import EthnobotanyPipeline from './components/EthnobotanyPipeline';
+import LandingPage from './components/LandingPage';
+import { database } from './data/database';
 import { useI18n } from './utils/i18n';
 
 export default function App() {
   const { lang, changeLanguage, t } = useI18n();
-  const [activePage, setActivePage] = useState('dashboard');
+  const [activePage, setActivePage] = useState(() => {
+    if (typeof window === 'undefined') return 'landing';
+    const path = window.location.pathname;
+    const params = path.split('/').filter(Boolean);
+    if (params.length > 0) return 'dashboard'; // Handled by handleUrlChange
+    const hasVisited = localStorage.getItem('this_landing_visited');
+    return hasVisited === 'true' ? 'dashboard' : 'landing';
+  });
   const [activeEntityId, setActiveEntityId] = useState(null);
   const [clinicianMode, setClinicianMode] = useState(false);
   const [showToolkit, setShowToolkit] = useState(false);
@@ -36,6 +45,12 @@ export default function App() {
   });
 
   const [showSettingsDrawer, setShowSettingsDrawer] = useState(false);
+
+  // Navigator state persistence
+  const [navSearchQuery, setNavSearchQuery] = useState('');
+  const [navActiveTab, setNavActiveTab] = useState('all');
+  const [navVisibleCount, setNavVisibleCount] = useState(12);
+  const [navScrollPosition, setNavScrollPosition] = useState(0);
 
   // Sync Queue States
   const [syncQueue, setSyncQueue] = useState([]);
@@ -170,6 +185,63 @@ export default function App() {
     }
   }, [darkMode]);
 
+  // Dynamic page document title update for SEO & History utility (Task 3.1)
+  useEffect(() => {
+    let title = "THIS - Tropical Health Information System";
+    if (activePage === 'condition' && activeEntityId) {
+      const name = database.conditions?.find(c => c.id === activeEntityId)?.name || "Condition";
+      title = `${name} | THIS Outpost Triage`;
+    } else if (activePage === 'remedy' && activeEntityId) {
+      const name = database.remedies?.find(r => r.id === activeEntityId)?.name || "Remedy";
+      title = `${name} | THIS Outpost Triage`;
+    } else if (activePage !== 'dashboard' && activePage !== 'landing') {
+      const capitalized = activePage.charAt(0).toUpperCase() + activePage.slice(1);
+      title = `${capitalized} | THIS Outpost Triage`;
+    }
+    document.title = title;
+  }, [activePage, activeEntityId]);
+
+  // Focus trapping logic for accessible modal drawers (Task 2.3)
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key !== 'Tab') return;
+      const activeDrawer = document.querySelector('.focus-trap-drawer');
+      if (!activeDrawer) return;
+
+      const focusables = activeDrawer.querySelectorAll('button, select, input, textarea, a, [tabindex="0"]');
+      if (focusables.length === 0) return;
+
+      const firstFocusable = focusables[0];
+      const lastFocusable = focusables[focusables.length - 1];
+
+      if (e.shiftKey) { // Shift + Tab
+        if (document.activeElement === firstFocusable) {
+          lastFocusable.focus();
+          e.preventDefault();
+        }
+      } else { // Tab
+        if (document.activeElement === lastFocusable) {
+          firstFocusable.focus();
+          e.preventDefault();
+        }
+      }
+    };
+
+    if (showSettingsDrawer || showSyncDrawer) {
+      window.addEventListener('keydown', handleKeyDown);
+      // Auto focus the close button or first element in the drawer on open
+      const timeoutId = setTimeout(() => {
+        const activeDrawer = document.querySelector('.focus-trap-drawer');
+        const firstBtn = activeDrawer?.querySelector('button');
+        firstBtn?.focus();
+      }, 50);
+      return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+        clearTimeout(timeoutId);
+      };
+    }
+  }, [showSettingsDrawer, showSyncDrawer]);
+
   const getProBadgeText = () => {
     if (localStorage.getItem('this_pro_waiver') === 'active') {
       const gpsLog = localStorage.getItem('this_pro_waiver_gps');
@@ -208,11 +280,16 @@ export default function App() {
       } else if (params[0] === 'remedy' && params[1]) {
         setActivePage('remedy');
         setActiveEntityId(params[1]);
-      } else if (['matrix', 'safety', 'dosage', 'weather', 'atlas', 'clinician', 'heatmap', 'synergy', 'blog', 'vault', 'submissions', 'flowcharts'].includes(params[0])) {
+      } else if (['landing', 'dashboard', 'matrix', 'safety', 'dosage', 'weather', 'atlas', 'clinician', 'heatmap', 'synergy', 'blog', 'vault', 'submissions', 'flowcharts'].includes(params[0])) {
         setActivePage(params[0]);
         setActiveEntityId(null);
       } else {
-        setActivePage('dashboard');
+        const hasVisited = localStorage.getItem('this_landing_visited');
+        if (hasVisited === 'true') {
+          setActivePage('dashboard');
+        } else {
+          setActivePage('landing');
+        }
         setActiveEntityId(null);
       }
     };
@@ -228,7 +305,16 @@ export default function App() {
 
   const navigateTo = (page, id = null) => {
     let url = '/';
-    if (page !== 'dashboard') {
+    if (page === 'dashboard') {
+      url = '/dashboard';
+    } else if (page === 'landing') {
+      url = '/landing';
+      // Reset dashboard search/scroll when going to landing page
+      setNavSearchQuery('');
+      setNavActiveTab('all');
+      setNavVisibleCount(12);
+      setNavScrollPosition(0);
+    } else {
       url = id ? `/${page}/${id}` : `/${page}`;
     }
     
@@ -254,7 +340,7 @@ export default function App() {
           <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-4">
             {/* Logo */}
             <div 
-              onClick={() => navigateTo('dashboard')}
+              onClick={() => navigateTo('landing')}
               className="flex items-center gap-2 cursor-pointer group"
             >
               <div className="bg-[hsl(var(--primary-green))] p-2 rounded-lg text-white shadow-md">
@@ -352,6 +438,8 @@ export default function App() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setShowSyncDrawer(true)}
+                  aria-expanded={showSyncDrawer}
+                  aria-haspopup="dialog"
                   className={`px-2.5 py-1.5 rounded-lg text-[10px] font-black border transition-all flex items-center gap-1.5 ${
                     syncStatus === 'synced' ? 'bg-emerald-50 dark:bg-emerald-950/20 text-emerald-800 dark:text-emerald-400 border-emerald-250 dark:border-emerald-900/50 shadow-sm' :
                     syncStatus === 'syncing' ? 'bg-sky-50 dark:bg-sky-950/20 text-sky-850 dark:text-sky-400 border-sky-200 dark:border-sky-900/50 animate-pulse' :
@@ -378,6 +466,8 @@ export default function App() {
               {/* Settings Gear trigger button */}
               <button
                 onClick={() => setShowSettingsDrawer(true)}
+                aria-expanded={showSettingsDrawer}
+                aria-haspopup="dialog"
                 className="p-1.5 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-500 hover:text-emerald-700 hover:bg-emerald-50 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700 relative group"
                 title="Open Outpost Settings Hub"
               >
@@ -393,8 +483,23 @@ export default function App() {
 
         {/* Dynamic Page Views */}
         <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+          {activePage === 'landing' && (
+            <LandingPage onNavigate={navigateTo} />
+          )}
+
           {activePage === 'dashboard' && (
-            <Navigator onNavigate={navigateTo} selectedRegion={selectedRegion} />
+            <Navigator 
+              onNavigate={navigateTo} 
+              selectedRegion={selectedRegion} 
+              searchQuery={navSearchQuery}
+              setSearchQuery={setNavSearchQuery}
+              activeTab={navActiveTab}
+              setActiveTab={setNavActiveTab}
+              visibleCount={navVisibleCount}
+              setVisibleCount={setNavVisibleCount}
+              scrollPosition={navScrollPosition}
+              setScrollPosition={setNavScrollPosition}
+            />
           )}
 
           {activePage === 'matrix' && (
@@ -493,7 +598,7 @@ export default function App() {
       {showSyncDrawer && (
         <div className="fixed inset-0 z-[100] flex justify-end animate-fade-in no-print bg-slate-900/40 backdrop-blur-sm">
           <div className="absolute inset-0" onClick={() => setShowSyncDrawer(false)} />
-          <div className="relative w-full max-w-md bg-white dark:bg-slate-900 shadow-2xl h-full flex flex-col justify-between animate-slide-in p-6 border-l border-slate-200 dark:border-slate-800">
+          <div className="relative w-full max-w-md bg-white dark:bg-slate-900 shadow-2xl h-full flex flex-col justify-between animate-slide-in p-6 border-l border-slate-200 dark:border-slate-800 focus-trap-drawer">
             <div>
               <div className="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-4 mb-4">
                 <div className="flex items-center gap-2">
@@ -596,7 +701,7 @@ export default function App() {
       {showSettingsDrawer && (
         <div className="fixed inset-0 z-[100] flex justify-end animate-fade-in no-print bg-slate-900/40 backdrop-blur-sm">
           <div className="absolute inset-0" onClick={() => setShowSettingsDrawer(false)} />
-          <div className="relative w-full max-w-md bg-white dark:bg-slate-900 shadow-2xl h-full flex flex-col justify-between animate-slide-in p-6 border-l border-slate-200 dark:border-slate-800">
+          <div className="relative w-full max-w-md bg-white dark:bg-slate-900 shadow-2xl h-full flex flex-col justify-between animate-slide-in p-6 border-l border-slate-200 dark:border-slate-800 focus-trap-drawer">
             <div className="overflow-y-auto pr-1">
               {/* Header */}
               <div className="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-4 mb-6">
@@ -618,17 +723,19 @@ export default function App() {
               <div className="space-y-6">
                 {/* 1. Clinical Outpost Location */}
                 <div className="bg-slate-50 dark:bg-slate-800/20 p-4 rounded-xl border border-slate-200/50 dark:border-slate-850/50">
-                  <div className="flex items-center gap-2 mb-2">
+                  <label 
+                    htmlFor="settings-region-select"
+                    className="flex items-center gap-2 mb-2 text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-200 cursor-pointer"
+                  >
                     <MapPin className="h-4 w-4 text-emerald-600 shrink-0" />
-                    <h4 className="text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-200">
-                      {t('countyContext') || 'Clinical Outpost Location'}
-                    </h4>
-                  </div>
+                    <span>{t('countyContext') || 'Clinical Outpost Location'}</span>
+                  </label>
                   <p className="text-[10px] text-slate-400 dark:text-slate-550 mb-3 leading-relaxed">
                     Select the active county region to overlay localized botanical names, local abundance scales, and regional ecological warnings.
                   </p>
                   <div className="relative">
                     <select
+                      id="settings-region-select"
                       value={selectedRegion}
                       onChange={(e) => {
                         const reg = e.target.value;
@@ -651,14 +758,18 @@ export default function App() {
                 <div className="bg-slate-50 dark:bg-slate-800/20 p-4 rounded-xl border border-slate-200/50 dark:border-slate-850/50">
                   <div className="flex items-center gap-2 mb-2">
                     <Globe className="h-4 w-4 text-emerald-600 shrink-0" />
-                    <h4 className="text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-200">
+                    <span className="text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-200">
                       {t('language') || 'Bedside Translation Portal'}
-                    </h4>
+                    </span>
                   </div>
                   <p className="text-[10px] text-slate-400 dark:text-slate-550 mb-3 leading-relaxed">
                     Translate clinical guidelines, matrix indexes, and warnings instantly into regional dialects.
                   </p>
-                  <div className="flex items-center gap-2 bg-slate-100/50 dark:bg-slate-900/40 p-1 rounded-xl border border-slate-200 dark:border-slate-800">
+                  <div 
+                    role="group" 
+                    aria-label="Bedside Translation Dialect options"
+                    className="flex items-center gap-2 bg-slate-100/50 dark:bg-slate-900/40 p-1 rounded-xl border border-slate-200 dark:border-slate-800"
+                  >
                     {[
                       { code: 'en', flag: '🇬🇧', label: 'English' },
                       { code: 'sw', flag: '🇰🇪', label: 'Swahili' },
@@ -667,6 +778,7 @@ export default function App() {
                       <button
                         key={item.code}
                         onClick={() => changeLanguage(item.code)}
+                        aria-pressed={lang === item.code}
                         className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
                           lang === item.code 
                             ? 'bg-white dark:bg-slate-800 text-[hsl(var(--primary-green))] dark:text-emerald-400 shadow-sm border border-slate-200/60 dark:border-slate-700'
@@ -684,13 +796,17 @@ export default function App() {
                 {/* 3. Clinician Mode Switcher */}
                 <div className="bg-slate-50 dark:bg-slate-800/20 p-4 rounded-xl border border-slate-200/50 dark:border-slate-850/50">
                   <div className="flex justify-between items-center mb-2">
-                    <div className="flex items-center gap-2">
+                    <label 
+                      htmlFor="settings-clinician-switch"
+                      className="flex items-center gap-2 cursor-pointer text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-200"
+                    >
                       <Stethoscope className="h-4 w-4 text-emerald-600 shrink-0" />
-                      <h4 className="text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-200">
-                        {t('clinicianMode') || 'Authorized Clinician Mode'}
-                      </h4>
-                    </div>
+                      <span>{t('clinicianMode') || 'Authorized Clinician Mode'}</span>
+                    </label>
                     <button 
+                      id="settings-clinician-switch"
+                      role="switch"
+                      aria-checked={clinicianMode}
                       onClick={() => {
                         setClinicianMode(!clinicianMode);
                         if (!clinicianMode) {
@@ -724,28 +840,30 @@ export default function App() {
                     </h4>
                   </div>
                   
-                  <div className="grid grid-cols-2 gap-2.5">
+                  <div className="grid grid-cols-2 gap-2.5" role="group" aria-label="Visual & Reading Preferences options">
                     {/* Contrast Toggle */}
                     <button
                       onClick={() => setHighContrast(!highContrast)}
+                      aria-pressed={highContrast}
                       className={`py-2 px-3 rounded-lg text-xs font-bold border transition-all flex items-center justify-center gap-2 ${
                         highContrast 
                           ? 'bg-yellow-400 text-slate-950 border-yellow-500 shadow'
-                          : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-750'
+                          : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-750 hover:bg-slate-50 dark:hover:bg-slate-750'
                       }`}
                       title={highContrast ? t('standardContrast') : t('highContrast')}
                     >
                       <span>👁</span>
                       <span>{highContrast ? "AAA Contrast" : "Low Vision"}</span>
                     </button>
-
+ 
                     {/* Dark Mode Toggle */}
                     <button
                       onClick={() => setDarkMode(!darkMode)}
+                      aria-pressed={darkMode}
                       className={`py-2 px-3 rounded-lg text-xs font-bold border transition-all flex items-center justify-center gap-2 ${
                         darkMode 
                           ? 'bg-slate-800 text-slate-100 border-slate-700 shadow-inner'
-                          : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-750'
+                          : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-750 hover:bg-slate-50 dark:hover:bg-slate-750'
                       }`}
                       title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
                     >
@@ -794,6 +912,28 @@ export default function App() {
                       </button>
                     )}
                   </div>
+                </div>
+
+                {/* 6. Landing Page Link */}
+                <div className="bg-slate-50 dark:bg-slate-800/20 p-4 rounded-xl border border-slate-200/50 dark:border-slate-850/50">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Globe className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <h4 className="text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-200">
+                      Product Home
+                    </h4>
+                  </div>
+                  <p className="text-[10px] text-slate-400 dark:text-slate-550 mb-3 leading-relaxed">
+                    View the product landing page featuring the interactive outbreak vector simulator and humanitarian geofence sandbox.
+                  </p>
+                  <button
+                    onClick={() => {
+                      setShowSettingsDrawer(false);
+                      navigateTo('landing');
+                    }}
+                    className="w-full py-2 bg-emerald-800 hover:bg-emerald-950 text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-1.5 shadow transition-all cursor-pointer"
+                  >
+                    View Product Page
+                  </button>
                 </div>
               </div>
             </div>

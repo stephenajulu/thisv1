@@ -54,6 +54,54 @@ export const handler = async (event, context) => {
     const payload = JSON.parse(event.body || "{}");
     const { outpostCounty, syncQueue, userName } = payload;
 
+    // Validate outpostCounty (must be present, alphanumeric/hyphens/spaces under 50 chars)
+    if (!outpostCounty || typeof outpostCounty !== "string" || outpostCounty.length > 50) {
+      return {
+        statusCode: 400,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({ error: "Bad Request: Missing or invalid outpostCounty (must be a string under 50 characters)" }),
+      };
+    }
+    const countyRegex = /^[a-zA-Z0-9\s-]+$/;
+    if (!countyRegex.test(outpostCounty)) {
+      return {
+        statusCode: 400,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({ error: "Bad Request: outpostCounty contains invalid characters (alphanumeric, spaces, and hyphens only)" }),
+      };
+    }
+
+    // Validate userName (optional, alphanumeric/dots/hyphens/spaces under 100 chars)
+    if (userName) {
+      if (typeof userName !== "string" || userName.length > 100) {
+        return {
+          statusCode: 400,
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+          body: JSON.stringify({ error: "Bad Request: userName must be under 100 characters" }),
+        };
+      }
+      const userRegex = /^[a-zA-Z0-9\s.-]+$/;
+      if (!userRegex.test(userName)) {
+        return {
+          statusCode: 400,
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+          body: JSON.stringify({ error: "Bad Request: userName contains invalid characters (alphanumeric, spaces, dots, and hyphens only)" }),
+        };
+      }
+    }
+
     if (!syncQueue || !Array.isArray(syncQueue) || syncQueue.length === 0) {
       return {
         statusCode: 400,
@@ -63,6 +111,57 @@ export const handler = async (event, context) => {
         },
         body: JSON.stringify({ error: "Bad Request: Empty or invalid sync queue" }),
       };
+    }
+
+    // 1. Security Hardening: Enforce maximum queue length to prevent payload bloat DoS
+    if (syncQueue.length > 50) {
+      return {
+        statusCode: 400,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({ error: "Bad Request: Sync queue exceeds maximum size of 50 items" }),
+      };
+    }
+
+    // 2. Security Hardening: Validate each item to prevent directory path traversal and data pollution
+    const allowedCollections = ["conditions", "remedies", "outcomes", "interactions"];
+    const idRegex = /^[a-z0-9-]+$/;
+
+    for (const item of syncQueue) {
+      if (!item.collection || !allowedCollections.includes(item.collection)) {
+        return {
+          statusCode: 400,
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+          body: JSON.stringify({ error: `Bad Request: Unallowed collection target '${item.collection}'` }),
+        };
+      }
+
+      if (!item.data || !item.data.id || !idRegex.test(item.data.id)) {
+        return {
+          statusCode: 400,
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+          body: JSON.stringify({ error: "Bad Request: Missing or malformed data ID (must be alphanumeric-hyphen only)" }),
+        };
+      }
+
+      if (item.data.name && (typeof item.data.name !== "string" || item.data.name.length > 100)) {
+        return {
+          statusCode: 400,
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+          body: JSON.stringify({ error: "Bad Request: Item name must be a string under 100 characters" }),
+        };
+      }
     }
 
     const githubToken = process.env.GITHUB_PAT;

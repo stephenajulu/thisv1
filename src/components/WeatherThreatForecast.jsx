@@ -320,15 +320,16 @@ export default function WeatherThreatForecast({ selectedRegion }) {
             {/* Temp Slider */}
             <div className="space-y-1.5">
               <div className="flex justify-between text-xs font-bold text-slate-700">
-                <span className="flex items-center gap-1 text-slate-600">
+                <label htmlFor="forecast-temp-input" className="flex items-center gap-1 text-slate-650 cursor-pointer">
                   <Thermometer className="h-4 w-4 text-rose-500" /> Temperature:
-                </span>
+                </label>
                 <span className="text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-100 font-extrabold">
                   {temperature} °C
                 </span>
               </div>
               <input 
                 type="range" 
+                id="forecast-temp-input"
                 min="10" 
                 max="45" 
                 value={temperature} 
@@ -345,15 +346,16 @@ export default function WeatherThreatForecast({ selectedRegion }) {
             {/* Humidity Slider */}
             <div className="space-y-1.5 pt-2">
               <div className="flex justify-between text-xs font-bold text-slate-700">
-                <span className="flex items-center gap-1 text-slate-600">
+                <label htmlFor="forecast-humidity-input" className="flex items-center gap-1 text-slate-650 cursor-pointer">
                   <Droplets className="h-4 w-4 text-sky-500" /> Relative Humidity:
-                </span>
+                </label>
                 <span className="text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-100 font-extrabold">
                   {humidity} %
                 </span>
               </div>
               <input 
                 type="range" 
+                id="forecast-humidity-input"
                 min="10" 
                 max="100" 
                 value={humidity} 
@@ -370,15 +372,16 @@ export default function WeatherThreatForecast({ selectedRegion }) {
             {/* Rainfall Slider */}
             <div className="space-y-1.5 pt-2">
               <div className="flex justify-between text-xs font-bold text-slate-700">
-                <span className="flex items-center gap-1 text-slate-600">
+                <label htmlFor="forecast-rainfall-input" className="flex items-center gap-1 text-slate-650 cursor-pointer">
                   <CloudRain className="h-4 w-4 text-sky-650" /> Rainfall (Monthly):
-                </span>
+                </label>
                 <span className="text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-100 font-extrabold">
                   {rainfall} mm
                 </span>
               </div>
               <input 
                 type="range" 
+                id="forecast-rainfall-input"
                 min="0" 
                 max="400" 
                 value={rainfall} 

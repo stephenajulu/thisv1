@@ -349,11 +349,12 @@ export default function DosageCalculator() {
             {/* Weight Slider */}
             <div className="space-y-1.5">
               <div className="flex justify-between text-xs font-bold text-slate-700">
-                <span className="flex items-center gap-1 text-slate-650">Patient Weight:</span>
+                <label htmlFor="patient-weight-input" className="flex items-center gap-1 text-slate-650 cursor-pointer">Patient Weight:</label>
                 <span className="text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-100/50 font-black">{weight} kg</span>
               </div>
               <input 
                 type="range" 
+                id="patient-weight-input"
                 min="3" 
                 max="80" 
                 value={weight} 
@@ -370,11 +371,12 @@ export default function DosageCalculator() {
             {/* Age Slider */}
             <div className="space-y-1.5">
               <div className="flex justify-between text-xs font-bold text-slate-700">
-                <span className="flex items-center gap-1 text-slate-650">Patient Age:</span>
+                <label htmlFor="patient-age-input" className="flex items-center gap-1 text-slate-650 cursor-pointer">Patient Age:</label>
                 <span className="text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-100/50 font-black">{getAgeString(ageMonths)}</span>
               </div>
               <input 
                 type="range" 
+                id="patient-age-input"
                 min="1" 
                 max="180" 
                 value={ageMonths} 
@@ -469,9 +471,10 @@ export default function DosageCalculator() {
                     </div>
                   </div>
                   <div className="space-y-1">
-                    <span className="text-[10px] font-bold text-slate-500 block">Initial Dose Time:</span>
+                    <label htmlFor="act-initial-dose-time" className="text-[10px] font-bold text-slate-500 block cursor-pointer">Initial Dose Time:</label>
                     <input 
                       type="time" 
+                      id="act-initial-dose-time"
                       value={actStartTime}
                       onChange={(e) => setActStartTime(e.target.value)}
                       className="w-full bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 text-xs font-bold text-slate-700 focus:bg-white focus:outline-none focus:ring-1 focus:ring-emerald-700"
@@ -889,9 +892,10 @@ export default function DosageCalculator() {
 
                                   {dropFactor === 'custom' && (
                                     <div className="flex items-center gap-2 p-2 bg-slate-50 border border-slate-200 rounded-xl w-full max-w-[200px] animate-scale-up mt-2">
-                                      <span className="text-[10px] font-bold text-slate-500 uppercase">Drops/mL:</span>
+                                      <label htmlFor="custom-drops-per-ml" className="text-[10px] font-bold text-slate-500 uppercase cursor-pointer">Drops/mL:</label>
                                       <input 
                                         type="number"
+                                        id="custom-drops-per-ml"
                                         min={1}
                                         max={150}
                                         value={customDropFactor}

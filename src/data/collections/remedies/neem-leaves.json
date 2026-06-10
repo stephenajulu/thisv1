@@ -3,6 +3,7 @@
   "name": "Neem Leaves",
   "scientificName": "Azadirachta indica (Neem)",
   "category": "botanical",
+  "imageUrl": "/images/botanicals/neem_leaves.png",
   "hepatotoxic": true,
   "synonyms": [
     "dogonyaro",

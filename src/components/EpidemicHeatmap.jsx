@@ -270,7 +270,8 @@ export default function EpidemicHeatmap({ selectedRegion }) {
             </div>
 
             {/* SVG Choropleth Vector Grid */}
-            <div className="aspect-[4/3] bg-slate-50/50 border border-slate-150 rounded-2xl p-4 flex items-center justify-center relative overflow-hidden">
+            <div className="w-full overflow-x-auto select-none no-print">
+              <div className="min-w-[320px] aspect-[4/3] bg-slate-50/50 border border-slate-150 rounded-2xl p-4 flex items-center justify-center relative overflow-hidden">
               <svg viewBox="0 0 200 180" className="w-full h-full max-h-[380px] drop-shadow-md">
                 {/* Outbreak Epicenter Animated Pulse Beacon */}
                 {epicenterZoneId && maxCaseCount >= 3 && (() => {
@@ -322,6 +323,7 @@ export default function EpidemicHeatmap({ selectedRegion }) {
                   </div>
                 );
               })()}
+              </div>
             </div>
             
             {/* Interactive zone information block */}

@@ -275,11 +275,15 @@ export default function SafetyChecker({ selectedRegion }) {
           {/* Input Selectors */}
           <div className="lg:col-span-4 space-y-4">
             <div className="glass-panel p-5 space-y-4">
-              <h3 className="text-sm font-extrabold text-[hsl(var(--primary-green))] uppercase tracking-wider flex items-center gap-1">
+              <label 
+                htmlFor="safety-population-select"
+                className="text-sm font-extrabold text-[hsl(var(--primary-green))] uppercase tracking-wider flex items-center gap-1 cursor-pointer"
+              >
                 <Users className="h-4 w-4" />
                 1. Vulnerable Demographic
-              </h3>
+              </label>
               <select
+                id="safety-population-select"
                 value={selectedPopulation}
                 onChange={(e) => setSelectedPopulation(e.target.value)}
                 className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-xs font-bold outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white"
@@ -290,11 +294,15 @@ export default function SafetyChecker({ selectedRegion }) {
                 ))}
               </select>
 
-              <h3 className="text-sm font-extrabold text-[hsl(var(--primary-green))] uppercase tracking-wider flex items-center gap-1 pt-2">
+              <label 
+                htmlFor="safety-remedy-select"
+                className="text-sm font-extrabold text-[hsl(var(--primary-green))] uppercase tracking-wider flex items-center gap-1 pt-2 cursor-pointer"
+              >
                 <Heart className="h-4 w-4" />
                 2. Remedy or Botanical
-              </h3>
+              </label>
               <select
+                id="safety-remedy-select"
                 value={selectedRemedy}
                 onChange={(e) => setSelectedRemedy(e.target.value)}
                 className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-xs font-bold outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white"
@@ -449,8 +457,9 @@ export default function SafetyChecker({ selectedRegion }) {
                     </span>
                     <div className="grid grid-cols-2 gap-2">
                       <div>
-                        <label className="text-[9px] font-bold text-slate-500 block mb-1">Patient Value (U/L)</label>
+                        <label htmlFor="dili-patient-alt" className="text-[9px] font-bold text-slate-500 block mb-1">Patient Value (U/L)</label>
                         <input
+                          id="dili-patient-alt"
                           type="number"
                           placeholder="e.g. 150"
                           value={patientAlt}
@@ -459,8 +468,9 @@ export default function SafetyChecker({ selectedRegion }) {
                         />
                       </div>
                       <div>
-                        <label className="text-[9px] font-bold text-slate-500 block mb-1">ULN (U/L)</label>
+                        <label htmlFor="dili-alt-uln" className="text-[9px] font-bold text-slate-500 block mb-1">ULN (U/L)</label>
                         <input
+                          id="dili-alt-uln"
                           type="number"
                           placeholder="e.g. 40"
                           value={altUln}
@@ -475,7 +485,7 @@ export default function SafetyChecker({ selectedRegion }) {
                       </div>
                     )}
                   </div>
-
+ 
                   {/* ALP Card */}
                   <div className="bg-slate-50/70 p-3.5 border border-slate-200/50 rounded-xl space-y-3">
                     <span className="text-[10px] uppercase font-black text-slate-500 tracking-wider block">
@@ -483,8 +493,9 @@ export default function SafetyChecker({ selectedRegion }) {
                     </span>
                     <div className="grid grid-cols-2 gap-2">
                       <div>
-                        <label className="text-[9px] font-bold text-slate-500 block mb-1">Patient Value (U/L)</label>
+                        <label htmlFor="dili-patient-alp" className="text-[9px] font-bold text-slate-500 block mb-1">Patient Value (U/L)</label>
                         <input
+                          id="dili-patient-alp"
                           type="number"
                           placeholder="e.g. 200"
                           value={patientAlp}
@@ -493,8 +504,9 @@ export default function SafetyChecker({ selectedRegion }) {
                         />
                       </div>
                       <div>
-                        <label className="text-[9px] font-bold text-slate-500 block mb-1">ULN (U/L)</label>
+                        <label htmlFor="dili-alp-uln" className="text-[9px] font-bold text-slate-500 block mb-1">ULN (U/L)</label>
                         <input
+                          id="dili-alp-uln"
                           type="number"
                           placeholder="e.g. 120"
                           value={alpUln}
@@ -569,7 +581,7 @@ export default function SafetyChecker({ selectedRegion }) {
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 pt-1.5">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 pt-1.5" role="group" aria-label="Time to Onset options">
                     {[
                       { id: 'onset_5_90', label: 'Ingestion Active: Onset 5 to 90 days after starting (+2 pts)' },
                       { id: 'onset_less_5_more_90', label: 'Ingestion Active: Onset < 5 days or > 90 days (+1 pt)' },
@@ -580,6 +592,7 @@ export default function SafetyChecker({ selectedRegion }) {
                       <button
                         key={choice.id}
                         onClick={() => setTimeToOnset(choice.id)}
+                        aria-pressed={timeToOnset === choice.id}
                         className={`text-left p-2.5 rounded-lg border text-xs font-semibold transition-all ${
                           timeToOnset === choice.id
                             ? 'bg-emerald-50 border-emerald-400 text-emerald-950 font-bold shadow-sm'
@@ -610,10 +623,12 @@ export default function SafetyChecker({ selectedRegion }) {
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1.5" role="group" aria-label="Demographic Risk Factors options">
                     {/* Age >= 55 */}
                     <button
                       onClick={() => setRiskFactors({ ...riskFactors, age55: !riskFactors.age55 })}
+                      role="checkbox"
+                      aria-checked={riskFactors.age55}
                       className={`flex items-center gap-2 p-2.5 rounded-lg border text-xs font-semibold transition-all ${
                         riskFactors.age55
                           ? 'bg-emerald-50 border-emerald-400 text-emerald-950 font-bold shadow-sm'
@@ -631,6 +646,8 @@ export default function SafetyChecker({ selectedRegion }) {
                     {/* Alcohol */}
                     <button
                       onClick={() => setRiskFactors({ ...riskFactors, alcohol: !riskFactors.alcohol })}
+                      role="checkbox"
+                      aria-checked={riskFactors.alcohol}
                       className={`flex items-center gap-2 p-2.5 rounded-lg border text-xs font-semibold transition-all ${
                         riskFactors.alcohol
                           ? 'bg-emerald-50 border-emerald-400 text-emerald-950 font-bold shadow-sm'
@@ -648,6 +665,8 @@ export default function SafetyChecker({ selectedRegion }) {
                     {/* Pregnancy */}
                     <button
                       onClick={() => setRiskFactors({ ...riskFactors, pregnancy: !riskFactors.pregnancy })}
+                      role="checkbox"
+                      aria-checked={riskFactors.pregnancy}
                       className={`flex items-center gap-2 p-2.5 rounded-lg border text-xs font-semibold transition-all ${
                         riskFactors.pregnancy
                           ? 'bg-emerald-50 border-emerald-400 text-emerald-950 font-bold shadow-sm'
@@ -691,12 +710,13 @@ export default function SafetyChecker({ selectedRegion }) {
 
                   {/* Bedside fast-tap & search picker */}
                   <div className="space-y-2">
-                    <label className="text-[9px] font-bold text-slate-500 uppercase tracking-wider block">1. Patient Co-Exposures (Search Database)</label>
+                    <label htmlFor="dili-remedy-search" className="text-[9px] font-bold text-slate-500 uppercase tracking-wider block cursor-pointer">1. Patient Co-Exposures (Search Database)</label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-slate-400">
                         <Search className="h-3.5 w-3.5" />
                       </div>
                       <input
+                        id="dili-remedy-search"
                         type="text"
                         placeholder="Search remedies (e.g. Neem, Albendazole)..."
                         value={remedySearchQuery}
@@ -786,7 +806,7 @@ export default function SafetyChecker({ selectedRegion }) {
                   {/* 2. RUCAM Concomitant Scoring Tier Selector */}
                   <div className="space-y-2 pt-1">
                     <label className="text-[9px] font-bold text-slate-500 uppercase tracking-wider block">2. Causality Scoring Tier (Domain 3 Score)</label>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2" role="group" aria-label="Causality Scoring Tier options">
                       {[
                         { id: 'none', label: 'No concomitant hepatotoxic substances (0 pts)' },
                         { id: 'compatible', label: 'Exposures present with compatible onset (+1 pt)' },
@@ -795,6 +815,7 @@ export default function SafetyChecker({ selectedRegion }) {
                         <button
                           key={tier.id}
                           onClick={() => setConcomitantTier(tier.id)}
+                          aria-pressed={concomitantTier === tier.id}
                           className={`text-left p-2.5 rounded-lg border text-xs font-semibold transition-all ${
                             concomitantTier === tier.id
                               ? 'bg-emerald-50 border-emerald-400 text-emerald-950 font-bold shadow-sm'
@@ -822,10 +843,12 @@ export default function SafetyChecker({ selectedRegion }) {
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1.5" role="group" aria-label="Alternative Cause Exclusions options">
                     {/* Hep Serology */}
                     <button
                       onClick={() => setExclusions({ ...exclusions, serologyNeg: !exclusions.serologyNeg, altCauseIdentified: false })}
+                      role="checkbox"
+                      aria-checked={exclusions.serologyNeg}
                       className={`flex items-center gap-2 p-2.5 rounded-lg border text-xs font-semibold transition-all ${
                         exclusions.serologyNeg
                           ? 'bg-emerald-50 border-emerald-400 text-emerald-950 font-bold shadow-sm'
@@ -843,6 +866,8 @@ export default function SafetyChecker({ selectedRegion }) {
                     {/* Ultrasound */}
                     <button
                       onClick={() => setExclusions({ ...exclusions, ultrasoundNeg: !exclusions.ultrasoundNeg, altCauseIdentified: false })}
+                      role="checkbox"
+                      aria-checked={exclusions.ultrapoundNeg}
                       className={`flex items-center gap-2 p-2.5 rounded-lg border text-xs font-semibold transition-all ${
                         exclusions.ultrasoundNeg
                           ? 'bg-emerald-50 border-emerald-400 text-emerald-950 font-bold shadow-sm'
@@ -860,6 +885,8 @@ export default function SafetyChecker({ selectedRegion }) {
                     {/* Other exclusions */}
                     <button
                       onClick={() => setExclusions({ ...exclusions, otherRuledOut: !exclusions.otherRuledOut, altCauseIdentified: false })}
+                      role="checkbox"
+                      aria-checked={exclusions.otherRuledOut}
                       className={`flex items-center gap-2 p-2.5 rounded-lg border text-xs font-semibold transition-all ${
                         exclusions.otherRuledOut
                           ? 'bg-emerald-50 border-emerald-400 text-emerald-950 font-bold shadow-sm'
@@ -882,6 +909,8 @@ export default function SafetyChecker({ selectedRegion }) {
                         otherRuledOut: false,
                         altCauseIdentified: !exclusions.altCauseIdentified
                       })}
+                      role="checkbox"
+                      aria-checked={exclusions.altCauseIdentified}
                       className={`flex items-center gap-2 p-2.5 rounded-lg border text-xs font-semibold transition-all ${
                         exclusions.altCauseIdentified
                           ? 'bg-rose-50 border-rose-400 text-rose-950 font-bold shadow-sm'
@@ -912,7 +941,7 @@ export default function SafetyChecker({ selectedRegion }) {
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1.5" role="group" aria-label="Enzyme Decline Course options">
                     {[
                       { id: 'decline_ge_50_8d', label: 'Fast Decline: >= 50% drop in ALT/ALP within 8 days (+3 pts)' },
                       { id: 'decline_ge_50_30d', label: 'Decline: >= 50% drop in ALT/ALP within 30 days (+2 pts)' },
@@ -922,6 +951,7 @@ export default function SafetyChecker({ selectedRegion }) {
                       <button
                         key={choice.id}
                         onClick={() => setEnzymeDecline(choice.id)}
+                        aria-pressed={enzymeDecline === choice.id}
                         className={`text-left p-2.5 rounded-lg border text-xs font-semibold transition-all ${
                           enzymeDecline === choice.id
                             ? 'bg-emerald-50 border-emerald-400 text-emerald-950 font-bold shadow-sm'

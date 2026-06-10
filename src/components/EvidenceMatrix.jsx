@@ -62,7 +62,7 @@ export default function EvidenceMatrix({ onNavigate, selectedRegion }) {
   return (
     <div className="animate-fade-in space-y-6">
       {/* Header and Filter Controls */}
-      <div className="glass-panel p-6 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
+      <div className="glass-panel p-6 flex flex-col xl:flex-row xl:items-center justify-between gap-4 no-print">
         <div>
           <h2 className="text-xl font-bold mb-1 flex items-center gap-2">
             <Layers className="h-5 w-5 text-emerald-700" />

@@ -39,12 +39,45 @@ const boostedConditionsByRegion = {
   nairobi: []
 };
 
-export default function Navigator({ onNavigate, selectedRegion }) {
+export default function Navigator({ 
+  onNavigate, 
+  selectedRegion,
+  searchQuery: query,
+  setSearchQuery: setQuery,
+  activeTab,
+  setActiveTab,
+  visibleCount,
+  setVisibleCount,
+  scrollPosition,
+  setScrollPosition
+}) {
   const { t } = useI18n();
-  const [query, setQuery] = useState('');
-  const [activeTab, setActiveTab] = useState('all');
-  const [visibleCount, setVisibleCount] = useState(12);
   const sentinelRef = useRef(null);
+  const isFirstRender = useRef(true);
+  const [isRestored, setIsRestored] = useState(scrollPosition === 0);
+
+  // Restore scroll position on mount
+  useEffect(() => {
+    if (scrollPosition > 0) {
+      const timer = setTimeout(() => {
+        window.scrollTo({ top: scrollPosition, behavior: 'instant' });
+        setIsRestored(true);
+      }, 80);
+      return () => clearTimeout(timer);
+    } else {
+      setIsRestored(true);
+    }
+  }, []);
+
+  // Save scroll position on scroll
+  useEffect(() => {
+    if (!isRestored) return;
+    const handleScroll = () => {
+      setScrollPosition(window.scrollY);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isRestored, setScrollPosition]);
 
   const cleanStr = (str) => (str || '').toLowerCase().trim();
   const searchTerms = cleanStr(query).split(' ').filter(Boolean);
@@ -76,6 +109,10 @@ export default function Navigator({ onNavigate, selectedRegion }) {
 
   // Reset infinite scroll count on query search or tab toggle
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     setVisibleCount(12);
   }, [query, activeTab]);
 

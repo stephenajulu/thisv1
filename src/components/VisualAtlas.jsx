@@ -416,8 +416,10 @@ function DermatologyDetail({ id }) {
       </div>
 
       {/* SVG Image container */}
-      <div className="relative w-full overflow-hidden border border-slate-150 rounded-2xl shadow-inner bg-slate-50 flex items-center justify-center p-1">
-        {data.svg}
+      <div className="relative w-full overflow-x-auto border border-slate-150 rounded-2xl shadow-inner bg-slate-50 p-1">
+        <div className="min-w-[340px] flex items-center justify-center">
+          {data.svg}
+        </div>
       </div>
 
       <div className="space-y-4">
@@ -940,8 +942,10 @@ function BotanicalDetail({ id, showLookAlike, onToggleLookAlike }) {
 
       {/* SVG Image container with Toggle */}
       <div className="space-y-3">
-        <div className="relative w-full overflow-hidden border border-slate-150 rounded-2xl shadow-inner bg-slate-50 flex items-center justify-center p-1">
-          {showLookAlike ? data.svgToxic : data.svgTherapeutic}
+        <div className="relative w-full overflow-x-auto border border-slate-150 rounded-2xl shadow-inner bg-slate-50 p-1">
+          <div className="min-w-[340px] flex items-center justify-center">
+            {showLookAlike ? data.svgToxic : data.svgTherapeutic}
+          </div>
         </div>
 
         {/* Toxic look-alike interactive slider/toggle */}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Activity, Sprout, AlertTriangle, ShieldCheck, BookOpen, HeartPulse, Clock, Sparkles, Printer, AlertOctagon, Send, Check, WifiOff, AlertCircle, MapPin, Calendar, ClipboardList, Eye } from 'lucide-react';
+import { ArrowLeft, Activity, Sprout, AlertTriangle, ShieldCheck, BookOpen, HeartPulse, Clock, Sparkles, Printer, AlertOctagon, Send, Check, WifiOff, AlertCircle, MapPin, Calendar, ClipboardList, Eye, Info } from 'lucide-react';
 import { database } from '../data/database';
 import { getLocalizedRemedy, getLocalizedCondition } from '../utils/regionalHelper';
 
@@ -14,12 +14,30 @@ export async function syncPendingFlags() {
     
     console.log(`Syncing ${pending.length} pending clinical flags...`);
     const remaining = [];
+
+    // Fetch active Identity user JWT for backend verification
+    let jwtToken = null;
+    if (typeof window !== 'undefined' && window.netlifyIdentity) {
+      const currentUser = window.netlifyIdentity.currentUser();
+      if (currentUser) {
+        try {
+          jwtToken = await currentUser.jwt();
+        } catch (e) {
+          console.error("Failed to retrieve user JWT:", e);
+        }
+      }
+    }
     
     for (const flag of pending) {
       try {
+        const headers = { 'Content-Type': 'application/json' };
+        if (jwtToken) {
+          headers['Authorization'] = `Bearer ${jwtToken}`;
+        }
+
         const res = await fetch('/.netlify/functions/create-clinical-flag', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: headers,
           body: JSON.stringify(flag),
         });
         if (!res.ok) {
@@ -114,11 +132,26 @@ function FlagModal({ entityName, onClose }) {
 
     // Attempt online post
     try {
+      let jwtToken = null;
+      if (typeof window !== 'undefined' && window.netlifyIdentity) {
+        const currentUser = window.netlifyIdentity.currentUser();
+        if (currentUser) {
+          try {
+            jwtToken = await currentUser.jwt();
+          } catch (e) {
+            console.error("Failed to retrieve user JWT:", e);
+          }
+        }
+      }
+
+      const headers = { 'Content-Type': 'application/json' };
+      if (jwtToken) {
+        headers['Authorization'] = `Bearer ${jwtToken}`;
+      }
+
       const res = await fetch('/.netlify/functions/create-clinical-flag', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: headers,
         body: JSON.stringify(payload),
       });
 
@@ -406,6 +439,37 @@ export function ConditionPage({ id, onBack, onNavigate, selectedRegion }) {
   const [showFlag, setShowFlag] = useState(false);
   const [showImprove, setShowImprove] = useState(false);
 
+  // Dynamic JSON-LD structured schema injector for SEO (Task 3.3)
+  useEffect(() => {
+    if (!c) return;
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "MedicalCondition",
+      "name": c.name,
+      "code": {
+        "@type": "MedicalCode",
+        "code": c.icd11 || "N/A",
+        "codingSystem": "ICD-11"
+      },
+      "description": c.description,
+      "possibleTreatment": c.prevention?.map(p => ({
+        "@type": "MedicalTherapy",
+        "name": p
+      })) || []
+    };
+
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'ld-schema-condition';
+    script.innerHTML = JSON.stringify(schema);
+    document.head.appendChild(script);
+
+    return () => {
+      const existing = document.getElementById('ld-schema-condition');
+      if (existing) existing.remove();
+    };
+  }, [c]);
+
   if (!c) return <div className="p-8 text-center text-sm font-semibold">Condition not found.</div>;
 
   // Find all symptoms
@@ -633,9 +697,40 @@ export function RemedyPage({ id, onBack, onNavigate, selectedRegion }) {
   const r = getLocalizedRemedy(baseRemedy, selectedRegion);
   const [showFlag, setShowFlag] = useState(false);
   const [showImprove, setShowImprove] = useState(false);
+
+  // Dynamic JSON-LD structured schema injector for SEO (Task 3.3)
+  useEffect(() => {
+    if (!r) return;
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "MedicalWebPage",
+      "name": r.name,
+      "description": r.description,
+      "mainEntity": {
+        "@type": "MedicalTherapy",
+        "name": r.scientificName,
+        "contraindication": r.safetyAlert || ""
+      }
+    };
+
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'ld-schema-remedy';
+    script.innerHTML = JSON.stringify(schema);
+    document.head.appendChild(script);
+
+    return () => {
+      const existing = document.getElementById('ld-schema-remedy');
+      if (existing) existing.remove();
+    };
+  }, [r]);
   
   // Tab navigation state
   const [activeTab, setActiveTab] = useState('evidence'); // 'evidence' or 'processing'
+  const [imageError, setImageError] = useState(false);
+  useEffect(() => {
+    setImageError(false);
+  }, [id]);
   
   // Extraction recipe states
   const [recipeMethod, setRecipeMethod] = useState('decoction'); // 'decoction', 'powdering', 'maceration'
@@ -688,7 +783,6 @@ export function RemedyPage({ id, onBack, onNavigate, selectedRegion }) {
   const renderTaxonomicWireframe = () => {
     switch (r.id) {
       case 'moringa-leaves':
-      case 'moringa-seeds':
         return (
           <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-emerald-600 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M100 180 V40" strokeWidth="3" className="stroke-emerald-800" />
@@ -701,18 +795,71 @@ export function RemedyPage({ id, onBack, onNavigate, selectedRegion }) {
             <path d="M100 40 C100 20 90 10 100 10 C110 10 100 20 100 40" fill="currentColor" fillOpacity="0.25" />
           </svg>
         );
+      case 'moringa-seeds':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-amber-700 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M85 30 C95 30 105 50 100 100 C95 150 110 170 115 180" strokeWidth="3.5" className="stroke-amber-800" />
+            <path d="M85 30 Q92 70 88 110 Q85 145 100 178" strokeWidth="1.5" className="stroke-amber-600" />
+            <circle cx="135" cy="70" r="10" fill="currentColor" fillOpacity="0.3" className="stroke-amber-800" />
+            <path d="M135 60 L155 55 M135 80 L155 85 M125 70 L110 70" strokeWidth="1.5" className="stroke-amber-600" />
+            <circle cx="145" cy="120" r="10" fill="currentColor" fillOpacity="0.3" className="stroke-amber-800" />
+            <path d="M145 110 L165 105 M145 130 L165 135 M135 120 L120 120" strokeWidth="1.5" className="stroke-amber-600" />
+          </svg>
+        );
       case 'neem-leaves':
-      case 'neem-seed-oil':
         return (
           <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-emerald-600 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M100 180 V40" strokeWidth="3" className="stroke-emerald-800" />
-            <path d="M100 130 C75 140 50 110 30 100 C50 95 75 110 100 115" fill="currentColor" fillOpacity="0.15" className="stroke-emerald-700" />
-            <path d="M30 100 Q45 105 50 110 Q65 115 70 120 Q85 125 100 130" strokeWidth="1" className="stroke-emerald-800/40" />
-            <path d="M100 130 C125 140 150 110 170 100 C150 95 125 110 100 115" fill="currentColor" fillOpacity="0.15" className="stroke-emerald-700" />
-            <path d="M170 100 Q155 105 150 110 Q135 115 130 120 Q115 125 100 130" strokeWidth="1" className="stroke-emerald-800/40" />
-            <path d="M100 85 C80 95 60 70 40 60 C60 55 80 70 100 75" fill="currentColor" fillOpacity="0.15" className="stroke-emerald-700" />
-            <path d="M100 85 C120 95 140 70 160 60 C140 55 120 70 100 75" fill="currentColor" fillOpacity="0.15" className="stroke-emerald-700" />
+            <path d="M100 130 C70 145 45 115 30 100 C50 95 75 110 100 115" fill="currentColor" fillOpacity="0.15" className="stroke-emerald-700" />
+            <path d="M30 100 L38 104 M45 108 L52 112 M62 118 L70 121" strokeWidth="1.5" className="stroke-emerald-500" />
+            <path d="M100 130 C130 145 155 115 170 100 C150 95 125 110 100 115" fill="currentColor" fillOpacity="0.15" className="stroke-emerald-700" />
+            <path d="M170 100 L162 104 M155 108 L148 112 M138 118 L130 121" strokeWidth="1.5" className="stroke-emerald-500" />
+            <path d="M100 85 C75 95 55 70 40 60 C60 55 75 70 100 75" fill="currentColor" fillOpacity="0.15" className="stroke-emerald-700" />
+            <path d="M100 85 C125 95 145 70 160 60 C140 55 125 70 100 75" fill="currentColor" fillOpacity="0.15" className="stroke-emerald-700" />
             <path d="M100 40 C90 30 95 10 100 5 C105 10 110 30 100 40" fill="currentColor" fillOpacity="0.25" className="stroke-emerald-700" />
+          </svg>
+        );
+      case 'neem-seed-oil':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-amber-600 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M100 30 Q100 80 120 150" strokeWidth="2" className="stroke-emerald-800" />
+            <path d="M102 70 Q90 90 85 100" strokeWidth="1.5" className="stroke-amber-700" />
+            <circle cx="85" cy="100" r="7" fill="currentColor" fillOpacity="0.35" className="stroke-amber-700" />
+            <path d="M108 100 Q95 125 90 135" strokeWidth="1.5" className="stroke-amber-700" />
+            <circle cx="90" cy="135" r="7" fill="currentColor" fillOpacity="0.35" className="stroke-amber-700" />
+            <path d="M115 110 Q130 130 135 140" strokeWidth="1.5" className="stroke-amber-700" />
+            <circle cx="135" cy="140" r="7" fill="currentColor" fillOpacity="0.35" className="stroke-amber-700" />
+            <path d="M100 180 C110 180 115 170 100 155 C85 170 90 180 100 180 Z" fill="currentColor" fillOpacity="0.5" className="stroke-amber-500" />
+          </svg>
+        );
+      case 'zanthoxylum-chalybeum':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-emerald-700 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M100 180 V40" strokeWidth="3" className="stroke-emerald-800" />
+            <path d="M100 140 L88 135 M100 140 L112 135 M100 100 L88 95 M100 100 L112 95 M100 70 L88 65 M100 70 L112 65" strokeWidth="2" className="stroke-amber-600" />
+            <path d="M100 120 C70 120 50 100 35 90 C55 85 80 100 100 105" fill="currentColor" fillOpacity="0.1" className="stroke-emerald-700" />
+            <path d="M100 120 C130 120 150 100 165 90 C145 85 120 100 100 105" fill="currentColor" fillOpacity="0.1" className="stroke-emerald-700" />
+            <path d="M100 80 C75 80 60 60 45 50 C65 45 80 60 100 65" fill="currentColor" fillOpacity="0.1" className="stroke-emerald-700" />
+            <path d="M100 80 C125 80 140 60 155 50 C135 45 120 60 100 65" fill="currentColor" fillOpacity="0.1" className="stroke-emerald-700" />
+          </svg>
+        );
+      case 'prunus-africana':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-emerald-655 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M100 180 C40 140 35 60 100 20 C165 60 160 140 100 180" fill="currentColor" fillOpacity="0.1" className="stroke-emerald-800" />
+            <path d="M100 180 V20" strokeWidth="2.5" className="stroke-emerald-800" />
+            <path d="M50 100 L47 97 M55 80 L52 77 M65 60 L62 57 M150 100 L153 97 M145 80 L148 77 M135 60 L138 57" strokeWidth="1.5" className="stroke-emerald-600" />
+            <circle cx="94" cy="170" r="3" fill="currentColor" className="fill-amber-500 stroke-none" />
+            <circle cx="106" cy="170" r="3" fill="currentColor" className="fill-amber-500 stroke-none" />
+          </svg>
+        );
+      case 'cinchona-bark':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-amber-800 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M100 150 C50 120 40 50 100 15 C160 50 150 120 100 150" fill="currentColor" fillOpacity="0.05" className="stroke-emerald-800" />
+            <path d="M100 150 V15" strokeWidth="2" className="stroke-emerald-800" />
+            <path d="M70 155 Q100 145 130 155 L125 180 Q100 170 75 180 Z" fill="currentColor" fillOpacity="0.3" className="stroke-amber-800" />
+            <path d="M80 160 Q100 152 120 160 L115 175 Q100 167 85 175 Z" strokeWidth="1" className="stroke-amber-600" />
           </svg>
         );
       case 'aloe-vera':
@@ -727,19 +874,63 @@ export function RemedyPage({ id, onBack, onNavigate, selectedRegion }) {
             <path d="M90 60 L93 63 M110 70 L107 73" strokeWidth="1.5" className="stroke-lime-500" />
           </svg>
         );
+      case 'aloe-secundiflora':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-emerald-700 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M100 180 Q100 160 100 155" strokeWidth="4" className="stroke-emerald-900" />
+            <path d="M100 160 C60 160 25 120 15 80 C35 110 65 140 100 150" fill="currentColor" fillOpacity="0.15" className="stroke-emerald-800" />
+            <path d="M15 80 L22 88 M30 100 L36 106 M48 118 L53 122" strokeWidth="1.5" className="stroke-amber-600" />
+            <path d="M100 160 C140 160 175 120 185 80 C165 110 135 140 100 150" fill="currentColor" fillOpacity="0.15" className="stroke-emerald-800" />
+            <path d="M185 80 L178 88 M170 100 L164 106 M152 118 L147 122" strokeWidth="1.5" className="stroke-amber-600" />
+            <path d="M100 160 C80 110 75 55 90 20 C105 55 110 110 100 160" fill="currentColor" fillOpacity="0.25" className="stroke-emerald-800" />
+            <path d="M78 60 L83 65 M105 70 L101 75" strokeWidth="1.5" className="stroke-amber-600" />
+          </svg>
+        );
       case 'guava-leaves':
         return (
           <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-emerald-600 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M100 180 C40 150 30 70 100 15 C170 70 160 150 100 180" fill="currentColor" fillOpacity="0.15" />
             <path d="M100 180 V15" strokeWidth="3" className="stroke-emerald-800" />
-            <path d="M100 150 Q75 140 50 140" />
-            <path d="M100 150 Q125 140 150 140" />
-            <path d="M100 120 Q70 110 40 110" />
-            <path d="M100 120 Q130 110 160 110" />
-            <path d="M100 90 Q65 80 35 80" />
-            <path d="M100 90 Q135 80 165 80" />
-            <path d="M100 60 Q70 50 45 50" />
-            <path d="M100 60 Q130 50 155 50" />
+            <path d="M100 150 Q75 140 50 140 M100 150 Q125 140 150 140" />
+            <path d="M100 120 Q70 110 40 110 M100 120 Q130 110 160 110" />
+            <path d="M100 90 Q65 80 35 80 M100 90 Q135 80 165 80" />
+            <path d="M100 60 Q70 50 45 50 M100 60 Q130 50 155 50" />
+          </svg>
+        );
+      case 'lippia-javanica':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-emerald-650 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M100 170 C50 145 45 80 100 30 C155 80 150 145 100 170" fill="currentColor" fillOpacity="0.15" className="stroke-emerald-800" />
+            <path d="M100 170 V30" strokeWidth="2" className="stroke-emerald-800" />
+            <path d="M70 100 H72 M78 80 H80 M65 120 H67 M130 100 H128 M122 80 H120 M135 120 H133" strokeWidth="2" className="stroke-emerald-450" />
+            <path d="M60 120 L58 116 M54 100 L52 96 M64 80 L62 76 M140 120 L142 116 M146 100 L148 96 M136 80 L138 76" strokeWidth="1" className="stroke-emerald-600" />
+          </svg>
+        );
+      case 'warburgia-salutaris':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-emerald-700 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M100 180 C55 150 45 70 100 15 C155 70 145 150 100 180" fill="currentColor" fillOpacity="0.2" className="stroke-emerald-800" />
+            <path d="M100 180 V15" strokeWidth="2.5" className="stroke-emerald-800" />
+            <circle cx="80" cy="80" r="1.5" fill="currentColor" className="fill-emerald-400 stroke-none" />
+            <circle cx="120" cy="90" r="1.5" fill="currentColor" className="fill-emerald-400 stroke-none" />
+            <circle cx="75" cy="110" r="1.5" fill="currentColor" className="fill-emerald-400 stroke-none" />
+            <circle cx="115" cy="60" r="1.5" fill="currentColor" className="fill-emerald-400 stroke-none" />
+            <circle cx="90" cy="50" r="1.5" fill="currentColor" className="fill-emerald-400 stroke-none" />
+          </svg>
+        );
+      case 'black-pepper':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-emerald-655 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M100 170 C40 140 25 70 100 20 C175 70 160 140 100 170" fill="currentColor" fillOpacity="0.15" className="stroke-emerald-800" />
+            <path d="M100 170 V20" strokeWidth="2.5" className="stroke-emerald-800" />
+            <path d="M100 170 Q60 110 100 20" strokeWidth="1.5" />
+            <path d="M100 170 Q140 110 100 20" strokeWidth="1.5" />
+            <path d="M100 170 Q45 130 100 20" strokeWidth="1" className="stroke-emerald-800/30" />
+            <path d="M100 170 Q155 130 100 20" strokeWidth="1" className="stroke-emerald-800/30" />
+            <path d="M130 90 Q145 110 140 145" strokeWidth="2" className="stroke-slate-450" />
+            <circle cx="138" cy="110" r="4.5" fill="currentColor" className="fill-amber-600 stroke-none" />
+            <circle cx="143" cy="122" r="4.5" fill="currentColor" className="fill-amber-650 stroke-none" />
+            <circle cx="140" cy="134" r="4.5" fill="currentColor" className="fill-amber-600 stroke-none" />
           </svg>
         );
       case 'papaya-leaf-extract':
@@ -753,6 +944,251 @@ export function RemedyPage({ id, onBack, onNavigate, selectedRegion }) {
             <path d="M100 120 L130 55" strokeWidth="2" />
             <path d="M100 120 L65 110" />
             <path d="M100 120 L135 110" />
+          </svg>
+        );
+      case 'papaya-seeds':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-slate-700 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="80" cy="80" r="9" fill="currentColor" fillOpacity="0.35" className="stroke-slate-800" />
+            <path d="M76 76 L84 84 M76 84 L84 76" strokeWidth="1" className="stroke-slate-600" />
+            <circle cx="110" cy="95" r="11" fill="currentColor" fillOpacity="0.35" className="stroke-slate-800" />
+            <path d="M105 90 L115 100 M105 100 L115 90" strokeWidth="1" className="stroke-slate-600" />
+            <circle cx="85" cy="120" r="10" fill="currentColor" fillOpacity="0.35" className="stroke-slate-800" />
+            <path d="M80 115 L90 125 M80 125 L90 115" strokeWidth="1" className="stroke-slate-600" />
+            <circle cx="125" cy="125" r="9" fill="currentColor" fillOpacity="0.35" className="stroke-slate-800" />
+            <path d="M121 121 L129 129 M121 129 L129 121" strokeWidth="1" className="stroke-slate-600" />
+          </svg>
+        );
+      case 'baobab-fruit':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-emerald-655 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M100 20 Q100 80 120 120" strokeWidth="2" className="stroke-emerald-800" />
+            <path d="M100 50 Q75 35 60 40 C75 55 90 55 100 50" fill="currentColor" fillOpacity="0.1" className="stroke-emerald-700" />
+            <path d="M100 50 Q110 20 125 15 C120 30 115 45 100 50" fill="currentColor" fillOpacity="0.1" className="stroke-emerald-700" />
+            <path d="M120 120 C105 120 95 135 95 155 C95 175 110 185 120 185 C130 185 145 175 145 155 C145 135 135 120 120 120 Z" fill="currentColor" fillOpacity="0.25" className="stroke-amber-800" />
+            <path d="M120 120 L120 185" strokeWidth="1" className="stroke-amber-700/30" />
+          </svg>
+        );
+      case 'pumpkin-seeds':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-slate-400 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M100 70 C70 70 60 90 60 100 C60 110 70 130 100 130 C130 130 140 110 140 100 C140 90 130 70 100 70 Z" fill="currentColor" fillOpacity="0.15" className="stroke-slate-500" />
+            <path d="M100 77 C78 77 70 93 70 100 C70 107 78 123 100 123 C122 123 130 107 130 100 C130 93 122 77 100 77 Z" strokeWidth="1.5" className="stroke-slate-350" />
+            <circle cx="100" cy="100" r="3.5" fill="currentColor" className="fill-slate-500 stroke-none" />
+          </svg>
+        );
+      case 'artemisia-annua':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-emerald-600 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M100 190 V30" strokeWidth="3" className="stroke-emerald-800" />
+            <path d="M100 150 Q75 140 60 150 M100 150 Q85 130 70 130 M100 110 Q70 100 50 110 M100 110 Q80 90 60 90 M100 70 Q75 60 55 65" />
+            <path d="M100 150 Q125 140 140 150 M100 150 Q115 130 130 130 M100 110 Q130 100 150 110 M100 110 Q120 90 140 90 M100 70 Q125 60 145 65" />
+            <circle cx="100" cy="30" r="5" fill="currentColor" className="fill-amber-400 stroke-none" />
+            <circle cx="85" cy="45" r="4" fill="currentColor" className="fill-amber-400 stroke-none" />
+            <circle cx="115" cy="45" r="4" fill="currentColor" className="fill-amber-400 stroke-none" />
+            <circle cx="95" cy="65" r="4.5" fill="currentColor" className="fill-amber-400 stroke-none" />
+            <circle cx="105" cy="85" r="4" fill="currentColor" className="fill-amber-400 stroke-none" />
+          </svg>
+        );
+      case 'lemongrass':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-emerald-650 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M100 190 Q90 120 40 60" fill="currentColor" fillOpacity="0.05" />
+            <path d="M100 190 Q100 100 80 30" fill="currentColor" fillOpacity="0.05" />
+            <path d="M100 190 Q110 110 160 50" fill="currentColor" fillOpacity="0.05" />
+            <path d="M100 190 Q105 130 130 40" fill="currentColor" fillOpacity="0.05" />
+            <path d="M100 190 Q95 140 70 70" fill="currentColor" fillOpacity="0.05" />
+            <path d="M100 190 V50" strokeWidth="1" className="stroke-emerald-800/20" />
+          </svg>
+        );
+      case 'ginger':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-amber-700 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M100 100 Q80 80 50 100 Q30 120 50 140 Q80 150 100 130 Q120 150 150 130 Q170 110 150 90 Q120 80 100 100 Z" fill="currentColor" fillOpacity="0.15" className="stroke-amber-800" />
+            <path d="M80 115 Q100 130 120 115 M60 105 Q70 120 85 110 M115 105 Q130 120 140 110" strokeWidth="1.5" />
+            <path d="M50 140 Q40 160 30 170 M100 130 Q100 165 95 185 M150 130 Q165 160 175 170" />
+            <path d="M100 100 Q100 60 110 30" strokeWidth="2" className="stroke-emerald-600" />
+            <path d="M105 50 C95 50 90 40 102 38" fill="currentColor" fillOpacity="0.1" className="stroke-emerald-500" />
+          </svg>
+        );
+      case 'turmeric':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-amber-600 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M60 130 C45 110 40 85 65 80 C90 75 110 100 120 120 C135 110 155 110 165 125 C175 140 160 160 130 155 C110 150 90 145 60 130 Z" fill="currentColor" fillOpacity="0.25" className="stroke-amber-700" />
+            <path d="M52 105 C58 98 64 102 70 112 M85 95 Q92 90 98 105 M132 135 C138 128 144 130 148 138" strokeWidth="1.5" className="stroke-amber-800" />
+            <path d="M90 90 Q95 50 110 20" strokeWidth="2.5" className="stroke-emerald-600" />
+            <path d="M102 45 C115 45 120 30 108 28" fill="currentColor" fillOpacity="0.1" className="stroke-emerald-500" />
+          </svg>
+        );
+      case 'garlic-bulb':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-slate-400 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M100 40 C65 40 50 75 50 110 C50 145 70 160 100 160 C130 160 150 145 150 110 C150 75 135 40 100 40 Z" fill="currentColor" fillOpacity="0.05" className="stroke-slate-500" />
+            <path d="M85 160 L80 180 M92 160 L90 185 M100 160 L100 188 M108 160 L110 185 M115 160 L120 180" strokeWidth="1.5" className="stroke-slate-400" />
+            <path d="M100 40 C85 65 75 90 75 110 C75 130 85 150 100 160" strokeWidth="1.5" className="stroke-slate-450" />
+            <path d="M100 40 C115 65 125 90 125 110 C125 130 115 150 100 160" strokeWidth="1.5" className="stroke-slate-450" />
+            <path d="M100 40 V160" strokeWidth="1" className="stroke-slate-450/40" />
+          </svg>
+        );
+      case 'panax-ginseng':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-amber-700 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M100 60 C90 60 75 70 75 95 C75 115 85 120 85 135 C85 145 70 160 65 175 C60 165 70 145 80 135 C70 125 60 115 60 95 C60 70 80 60 100 60 Z" fill="currentColor" fillOpacity="0.15" className="stroke-amber-800" />
+            <path d="M100 60 C110 60 125 70 125 95 C125 115 115 120 115 135 C115 145 130 160 135 175 C140 165 130 145 120 135 C130 125 140 115 140 95 C140 70 120 60 100 60 Z" fill="currentColor" fillOpacity="0.15" className="stroke-amber-800" />
+            <path d="M100 60 V125 C100 138 95 145 90 180 M100 125 C100 138 105 145 110 180" strokeWidth="2" className="stroke-amber-800" />
+            <path d="M68 150 Q55 152 48 145 M132 150 Q145 152 152 145 M72 170 Q55 175 50 170 M128 170 Q145 175 150 170" strokeWidth="1" className="stroke-amber-600/60" />
+            <path d="M100 60 V25" strokeWidth="2.5" className="stroke-emerald-600" />
+            <path d="M100 35 L75 25 M100 35 L125 25" strokeWidth="1.5" className="stroke-emerald-600" />
+          </svg>
+        );
+      case 'mondia-whitei':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-amber-800 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M100 90 C50 60 30 10 100 5 C170 10 150 60 100 90" fill="currentColor" fillOpacity="0.1" className="stroke-emerald-600" />
+            <path d="M100 90 V5" strokeWidth="2.5" className="stroke-emerald-700" />
+            <path d="M100 90 Q80 120 70 160 M100 90 Q120 120 130 165" strokeWidth="3" className="stroke-amber-800" />
+            <path d="M85 110 Q60 135 45 150 M115 110 Q140 135 155 150" strokeWidth="2" className="stroke-amber-700" />
+            <path d="M73 145 Q60 165 52 185 M127 145 Q140 165 148 185" strokeWidth="1.5" className="stroke-amber-600" />
+          </svg>
+        );
+      case 'astragalus-membranaceus':
+      case 'glycyrrhiza-uralensis':
+      case 'salvia-miltiorrhiza':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-amber-700 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M100 80 Q100 130 95 180" strokeWidth="4.5" className="stroke-amber-800" />
+            <path d="M100 110 Q70 130 50 145 M100 135 Q130 155 150 170 M97 155 Q75 168 60 180" strokeWidth="2" className="stroke-amber-700" />
+            <path d="M100 80 Q100 50 108 25 M102 65 Q85 55 72 45" strokeWidth="2" className="stroke-emerald-600" />
+          </svg>
+        );
+      case 'kigelia-africana':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-emerald-600 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M100 20 L100 80" strokeWidth="2" className="stroke-slate-500" />
+            <path d="M100 80 C80 80 75 100 75 140 C75 175 85 185 100 185 C115 185 125 175 125 140 C125 100 120 80 100 80 Z" fill="currentColor" fillOpacity="0.2" className="stroke-emerald-800" />
+            <path d="M90 100 Q100 120 110 100 M85 130 Q100 150 115 130 M90 160 Q100 175 110 160" strokeWidth="1.5" className="stroke-emerald-800/40" />
+          </svg>
+        );
+      case 'hibiscus-flowers':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-rose-600 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M100 100 C70 90 45 60 65 40 C85 20 100 65 100 100 Z" fill="currentColor" fillOpacity="0.1" />
+            <path d="M100 100 C130 90 155 60 135 40 C115 20 100 65 100 100 Z" fill="currentColor" fillOpacity="0.1" />
+            <path d="M100 100 C110 130 140 155 160 135 C180 115 135 100 100 100 Z" fill="currentColor" fillOpacity="0.1" />
+            <path d="M100 100 C90 130 60 155 40 135 C20 115 65 100 100 100 Z" fill="currentColor" fillOpacity="0.1" />
+            <path d="M100 100 Q120 110 140 120" strokeWidth="3" className="stroke-amber-500" />
+            <circle cx="140" cy="120" r="4.5" fill="currentColor" className="fill-amber-500 stroke-none" />
+            <circle cx="135" cy="128" r="2" fill="currentColor" className="fill-amber-500 stroke-none" />
+            <circle cx="147" cy="115" r="2" fill="currentColor" className="fill-amber-500 stroke-none" />
+          </svg>
+        );
+      case 'toddalia-asiatica':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-emerald-600 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M100 180 V90" strokeWidth="2.5" className="stroke-emerald-800" />
+            <path d="M100 140 L90 135 M100 110 L110 105" strokeWidth="2" className="stroke-amber-600" />
+            <path d="M100 90 C85 80 85 45 100 20 C115 45 115 80 100 90 Z" fill="currentColor" fillOpacity="0.15" />
+            <path d="M100 90 Q65 90 45 80 C60 70 85 80 100 90 Z" fill="currentColor" fillOpacity="0.15" />
+            <path d="M100 90 Q135 90 155 80 C140 70 115 80 100 90 Z" fill="currentColor" fillOpacity="0.15" />
+          </svg>
+        );
+      case 'carissa-spinarum':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-emerald-700 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M100 180 V40" strokeWidth="2.5" className="stroke-emerald-800" />
+            <path d="M100 130 L80 120 M80 120 L70 128 M80 120 L68 112" strokeWidth="2" className="stroke-amber-700" />
+            <path d="M100 130 L120 120 M120 120 L130 128 M120 120 L132 112" strokeWidth="2" className="stroke-amber-700" />
+            <path d="M100 95 C75 95 60 75 55 60 C75 55 90 70 100 95 Z" fill="currentColor" fillOpacity="0.15" className="stroke-emerald-700" />
+            <path d="M100 95 C125 95 140 75 145 60 C125 55 110 70 100 95 Z" fill="currentColor" fillOpacity="0.15" className="stroke-emerald-700" />
+          </svg>
+        );
+      case 'tea-tree-oil':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-emerald-600 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M100 180 V30" strokeWidth="2.5" className="stroke-emerald-800" />
+            <path d="M100 140 L70 120 M100 140 L130 120 M100 110 L75 90 M100 110 L125 90 M100 80 L80 60 M100 80 L120 60 M100 50 L85 35 M100 50 L115 35" strokeWidth="2.5" className="stroke-emerald-600" />
+          </svg>
+        );
+      case 'coconut-water':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-sky-600 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M100 30 C155 30 170 80 170 110 C170 150 140 170 100 170 C60 170 30 150 30 110 C30 80 45 30 100 30 Z" fill="currentColor" fillOpacity="0.05" className="stroke-slate-400" />
+            <path d="M100 38 C145 38 160 80 160 110 C160 145 130 160 100 160 C70 160 40 145 40 110 C40 80 55 38 100 38 Z" strokeWidth="1.5" className="stroke-slate-300" />
+            <path d="M50 110 C50 135 70 150 100 150 C130 150 150 135 150 110 Z" fill="currentColor" fillOpacity="0.25" className="stroke-sky-500" />
+            <path d="M50 110 C70 115 130 105 150 110" className="stroke-sky-500" strokeWidth="1.5" />
+            <path d="M140 30 Q160 50 180 80" className="stroke-emerald-650" />
+            <path d="M150 38 L165 42 M160 48 L175 52 M170 60 L185 64" className="stroke-emerald-600" />
+          </svg>
+        );
+      case 'grapefruit-juice':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-amber-500 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="100" cy="100" r="70" fill="currentColor" fillOpacity="0.05" className="stroke-amber-600" />
+            <circle cx="100" cy="100" r="62" strokeWidth="1.5" className="stroke-amber-500" />
+            <circle cx="100" cy="100" r="6" fill="currentColor" className="fill-amber-600 stroke-none" />
+            {Array.from({ length: 8 }).map((_, i) => {
+              const angle = (i * 360) / 8;
+              const rad = (angle * Math.PI) / 180;
+              const x1 = 100 + 8 * Math.cos(rad);
+              const y1 = 100 + 8 * Math.sin(rad);
+              const x2 = 100 + 56 * Math.cos(rad);
+              const y2 = 100 + 56 * Math.sin(rad);
+              return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth="1.5" className="stroke-amber-400" />;
+            })}
+            <path d="M100 30 Q70 10 50 20 C65 30 85 35 100 30" fill="currentColor" fillOpacity="0.15" className="stroke-emerald-600" />
+          </svg>
+        );
+      case 'tamarindus-indica':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-amber-800 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M50 40 Q100 40 150 40" strokeWidth="1.5" className="stroke-emerald-600" />
+            {Array.from({ length: 6 }).map((_, i) => {
+              const x = 60 + i * 16;
+              return (
+                <g key={i}>
+                  <path d={`M${x} 40 Q${x-4} 25 ${x-8} 25 C${x-2} 32 ${x} 40 ${x} 40`} fill="currentColor" fillOpacity="0.1" className="stroke-emerald-600" />
+                  <path d={`M${x} 40 Q${x-4} 55 ${x-8} 55 C${x-2} 48 ${x} 40 ${x} 40`} fill="currentColor" fillOpacity="0.1" className="stroke-emerald-600" />
+                </g>
+              );
+            })}
+            <path d="M60 120 C70 95 100 90 120 100 C135 110 140 130 130 145 C120 155 100 150 85 140 C75 130 65 135 60 120" fill="currentColor" fillOpacity="0.25" className="stroke-amber-900" />
+            <circle cx="85" cy="112" r="6" fill="currentColor" className="fill-amber-955 stroke-none" />
+            <circle cx="112" cy="118" r="6" fill="currentColor" className="fill-amber-955 stroke-none" />
+            <circle cx="120" cy="136" r="6" fill="currentColor" className="fill-amber-955 stroke-none" />
+          </svg>
+        );
+      case 'schisandra-chinensis':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-rose-600 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M120 20 Q100 50 100 100 Q100 150 80 180" strokeWidth="2" className="stroke-emerald-700" />
+            <path d="M100 60 C60 50 40 80 100 100 C140 90 120 60 100 60" fill="currentColor" fillOpacity="0.1" className="stroke-emerald-600" />
+            <path d="M100 100 Q110 110 120 130" strokeWidth="1.5" className="stroke-rose-400" />
+            <circle cx="120" cy="130" r="5" fill="currentColor" className="fill-rose-500 stroke-rose-600" />
+            <circle cx="126" cy="138" r="5" fill="currentColor" className="fill-rose-500 stroke-rose-600" />
+            <circle cx="114" cy="138" r="5" fill="currentColor" className="fill-rose-500 stroke-rose-600" />
+            <circle cx="120" cy="146" r="5" fill="currentColor" className="fill-rose-600 stroke-rose-700" />
+            <circle cx="128" cy="148" r="4" fill="currentColor" className="fill-rose-500 stroke-rose-600" />
+          </svg>
+        );
+      case 'sodium-bicarbonate':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-slate-500 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M70 120 L110 90 L150 110 L110 140 Z" fill="currentColor" fillOpacity="0.05" className="stroke-slate-400" />
+            <path d="M70 120 L70 150 L110 170 L110 140 Z" fill="currentColor" fillOpacity="0.1" className="stroke-slate-500" />
+            <path d="M110 140 L110 170 L150 140 L150 110 Z" fill="currentColor" fillOpacity="0.15" className="stroke-slate-600" />
+            <path d="M100 60 L130 40 L160 55 L130 75 Z" fill="currentColor" fillOpacity="0.05" className="stroke-slate-400" />
+            <path d="M100 60 L100 85 L130 100 L130 75 Z" fill="currentColor" fillOpacity="0.1" className="stroke-slate-500" />
+            <path d="M130 75 L130 100 L160 80 L160 55 Z" fill="currentColor" fillOpacity="0.15" className="stroke-slate-600" />
+          </svg>
+        );
+      case 'petroleum-jelly':
+        return (
+          <svg viewBox="0 0 200 200" className="w-48 h-48 mx-auto text-sky-500 animate-scale-up" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="60" y="45" width="80" height="20" rx="4" fill="currentColor" fillOpacity="0.2" className="stroke-sky-600" />
+            <line x1="60" y1="55" x2="140" y2="55" strokeWidth="1.5" className="stroke-sky-700" />
+            <path d="M65 65 C65 65 55 70 55 85 L55 140 C55 155 70 160 100 160 C130 160 145 155 145 140 L145 85 C145 70 135 65 135 65 Z" fill="currentColor" fillOpacity="0.05" className="stroke-sky-700" />
+            <path d="M75 140 C75 110 90 100 100 100 C110 100 125 110 125 140 Z" fill="currentColor" fillOpacity="0.25" className="stroke-sky-500" />
+            <path d="M85 140 C85 125 95 120 100 120 C105 120 115 125 115 140" strokeWidth="1.5" className="stroke-sky-300" />
           </svg>
         );
       default:
@@ -892,48 +1328,78 @@ export function RemedyPage({ id, onBack, onNavigate, selectedRegion }) {
 
       {/* Main Remedy Info */}
       <div className="glass-panel p-6 border-l-4 border-l-sky-500 bg-white">
-        <div className="flex flex-wrap items-center gap-2 mb-3">
-          <span className="text-[10px] uppercase font-extrabold tracking-wider px-2.5 py-0.5 rounded bg-sky-50 text-sky-800 border border-sky-100 inline-block font-outfit">
-            {r.category === 'botanical' ? 'Traditional Natural Plant' : 'Modern Pharmaceutical'}
-          </span>
-          {r.category === 'botanical' && (
-            <span className={`text-[9px] uppercase font-extrabold tracking-wider px-2.5 py-0.5 rounded border font-outfit ${
-              r.availability === 'abundant' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
-              r.availability === 'scarce' ? 'bg-rose-50 text-rose-700 border-rose-200 animate-pulse' :
-              'bg-amber-50 text-amber-700 border-amber-200'
-            }`}>
-              Availability: {r.availability}
-            </span>
-          )}
+        <div className={r.imageUrl ? "grid grid-cols-1 md:grid-cols-12 gap-6" : ""}>
+          <div className={r.imageUrl ? "md:col-span-8 space-y-3" : "space-y-3"}>
+            <div className="flex flex-wrap items-center gap-2 mb-1">
+              <span className="text-[10px] uppercase font-extrabold tracking-wider px-2.5 py-0.5 rounded bg-sky-50 text-sky-800 border border-sky-100 inline-block font-outfit">
+                {r.category === 'botanical' ? 'Traditional Natural Plant' : 'Modern Pharmaceutical'}
+              </span>
+              {r.category === 'botanical' && (
+                <span className={`text-[9px] uppercase font-extrabold tracking-wider px-2.5 py-0.5 rounded border font-outfit ${
+                  r.availability === 'abundant' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
+                  r.availability === 'scarce' ? 'bg-rose-50 text-rose-700 border-rose-200 animate-pulse' :
+                  'bg-amber-50 text-amber-700 border-amber-200'
+                }`}>
+                  Availability: {r.availability}
+                </span>
+              )}
+            </div>
+            
+            <h2 className="text-2xl md:text-3xl font-extrabold text-[hsl(var(--primary-green))] mb-1 font-outfit flex items-center gap-2">
+              {r.name}
+              {selectedRegion && selectedRegion !== 'nairobi' && (
+                <span className="text-[10px] uppercase font-extrabold tracking-wider px-2.5 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-100 animate-pulse">
+                  {selectedRegion} context
+                </span>
+              )}
+            </h2>
+            {r.baselineName && r.baselineName !== r.name && (
+              <span className="text-xs text-slate-400 block mb-1 font-bold italic font-outfit">
+                English Botanical Baseline: {r.baselineName}
+              </span>
+            )}
+            <p className="text-sm italic text-slate-400 mb-1">
+              {r.scientificName}
+            </p>
+
+            {/* Synonyms list */}
+            {r.synonyms && r.synonyms.length > 0 && (
+              <p className="text-xs text-slate-500 mb-2 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100/50 inline-block font-semibold">
+                <strong>Synonyms / Local Names:</strong> {r.synonyms.join(', ')}
+              </p>
+            )}
+
+            <p className="text-sm text-slate-650 leading-relaxed max-w-4xl font-medium pt-1">
+              {r.description}
+            </p>
+          </div>
+
+          {r.imageUrl && !imageError ? (
+            <div className="md:col-span-4 relative group rounded-2xl overflow-hidden border border-slate-150 bg-slate-50 aspect-video md:aspect-square flex items-center justify-center shadow-inner no-print">
+              <img 
+                src={r.imageUrl} 
+                alt={`${r.name} botanical identification specimen`} 
+                onError={() => setImageError(true)}
+                className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent p-3 text-white">
+                <span className="text-[9px] font-black uppercase tracking-widest block text-emerald-300">Specimen Reference</span>
+                <span className="text-[10px] font-bold block truncate italic">{r.scientificName}</span>
+              </div>
+            </div>
+          ) : r.category === 'botanical' ? (
+            <div className="md:col-span-4 relative group rounded-2xl overflow-hidden border border-slate-150 bg-gradient-to-br from-emerald-50/10 to-slate-50 aspect-video md:aspect-square flex flex-col items-center justify-center p-4 text-center shadow-inner no-print">
+              <div className="p-3 bg-emerald-50 rounded-2xl border border-emerald-100 text-[hsl(var(--primary-green))] mb-2">
+                <Sprout className="h-6 w-6 animate-pulse" />
+              </div>
+              <span className="text-[10px] font-black text-slate-450 uppercase tracking-widest block">specimen photo pending</span>
+              <span className="text-xs font-bold text-slate-650 block mt-1 italic">{r.scientificName}</span>
+              <span className="text-[9px] text-slate-400 mt-2 max-w-[170px] leading-relaxed block font-medium">
+                Identification illustration is undergoing clinical curation.
+              </span>
+            </div>
+          ) : null}
         </div>
-        
-        <h2 className="text-2xl md:text-3xl font-extrabold text-[hsl(var(--primary-green))] mb-1 font-outfit flex items-center gap-2">
-          {r.name}
-          {selectedRegion && selectedRegion !== 'nairobi' && (
-            <span className="text-[10px] uppercase font-extrabold tracking-wider px-2.5 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-100 animate-pulse">
-              {selectedRegion} context
-            </span>
-          )}
-        </h2>
-        {r.baselineName && r.baselineName !== r.name && (
-          <span className="text-xs text-slate-400 block mb-2 font-bold italic font-outfit">
-            English Botanical Baseline: {r.baselineName}
-          </span>
-        )}
-        <p className="text-sm italic text-slate-400 mb-2">
-          {r.scientificName}
-        </p>
-
-        {/* Synonyms list */}
-        {r.synonyms && r.synonyms.length > 0 && (
-          <p className="text-xs text-slate-500 mb-4 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100/50 inline-block font-semibold">
-            <strong>Synonyms / Local Names:</strong> {r.synonyms.join(', ')}
-          </p>
-        )}
-
-        <p className="text-sm text-slate-650 leading-relaxed max-w-4xl font-medium">
-          {r.description}
-        </p>
       </div>
 
       {/* Dual Tab Navigation Selection Controls */}
@@ -1238,11 +1704,11 @@ export function RemedyPage({ id, onBack, onNavigate, selectedRegion }) {
 
               {/* Selected Recipe Panel */}
               {(() => {
-                const recipe = recipesList[recipeMethod];
-                const checked = checkedSteps[recipeMethod];
-                const totalSteps = recipe.steps.length;
+                const recipe = recipesList[recipeMethod] || { title: '', time: '', steps: [] };
+                const checked = checkedSteps[recipeMethod] || [];
+                const totalSteps = recipe.steps ? recipe.steps.length : 0;
                 const completedSteps = checked.length;
-                const progressPct = Math.round((completedSteps / totalSteps) * 100);
+                const progressPct = totalSteps > 0 ? Math.round((completedSteps / totalSteps) * 100) : 0;
 
                 return (
                   <div className="space-y-4 animate-fade-in pt-1">

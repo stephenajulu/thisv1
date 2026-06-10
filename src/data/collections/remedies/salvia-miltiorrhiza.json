@@ -14,5 +14,6 @@
   "safetyRating": "High Safety",
   "safetyAlert": "Well tolerated. Do not combine with modern anticoagulant or blood thinning pharmaceuticals.",
   "interactions": "Contraindicated with Warfarin, Aspirin, or heparin due to additive antiplatelet bleeding hazards.",
-  "demographicCautions": []
+  "demographicCautions": [],
+  "imageUrl": "/images/botanicals/salvia-miltiorrhiza.png"
 }

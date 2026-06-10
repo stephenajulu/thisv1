@@ -23,45 +23,93 @@ export const handler = async (event, context) => {
   }
 
   try {
+    // Retrieve authenticated user context if present (anonymous submissions are allowed)
+    const user = context.clientContext && context.clientContext.user;
+
     const payload = JSON.parse(event.body || "{}");
     const { entityName, flagReason, details, userEmail } = payload;
 
     if (!entityName || !flagReason || !details) {
       return {
         statusCode: 400,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
         body: JSON.stringify({ error: "Missing required fields" }),
       };
     }
 
-    // Reason mapping for friendly text
+    // Email format validation if provided
+    if (userEmail && typeof userEmail === "string") {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(userEmail) || userEmail.length > 150) {
+        return {
+          statusCode: 400,
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+          body: JSON.stringify({ error: "Bad Request: Invalid email format" }),
+        };
+      }
+    }
+
+    // Reason mapping for friendly text & Whitelist Validation
     const reasonMap = {
       dosage: "Inaccurate Dosage Guideline",
       safety: "Omitted Safety Advisory / Pregnancy Caution",
       empirical: "Questionable Evidence / Missing Citation",
       identification: "Botanical Identification / Taxonomy Error",
     };
-    const reasonText = reasonMap[flagReason] || flagReason;
-    const author = userEmail || "Anonymous Clinician";
+
+    if (!reasonMap[flagReason]) {
+      return {
+        statusCode: 400,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({ error: "Bad Request: Invalid flag category reason" }),
+      };
+    }
+
+    // Input Sanitization (strip HTML tags) & Length Checks
+    const cleanEntityName = entityName.replace(/<[^>]*>/g, "");
+    const cleanDetails = details.replace(/<[^>]*>/g, "");
+    const cleanEmail = userEmail ? userEmail.replace(/<[^>]*>/g, "") : "";
+
+    if (cleanEntityName.length > 100 || cleanDetails.length > 2000) {
+      return {
+        statusCode: 400,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({ error: "Bad Request: Field lengths exceed safe boundaries" }),
+      };
+    }
+
+    const reasonText = reasonMap[flagReason];
+    const author = user ? user.email : (cleanEmail || "Anonymous Clinician");
 
     // 1. Create GitHub Issue if GITHUB_PAT is configured
-    // Secure token is configured in Netlify dashboard settings (not exposed to client)
     const githubToken = process.env.GITHUB_PAT;
     let githubIssueUrl = null;
     let githubIssueNum = null;
 
     if (githubToken) {
-      // Default repository path
       const repo = process.env.GITHUB_REPO || "stephenajulu/thisv1";
-      const issueTitle = `[Clinical Flag] ${entityName} - ${reasonText}`;
+      const issueTitle = `[Clinical Flag] ${cleanEntityName} - ${reasonText}`;
       const issueBody = `## 🚨 Clinical Advisory Report
 
-**Condition/Remedy Flagged:** \`${entityName}\`
+**Condition/Remedy Flagged:** \`${cleanEntityName}\`
 **Flag Category:** \`${reasonText}\`
 **Submitted By:** \`${author}\`
 **Timestamp:** \`${new Date().toISOString()}\`
 
 ### Clinical Details & References
-${details}
+${cleanDetails}
 
 ---
 *This issue was automatically created by the bedside clinical audit system in the **THIS PWA**. Please review the database record and close this issue once resolved.*`;
@@ -101,19 +149,19 @@ ${details}
     const discordWebhookUrl = process.env.DISCORD_WEBHOOK_URL;
     if (discordWebhookUrl) {
       const discordPayload = {
-        username: "THIS Clinical Audit Bot",
+        username: "THIS Clinical Advisory",
         avatar_url: "https://raw.githubusercontent.com/stephenajulu/thisv1/main/public/icon-192.png",
         embeds: [
           {
             title: "🚨 New Clinical Advisory Flag Raised",
-            color: 15548997, // Warm Rose/Red color
+            color: 15548997, // Rose/Red color
             url: githubIssueUrl || undefined,
             fields: [
-              { name: "Clinical Entity", value: `\`${entityName}\``, inline: true },
+              { name: "Clinical Entity", value: `\`${cleanEntityName}\``, inline: true },
               { name: "Flag Category", value: reasonText, inline: true },
               { name: "Submitted By", value: `\`${author}\``, inline: true },
             ],
-            description: `**Clinical Details & References:**\n${details}`,
+            description: `**Clinical Details & References:**\n${cleanDetails}`,
             footer: {
               text: `THIS Clinical PWA • Issue #${githubIssueNum || "Offline Queue"}`
             },
@@ -140,7 +188,7 @@ ${details}
     const slackWebhookUrl = process.env.SLACK_WEBHOOK_URL;
     if (slackWebhookUrl) {
       const slackPayload = {
-        text: `🚨 *New Clinical Advisory Flag Raised*\n*Entity:* \`${entityName}\`\n*Category:* ${reasonText}\n*By:* ${author}\n*Details:* ${details}\n${githubIssueUrl ? `*GitHub Issue:* <${githubIssueUrl}|View Issue #${githubIssueNum}>` : ""}`,
+        text: `🚨 *New Clinical Advisory Flag Raised*\n*Entity:* \`${cleanEntityName}\`\n*Category:* ${reasonText}\n*By:* ${author}\n*Details:* ${cleanDetails}\n${githubIssueUrl ? `*GitHub Issue:* <${githubIssueUrl}|View Issue #${githubIssueNum}>` : ""}`,
       };
 
       try {
@@ -177,4 +225,13 @@ ${details}
       body: JSON.stringify({ error: "Internal Server Error", details: err.message }),
     };
   }
+};
+
+// Netlify Function config configuration for Rate Limiting (all plans)
+export const config = {
+  path: "/.netlify/functions/create-clinical-flag",
+  rateLimit: {
+    minRequests: 5,
+    resetInterval: 60,
+  },
 };

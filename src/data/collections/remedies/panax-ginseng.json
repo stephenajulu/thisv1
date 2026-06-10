@@ -14,5 +14,6 @@
   "safetyRating": "High Safety",
   "safetyAlert": "Generally extremely safe. Avoid high dosages in patients with severe uncontrolled hypertension or acute cardiac dysrhythmias.",
   "interactions": "Avoid concurrent use with MAOIs. May enhance hypoglycemic effects of antidiabetic drugs.",
-  "demographicCautions": []
+  "demographicCautions": [],
+  "imageUrl": "/images/botanicals/panax-ginseng.png"
 }

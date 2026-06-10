@@ -3,6 +3,7 @@
   "name": "Aloe Vera Gel",
   "scientificName": "Aloe vera (L.) Burm.f.",
   "category": "botanical",
+  "imageUrl": "/images/botanicals/aloe_vera.png",
   "description": "A succulent plant yielding clear mucilage gel. Accelerates wound epithelization, soothes sunburn inflammation, and exhibits powerful antibacterial properties on cutaneous lesions.",
   "activeConstituents": [
     "Acemannan",

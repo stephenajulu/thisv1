@@ -2,6 +2,29 @@
 
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-slate-150: #edf2f7;
+  --color-slate-250: #d1dbe5;
+  --color-slate-350: #b8c4d4;
+  --color-slate-450: #7f92a8;
+  --color-slate-550: #5f758e;
+  --color-slate-650: #4e5d73;
+  --color-slate-655: #3e4e63;
+  --color-slate-750: #222e3f;
+  --color-slate-850: #131d2a;
+  
+  --color-emerald-250: #a7f3d0;
+  --color-emerald-450: #34d399;
+  
+  --color-rose-250: #fecdd3;
+  --color-rose-350: #fb7185;
+  --color-rose-550: #e11d48;
+  
+  --color-sky-850: #0c4a6e;
+}
+
 :root {
   /* HSL Color System */
   --primary-green: 164, 86%, 12%;       /* #033c2a - Deep Jungle forest */
@@ -409,6 +432,9 @@ body.high-contrast p,
 body.high-contrast span,
 body.high-contrast label,
 body.high-contrast div,
+body.high-contrast li,
+body.high-contrast ul,
+body.high-contrast ol,
 body.high-contrast table,
 body.high-contrast th,
 body.high-contrast td,
@@ -417,6 +443,49 @@ body.high-contrast textarea,
 body.high-contrast select {
   color: #ffffff !important;
 }
+
+body.high-contrast .bg-white,
+body.high-contrast .bg-slate-50,
+body.high-contrast .bg-slate-50\/50,
+body.high-contrast .bg-slate-100,
+body.high-contrast .bg-slate-150,
+body.high-contrast .bg-slate-900,
+body.high-contrast .bg-slate-900\/40,
+body.high-contrast .bg-slate-900\/60,
+body.high-contrast .bg-slate-950,
+body.high-contrast .bg-slate-950\/70,
+body.high-contrast .bg-emerald-50,
+body.high-contrast .bg-emerald-950,
+body.high-contrast .bg-sky-50,
+body.high-contrast .bg-rose-50,
+body.high-contrast .bg-amber-50,
+body.high-contrast .bg-teal-50,
+body.high-contrast .bg-radial-\[at_top_right\],
+body.high-contrast [class*="from-"],
+body.high-contrast [class*="via-"],
+body.high-contrast [class*="to-"],
+body.high-contrast [class*="bg-gradient-"],
+body.high-contrast [class*="bg-emerald-500/10"],
+body.high-contrast [class*="bg-rose-500/10"],
+body.high-contrast [class*="bg-amber-500/10"],
+body.high-contrast [class*="bg-sky-500/10"] {
+  background-color: #000000 !important;
+  background-image: none !important;
+  border-color: #ffffff !important;
+  border-width: 2px !important;
+}
+
+body.high-contrast .border-slate-100,
+body.high-contrast .border-slate-200,
+body.high-contrast .border-slate-300,
+body.high-contrast .border-emerald-100,
+body.high-contrast .border-emerald-200,
+body.high-contrast .border-emerald-300,
+body.high-contrast .border-rose-100,
+body.high-contrast .border-rose-200 {
+  border-color: #ffffff !important;
+}
+
 
 body.high-contrast a,
 body.high-contrast button {
@@ -450,6 +519,19 @@ body.high-contrast textarea:focus {
 body.high-contrast svg {
   border: 2px solid #ffff00 !important;
   background-color: #000000 !important;
+}
+
+body.high-contrast svg.lucide {
+  border: none !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+body.high-contrast .text-transparent {
+  color: #ffff00 !important;
+  -webkit-text-fill-color: #ffff00 !important;
+  background-clip: unset !important;
+  -webkit-background-clip: unset !important;
 }
 
 body.high-contrast svg line,
@@ -525,8 +607,10 @@ body.dark select option {
 }
 
 body.dark .text-slate-500,
-body.dark .text-slate-655,
-body.dark .text-slate-600 {
+body.dark .text-slate-550,
+body.dark .text-slate-600,
+body.dark .text-slate-650,
+body.dark .text-slate-655 {
   color: #94a3b8 !important;
 }
 
@@ -541,7 +625,44 @@ body.dark .text-slate-850 {
 
 body.dark .text-slate-400,
 body.dark .text-slate-450 {
-  color: #64748b !important;
+  color: #cbd5e1 !important;
+}
+
+body.dark .bg-emerald-50 {
+  background-color: rgba(16, 185, 129, 0.1) !important;
+  border-color: rgba(16, 185, 129, 0.2) !important;
+}
+body.dark .bg-sky-50 {
+  background-color: rgba(14, 165, 233, 0.1) !important;
+  border-color: rgba(14, 165, 233, 0.2) !important;
+}
+body.dark .bg-rose-50 {
+  background-color: rgba(244, 63, 94, 0.1) !important;
+  border-color: rgba(244, 63, 94, 0.2) !important;
+}
+body.dark .bg-amber-50 {
+  background-color: rgba(245, 158, 11, 0.1) !important;
+  border-color: rgba(245, 158, 11, 0.2) !important;
+}
+body.dark .bg-teal-50 {
+  background-color: rgba(20, 184, 166, 0.1) !important;
+  border-color: rgba(20, 184, 166, 0.2) !important;
+}
+
+body.dark .text-sky-600 {
+  color: #38bdf8 !important;
+}
+body.dark .text-emerald-800 {
+  color: #34d399 !important;
+}
+body.dark .text-amber-700 {
+  color: #fbbf24 !important;
+}
+body.dark .text-teal-700 {
+  color: #2dd4bf !important;
+}
+body.dark .text-rose-700 {
+  color: #fb7185 !important;
 }
 
 body.dark .bg-slate-100 {
@@ -597,6 +718,71 @@ body.dark svg line {
 
 .animate-beacon-ring {
   animation: beacon-ring 1.8s infinite;
+}
+
+/* ========================================================
+   LANDING PAGE CONTRAST ADJUSTMENTS
+   ======================================================== */
+/* Light Mode - enhance low contrast slate text classes */
+.landing-page-container p.text-slate-600,
+.landing-page-container p.text-slate-500,
+.landing-page-container span.text-slate-600,
+.landing-page-container span.text-slate-500 {
+  color: #334155 !important; /* slate-700 */
+}
+
+.landing-page-container .text-slate-450 {
+  color: #475569 !important; /* slate-600 */
+}
+
+.landing-page-container label.text-slate-550,
+.landing-page-container label.text-slate-500 {
+  color: #334155 !important; /* slate-700 */
+}
+
+.landing-page-container span.text-slate-400 {
+  color: #475569 !important; /* slate-600 */
+}
+
+/* Dark Mode - ensure legible text on dark backgrounds */
+body.dark .landing-page-container p.text-slate-600,
+body.dark .landing-page-container p.text-slate-500,
+body.dark .landing-page-container span.text-slate-600,
+body.dark .landing-page-container span.text-slate-500,
+body.dark .landing-page-container .text-slate-450,
+body.dark .landing-page-container label.text-slate-550,
+body.dark .landing-page-container label.text-slate-500 {
+  color: #cbd5e1 !important; /* slate-300 */
+}
+
+body.dark .landing-page-container label {
+  color: #cbd5e1 !important; /* slate-300 */
+}
+
+body.dark .landing-page-container span.text-slate-400 {
+  color: #cbd5e1 !important; /* slate-300 */
+}
+
+body.dark .landing-page-container h3,
+body.dark .landing-page-container h4 {
+  color: #ffffff !important;
+}
+
+/* High Contrast Mode overrides for Landing Page */
+body.high-contrast .landing-page-container h1,
+body.high-contrast .landing-page-container h2,
+body.high-contrast .landing-page-container h3,
+body.high-contrast .landing-page-container h4,
+body.high-contrast .landing-page-container h5,
+body.high-contrast .landing-page-container h6 {
+  color: #ffff00 !important;
+}
+
+body.high-contrast .landing-page-container p,
+body.high-contrast .landing-page-container span,
+body.high-contrast .landing-page-container label,
+body.high-contrast .landing-page-container li {
+  color: #ffffff !important;
 }
 
 
