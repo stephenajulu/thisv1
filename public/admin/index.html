@@ -41,6 +41,57 @@
         border-left: 4px solid #20b887 !important;
       }
 
+      /* Custom background overrides for input wrapper elements */
+      div[class*="ControlContainer"] {
+        background: #ffffff !important;
+        border: 1px solid rgba(3, 60, 42, 0.08) !important;
+        border-radius: 12px !important;
+        padding: 18px !important;
+        box-shadow: 0 4px 6px rgba(3, 60, 42, 0.015) !important;
+        margin-bottom: 20px !important;
+      }
+      
+      /* Target the field label text */
+      label[class*="ControlLabel"] {
+        font-family: 'Outfit', sans-serif !important;
+        color: #033c2a !important;
+        font-weight: 700 !important;
+        font-size: 13px !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.03em !important;
+        margin-bottom: 8px !important;
+      }
+
+      /* Make card lists in the editor look like grids */
+      div[class*="ListCard"] {
+        border-left: 4px solid #20b887 !important;
+        background: #fdfefe !important;
+        border-radius: 8px !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.02) !important;
+        padding: 12px !important;
+        margin-bottom: 12px !important;
+      }
+
+      /* Target Decap CMS Publish buttons and editor topbar */
+      [class*="EditorToolbar"] {
+        background-color: #ffffff !important;
+        border-top: 1px solid rgba(3, 60, 42, 0.1) !important;
+        box-shadow: 0 -4px 12px rgba(3, 60, 42, 0.05) !important;
+      }
+
+      /* Collection listing view grid */
+      [class*="CollectionCard"] {
+        border-radius: 12px !important;
+        border: 1px solid rgba(3, 60, 42, 0.06) !important;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02) !important;
+        transition: all 0.2s ease-in-out !important;
+      }
+      [class*="CollectionCard"]:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 16px rgba(3, 60, 42, 0.06) !important;
+        border-color: rgba(32, 184, 135, 0.2) !important;
+      }
+      
       /* Form controls styles inside Decap */
       input, select, textarea {
         font-family: 'Inter', sans-serif !important;
@@ -48,6 +99,8 @@
         border: 1px solid rgba(3, 60, 42, 0.15) !important;
         padding: 10px 14px !important;
         transition: all 0.2s ease-in-out !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
       }
       
       input:focus, select:focus, textarea:focus {
@@ -328,6 +381,49 @@
       CMS.registerPreviewTemplate("blog", BlogPreview);
       CMS.registerPreviewTemplate("notes", VaultNotePreview);
       CMS.registerPreviewTemplate("guidebook", GuidebookPreview);
+
+      // Register custom medical-grade validators using preSave event hook
+      CMS.registerEventListener({
+        name: 'preSave',
+        handler: ({ entry }) => {
+          const data = entry.get('data');
+          const id = data.get('id');
+          const collection = entry.get('collection');
+          
+          // 1. Enforce lowercase, dash-only IDs
+          if (id && !/^[a-z0-9-]+$/.test(id)) {
+            alert("VALIDATION ERROR: Unique ID must contain strictly lowercase letters, numbers, and hyphens (e.g. 'artemisia-annua'). Spaces, capitals, and special characters are forbidden.");
+            throw new Error("Invalid ID format");
+          }
+
+          // 2. Validate ICD-11 syntax format for conditions
+          if (collection === 'conditions') {
+            const icd11 = data.get('icd11');
+            if (icd11 && icd11 !== 'N/A' && !/^[1-9A-Z][0-9A-Z]{3}$/.test(icd11)) {
+              alert("VALIDATION WARNING: ICD-11 code typical format is 4 characters (e.g. '1B10'). Please check the input.");
+            }
+          }
+
+          // 3. Ensure safety alerts are populated when caution ratings are chosen
+          if (collection === 'remedies') {
+            const safetyRating = data.get('safetyRating');
+            const safetyAlert = data.get('safetyAlert');
+            if (safetyRating && (safetyRating.includes('Caution') || safetyRating.includes('Warning')) && (!safetyAlert || safetyAlert.trim().length < 10)) {
+              alert("VALIDATION ERROR: The Safety Rating is set to caution/caution-needed, but you have not provided a detailed Safety Alert / Contraindication. This is required for patient safety.");
+              throw new Error("Missing mandatory safety alert context");
+            }
+          }
+
+          // 4. Validate publishing dates for blogs and notes
+          if (collection === 'blog' || collection === 'notes') {
+            const date = data.get('date');
+            if (date && !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+              alert("VALIDATION ERROR: Date must be entered in YYYY-MM-DD format (e.g. 2026-06-10).");
+              throw new Error("Invalid date format");
+            }
+          }
+        }
+      });
     </script>
   </body>
 </html>

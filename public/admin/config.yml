@@ -73,31 +73,31 @@ collections:
     slug: "{{id}}"
     fields:
       - { label: "Unique Matrix Link ID", name: "id", widget: "string", description: "Msimbo maalum wa kuunganisha dawa na ugonjwa (k.m. 'm-37')." }
-      - { label: "Remedy ID Link", name: "remedyId", widget: "string", description: "ID ya dawa iliyopo. K.m. 'neem-seed-oil'." }
-      - { label: "Condition ID Link", name: "conditionId", widget: "string", description: "ID ya ugonjwa uliopo. K.m. 'scabies'." }
+      - { label: "Remedy ID Link", name: "remedyId", widget: "relation", collection: "remedies", search_fields: ["name", "id"], value_field: "id", display_fields: ["name"], description: "ID ya dawa iliyopo. K.m. 'neem-seed-oil'." }
+      - { label: "Condition ID Link", name: "conditionId", widget: "relation", collection: "conditions", search_fields: ["name", "id"], value_field: "id", display_fields: ["name"], description: "ID ya ugonjwa uliopo. K.m. 'scabies'." }
       - { label: "Target Symptom ID Link", name: "targetSymptomId", widget: "string", description: "ID ya dalili inayolengwa. K.m. 'pruritus'." }
       - { label: "GRADE Evidence Quality", name: "gradeQuality", widget: "select", options: ["High", "Moderate", "Low", "Very Low"], description: "Kiwango cha ubora wa ushahidi wa kisayansi kulingana na mfumo wa GRADE." }
       - { label: "GRADE Recommendation Strength", name: "recommendationStrength", widget: "select", options: ["Strong For", "Conditional For", "Conditional Against", "Strong Against"], description: "Nguvu ya pendekezo la matibabu kwa watendaji wa afya." }
       - { label: "Traditional-Modern Alignment", name: "traditionalAlignment", widget: "select", options: ["High", "Emerging", "Unaligned"], description: "Kiwango cha kuoana kwa maarifa ya jadi na ushahidi wa kisasa wa maabara." }
       - { label: "Human Clinical Efficacy Summary", name: "clinicalSummary", widget: "text", description: "Muhtasari mfupi wa matokeo ya majaribio ya kliniki ya binadamu na ufanisi wa matibabu haya." }
       - { label: "Reference Citation / PubMed URL", name: "citation", widget: "string", description: "Chanzo rasmi cha citation ya utafiti au kiungo cha PubMed." }
-
-  - name: "blog"
-    label: "Clinical Blog"
-    folder: "src/data/collections/blog"
-    create: true
-    format: "json"
-    slug: "{{id}}"
-    fields:
-      - { label: "Unique ID", name: "id", widget: "string", description: "Kitambulisho cha makala hii. K.m. 'malaria-prevention-2026'." }
-      - { label: "Title", name: "title", widget: "string", description: "Kichwa cha habari cha makala ya kliniki (Blog Title)." }
-      - { label: "Author", name: "author", widget: "string", description: "Jina la mwandishi (Daktari au Mtafiti)." }
-      - { label: "Published Date (YYYY-MM-DD)", name: "date", widget: "string", description: "Tarehe ya kuchapishwa kwa muundo wa Mwaka-Mwezi-Siku." }
-      - { label: "Read Time", name: "readTime", widget: "string", description: "Muda unaokadiriwa kusoma makala hii (k.m. '5 min read')." }
-      - { label: "Excerpt / Short Summary", name: "excerpt", widget: "text", description: "Muhtasari mfupi sana wa makala ili kuvutia wasomaji kwenye ukurasa wa mbele." }
-      - { label: "Full Article Body", name: "body", widget: "text", description: "Maelezo kamili na yaliyomo ndani ya makala ya afya." }
-      - { label: "Linked Conditions (IDs)", name: "linkedConditions", widget: "list", field: { name: "conditionId", widget: "string" }, description: "Magonjwa yanayohusiana na makala hii (k.m. 'malaria') ili kutengeneza viungo otomatiki vya marejeleo ya haraka." }
-      - { label: "Linked Remedies (IDs)", name: "linkedRemedies", widget: "list", field: { name: "remedyId", widget: "string" }, description: "Dawa za asili au za kisasa zinazotajwa kwenye makala ili wasomaji wazipate kwa mbofyo mmoja." }
+ 
+   - name: "blog"
+     label: "Clinical Blog"
+     folder: "src/data/collections/blog"
+     create: true
+     format: "json"
+     slug: "{{id}}"
+     fields:
+       - { label: "Unique ID", name: "id", widget: "string", description: "Kitambulisho cha makala hii. K.m. 'malaria-prevention-2026'." }
+       - { label: "Title", name: "title", widget: "string", description: "Kichwa cha habari cha makala ya kliniki (Blog Title)." }
+       - { label: "Author", name: "author", widget: "string", description: "Jina la mwandishi (Daktari au Mtafiti)." }
+       - { label: "Published Date (YYYY-MM-DD)", name: "date", widget: "string", description: "Tarehe ya kuchapishwa kwa muundo wa Mwaka-Mwezi-Siku." }
+       - { label: "Read Time", name: "readTime", widget: "string", description: "Muda unaokadiriwa kusoma makala hii (k.m. '5 min read')." }
+       - { label: "Excerpt / Short Summary", name: "excerpt", widget: "text", description: "Muhtasari mfupi sana wa makala ili kuvutia wasomaji kwenye ukurasa wa mbele." }
+       - { label: "Full Article Body", name: "body", widget: "text", description: "Maelezo kamili na yaliyomo ndani ya makala ya afya." }
+       - { label: "Linked Conditions (IDs)", name: "linkedConditions", widget: "list", field: { label: "Condition Link", name: "conditionId", widget: "relation", collection: "conditions", search_fields: ["name", "id"], value_field: "id", display_fields: ["name"] }, description: "Magonjwa yanayohusiana na makala hii (k.m. 'malaria') ili kutengeneza viungo otomatiki vya marejeleo ya haraka." }
+       - { label: "Linked Remedies (IDs)", name: "linkedRemedies", widget: "list", field: { label: "Remedy Link", name: "remedyId", widget: "relation", collection: "remedies", search_fields: ["name", "id"], value_field: "id", display_fields: ["name"] }, description: "Dawa za asili au za kisasa zinazotajwa kwenye makala ili wasomaji wazipate kwa mbofyo mmoja." }
 
   - name: "notes"
     label: "Community Vault Notes"
